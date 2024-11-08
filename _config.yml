@@ -1,0 +1,19 @@
+# _config.yml
+
+# Site settings
+title: freePCgames
+description: "Welcome"
+url: "www.freepcgames.online"     # Change to your actual site URL
+
+# Theme settings
+theme: jekyll-theme-slate
+
+# Build settings
+markdown: kramdown
+
+# Pagination settings
+paginate: 5
+paginate_path: "/page:num/"
+
+# If deploying to a subfolder, change baseurl accordingly:
+baseurl: ""                   # Leave blank for the root of the domain
