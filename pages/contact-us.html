@@ -1,52 +1,31 @@
-
-
-
-
-<div class="container">
-
-    <!-- Navigation Bar -->
-<nav>
-    <div class="logo">free.PC.games</div>
-    <div class="hamburger" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <div class="menu">
-        <a href="https://www.freepcgames.online/">Home</a>
-        <a href="pages/contact-us.html">Contact</a>
-        <a href="https://www.freepcgames.online/contact-store/">Sale</a>
-        <a href="https://www.freepcgames.online/login/">Members</a>
-        <a href="https://www.freepcgames.online/login-vip">VIP</a>
-    </div>
-</nav>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/css/styles.css">
     <title>freePCames</title>
+    <link rel="stylesheet" href="/css/styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             background-image: url('assets/images/bannercontactus.jpg');
-            background-size: cover; /* Ensures the image covers the entire background */
-            background-position: center; /* Centers the background image */
-            background-attachment: fixed; /* Keeps the background fixed while scrolling */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #fff;
             margin: 0;
             padding: 0;
-            height: 100vh; /* Ensures the body takes full viewport height */
-
+            height: 100vh;
+        }
         h1 {
             font-size: 2.5em;
             margin: 0.5em 0;
             color: #f39c12;
         }
-
         h3 {
             font-size: 1.2em;
             margin: 1em 0;
         }
-
         .footer {
             margin-top: 40px;
             padding: 20px;
@@ -56,97 +35,74 @@
             text-align: center;
             border-top: 1px solid #39ff14;
         }
-
     </style>
+</head>
+<body>
 
+<div class="container">
 
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">free.PC.games</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="menu">
+            <a href="https://www.freepcgames.online/">Home</a>
+            <a href="pages/contact-us.html">Contact</a>
+            <a href="https://www.freepcgames.online/contact-store/">Sale</a>
+            <a href="https://www.freepcgames.online/login/">Members</a>
+            <a href="https://www.freepcgames.online/login-vip">VIP</a>
+        </div>
+    </nav>
 
     <p id="greetings"></p>
 
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steam Game Codes</title>
-
-
-   <!-- form -->
-<div class="container">
-    <div class="input-container">
-        <h1>Contact Us</h1>
-        <h4>We'd love to hear from you!</h4>
-        <form action="https://formspree.io/f/xgvevqjn" method="POST">
-            <div class="styled-input">
-                <input type="text" name="name" required />
-                <label>Name</label> 
-            </div>
-            <div class="styled-input">
-                <input type="email" name="email" required />
-                <label>Email</label> 
-            </div>
-            <div class="styled-input">
-                <input type="text" name="phone" required />
-                <label>Phone Number</label> 
-            </div>
-            <div class="styled-input">
-                <textarea name="message" required></textarea>
-                <label>Message</label>
-            </div>
-            <button type="submit" class='submit-btn'>Send Message</button>
-        </form>
+    <!-- Contact Form -->
+    <div class="container">
+        <div class="input-container">
+            <h1>Contact Us</h1>
+            <h4>We'd love to hear from you!</h4>
+            <form action="https://formspree.io/f/xgvevqjn" method="POST">
+                <div class="styled-input">
+                    <input type="text" name="name" required />
+                    <label>Name</label> 
+                </div>
+                <div class="styled-input">
+                    <input type="email" name="email" required />
+                    <label>Email</label> 
+                </div>
+                <div class="styled-input">
+                    <input type="text" name="phone" required />
+                    <label>Phone Number</label> 
+                </div>
+                <div class="styled-input">
+                    <textarea name="message" required></textarea>
+                    <label>Message</label>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
     </div>
-</div>
-   
 
-
-
-    <script>
-        function showCode(button) {
-            // Find the parent row (tr) and the code (span) element
-            var row = button.closest('tr');
-            var codeCell = row.querySelector('.code-cell span');
-
-            // Toggle the blur effect and opacity
-            if (codeCell.style.filter === 'blur(5px)') {
-                // Remove the blur and transition to clear text
-                codeCell.style.filter = 'blur(0px)';
-                button.textContent = 'Hide Code'; // Change button text to "Hide Code"
-                button.classList.add('hide'); // Optionally change button color
-            } else {
-                // Reapply the blur effect and transition to blur text
-                codeCell.style.filter = 'blur(5px)';
-                button.textContent = 'Show Code'; // Revert button text to "Show Code"
-                button.classList.remove('hide');
-            }
-        }
-    </script>
-
-    </div>
-    <script src="https://static.elfsight.com/platform/platform.js" async></script>
-<div class="elfsight-app-e853409c-50e5-424a-b3c4-81a8cd677e07" data-elfsight-app-lazy></div>
-
-<!-- Input Form -->
+    <!-- Donate Game Key Form -->
     <div class="input-container">
         <form action="" method="POST">
             <div class="styled-input">
                 <input type="text" name="key" required>
                 <label for="key">Donate game key (steam only)</label>
             </div>
-
             <button type="submit" class="submit-btn">Post</button>
         </form>
     </div>
-
-    </div>
-
 
     <h1>Premium Titles</h1>
     <h3>Your activation code will be sent instantly!</h3>
 
     <!-- Ecwid Store and Widgets -->
     <div class="store-section">
-       
         <div id="my-store-109248026"></div>
         <script data-cfasync="false" type="text/javascript" src="https://app.ecwid.com/script.js?109248026&data_platform=code&data_date=2024-10-24" charset="utf-8"></script>
         <script type="text/javascript">
@@ -154,29 +110,26 @@
         </script>
     </div>
 
-
-        <!-- googlereviews Widget -->
+    <!-- Google Reviews Widget -->
     <script src="https://static.elfsight.com/platform/platform.js" async></script>
-<div class="elfsight-app-f59ba269-3fc2-4cd3-ad4c-e060a928c04c" data-elfsight-app-lazy></div>
+    <div class="elfsight-app-f59ba269-3fc2-4cd3-ad4c-e060a928c04c" data-elfsight-app-lazy></div>
 
-<div style="height: 50px;"></div> <!-- Adds 20px of space -->
+    <div style="height: 50px;"></div> <!-- Adds 50px of space -->
 
+    <!-- Link to main.js file -->
+    <script src="js/main.js"></script>
 
-<!-- Link to your main.js file -->
- <script src="js/main.js"></script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.menu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+    </script>
 
-<script src="main.js"></script> <!-- Link to your main.js file -->
-
- <script>
-    function toggleMenu() {
-        const menu = document.querySelector('.menu');
-        const hamburger = document.querySelector('.hamburger');
-        
-        menu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    }
-</script>
+</div>
 
 </body>
-
 </html>
