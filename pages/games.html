@@ -1,7 +1,3 @@
-
-
-
-
 <div class="container">
 
     <!-- Navigation Bar -->
@@ -27,11 +23,9 @@
 <link rel="stylesheet" href="/css/styles.css">
     <title>freePCames</title>
     <style>
-        body
-
-         {
+        body {
             font-family: Arial, sans-serif;
-            background-image: url('assets/images/banner.jpg');
+            background-image: url('https://img.freepik.com/free-vector/dark-hexagonal-background-with-gradient-color_79603-1409.jpg'); /* New background image */
             background-size: cover; /* Ensures the image covers the entire background */
             background-position: center; /* Centers the background image */
             background-attachment: fixed; /* Keeps the background fixed while scrolling */
@@ -42,27 +36,6 @@
         }
 
          .steam-widgets {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);  /* Two columns layout */
-    gap: 20px;  /* Space between the items */
-    margin: 20px 0;
-}
-
-.steam-widgets iframe {
-    width: 100%;  /* Makes sure iframes are fully responsive */
-    height: 300px;  /* Adjust the height as necessary */
-    border: 4px solid #39ff14;  /* Neon green border */
-    border-radius: 10px;  /* Rounded corners */
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);  /* Adding a shadow for extra effect */
-    transition: all 0.3s ease-in-out;  /* Smooth transition for hover effects */
-}
-
-.steam-widgets iframe:hover {
-    transform: scale(1.05);  /* Slight zoom effect on hover */
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);  /* Stronger shadow effect on hover */
-       }
-
-           .steam-widgets {
             display: grid;
             grid-template-columns: repeat(5, 1fr);  /* 5 items across */
             gap: 20px;
@@ -75,7 +48,6 @@
             border-radius: 5px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
         }
-
 
         .container {
             width: 90%;
@@ -106,7 +78,6 @@
         }
 
     </style>
-
 
     <style>
         /* Styling for blurred codes */
@@ -145,8 +116,6 @@
             background-color: #45a049;
         }
     </style>
-
-
 
     <style>
         /* Styling for blurred codes with a smooth transition */
@@ -244,11 +213,11 @@
 
     
 
-<h1>Test Your MMA SKills!</h1>
+<h1>Test Your MMA Skills!</h1>
 <h3>CHALLENGE: Win your first match!</h3>
 <h3>J= jab / L= Kick / Hold J for takedowns</h3>
 <br>
-<h3>✅ <a href="https://freepcgames.online/register">Click here</a> for next random game >
+<h3>✅ <a href="https://freepcgames.online/register">Click here</a> for next random game ></h3>
 
 
 <!-- iDev.Games Responsive Embed Code for Undisputed MMA -->
@@ -258,31 +227,29 @@
     </div>
 </div>
 
+<script>
+    function showCode(button) {
+        // Find the parent row (tr) and the code (span) element
+        var row = button.closest('tr');
+        var codeCell = row.querySelector('.code-cell span');
 
-
-    <script>
-        function showCode(button) {
-            // Find the parent row (tr) and the code (span) element
-            var row = button.closest('tr');
-            var codeCell = row.querySelector('.code-cell span');
-
-            // Toggle the blur effect and opacity
-            if (codeCell.style.filter === 'blur(5px)') {
-                // Remove the blur and transition to clear text
-                codeCell.style.filter = 'blur(0px)';
-                button.textContent = 'Hide Code'; // Change button text to "Hide Code"
-                button.classList.add('hide'); // Optionally change button color
-            } else {
-                // Reapply the blur effect and transition to blur text
-                codeCell.style.filter = 'blur(5px)';
-                button.textContent = 'Show Code'; // Revert button text to "Show Code"
-                button.classList.remove('hide');
-            }
+        // Toggle the blur effect and opacity
+        if (codeCell.style.filter === 'blur(5px)') {
+            // Remove the blur and transition to clear text
+            codeCell.style.filter = 'blur(0px)';
+            button.textContent = 'Hide Code'; // Change button text to "Hide Code"
+            button.classList.add('hide'); // Optionally change button color
+        } else {
+            // Reapply the blur effect and transition to blur text
+            codeCell.style.filter = 'blur(5px)';
+            button.textContent = 'Show Code'; // Revert button text to "Show Code"
+            button.classList.remove('hide');
         }
-    </script>
+    }
+</script>
 
-    </div>
-    <script src="https://static.elfsight.com/platform/platform.js" async></script>
+</div>
+<script src="https://static.elfsight.com/platform/platform.js" async></script>
 <div class="elfsight-app-e853409c-50e5-424a-b3c4-81a8cd677e07" data-elfsight-app-lazy></div>
 
 <!-- Input Form -->
@@ -299,7 +266,6 @@
 
     </div>
 
-
     <h1>Premium Titles</h1>
     <h3>Your activation code will be sent instantly!</h3>
 
@@ -313,8 +279,7 @@
         </script>
     </div>
 
-
-        <!-- googlereviews Widget -->
+    <!-- googlereviews Widget -->
     <script src="https://static.elfsight.com/platform/platform.js" async></script>
 <div class="elfsight-app-f59ba269-3fc2-4cd3-ad4c-e060a928c04c" data-elfsight-app-lazy></div>
 
@@ -344,7 +309,7 @@
     <iframe src="https://store.steampowered.com/widget/2325290/" frameborder="0"></iframe>
     <iframe src="https://store.steampowered.com/widget/440/" frameborder="0"></iframe>
     <iframe src="https://store.steampowered.com/widget/1721470/" frameborder="0"></iframe>
-    <iframe src="https://store.steampowered.com/widget/2811830/" frameborder="0"></iframe>#
+    <iframe src="https://store.steampowered.com/widget/2811830/" frameborder="0"></iframe>
 </div>
 
 <div style="height: 50px;"></div> <!-- Adds 20px of space -->
@@ -461,4 +426,4 @@
 </style>
  
 
-</html>
+</html> 
