@@ -1,58 +1,81 @@
-<div class="container">
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="logo">free.PC.games</div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <div class="menu">
-            <a href="https://www.freepcgames.online/">Home</a>
-            <a href="pages/contact-us.html">Contact</a>
-            <a href="https://www.freepcgames.online/contact-store/">Sale</a>
-            <a href="pages/sign-up.html">Members</a>
-            <a href="pages/sign-up.html">VIP</a>
-        </div>
-    </nav>
 
+
+
+
+<div class="container">
+
+    <!-- Navigation Bar -->
+<nav>
+    <div class="logo">free.PC.games</div>
+    <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="menu">
+        <a href="https://www.freepcgames.online/">Home</a>
+        <a href="pages/contact-us.html">Contact</a>
+        <a href="https://www.freepcgames.online/contact-store/">Sale</a>
+        <a href="pages/sign-up.html">Members</a>
+        <a href="pages/sign-up.html">VIP</a>
+    </div>
+</nav>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="/css/styles.css">
     <title>freePCames</title>
     <style>
-        body {
+        body
+
+<class="home-page">
+
+         {
             font-family: Arial, sans-serif;
             background-image: url('assets/images/banner.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-size: cover; /* Ensures the image covers the entire background */
+            background-position: center; /* Centers the background image */
+            background-attachment: fixed; /* Keeps the background fixed while scrolling */
             color: #fff;
             margin: 0;
             padding: 0;
-            height: 100vh;
+            height: 100vh; /* Ensures the body takes full viewport height */
         }
 
-        .steam-widgets {
+         .steam-widgets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* Two columns layout */
+    gap: 20px;  /* Space between the items */
+    margin: 20px 0;
+}
+
+.steam-widgets iframe {
+    width: 100%;  /* Makes sure iframes are fully responsive */
+    height: 300px;  /* Adjust the height as necessary */
+    border: 4px solid #39ff14;  /* Neon green border */
+    border-radius: 10px;  /* Rounded corners */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);  /* Adding a shadow for extra effect */
+    transition: all 0.3s ease-in-out;  /* Smooth transition for hover effects */
+}
+
+.steam-widgets iframe:hover {
+    transform: scale(1.05);  /* Slight zoom effect on hover */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);  /* Stronger shadow effect on hover */
+       }
+
+           .steam-widgets {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(5, 1fr);  /* 5 items across */
             gap: 20px;
-            margin: 20px 0;
+            margin-bottom: 40px;
         }
 
-        .steam-widgets iframe {
+        iframe {
             width: 100%;
             height: 300px;
-            border: 4px solid #39ff14;
-            border-radius: 10px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease-in-out;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .steam-widgets iframe:hover {
-            transform: scale(1.05);
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);
-        }
 
         .container {
             width: 90%;
@@ -82,12 +105,70 @@
             border-top: 1px solid #39ff14;
         }
 
+    </style>
+
+
+    <h1>Free Steam Game Codes</h1>
+    <h3>✅ <a href="javascript:location.reload()">Refresh the page*</a> to check for new codes!</h3>
+    <h3>✅ Fresh codes added weekly <a href="https://freepcgames.online/register">sign up</a> for premium codes!</h3>
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Game Codes</title>
+
+
+    <style>
         /* Styling for blurred codes */
         .blurred {
             color: transparent;
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
+        
+        /* Optional: Add some basic styling for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
 
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .show-code-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .show-code-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+
+
+    <style>
+        /* Styling for blurred codes with a smooth transition */
+        .code-cell span {
+            filter: blur(5px); /* Apply blur effect */
+            opacity: 0; /* Initially hide the code */
+            transition: opacity 0.5s ease, filter 0.5s ease; /* Smooth fade-in and blur effect */
+        }
+
+        /* Optional: Add some basic styling for the table */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -117,84 +198,63 @@
             background-color: #45a049;
         }
 
-        .code-cell span {
-            filter: blur(5px);
-            opacity: 0;
-            transition: opacity 0.5s ease, filter 0.5s ease;
+        /* Styling for the 'Hide Code' button (optional) */
+        .show-code-btn.hide {
+            background-color: #f44336; /* Red background for Hide button */
         }
-
-        .code-cell span.visible {
-            filter: blur(0px);
-            opacity: 1;
-        }
-
-        /* Footer styles */
-        .footer-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .footer-left p {
-            margin: 0;
-            font-size: 16px;
-        }
-
-        .footer-left span {
-            font-weight: bold;
-            color: #ff7f00;
-        }
-
-        .footer-right ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            gap: 20px;
-        }
-
-        .footer-right ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s ease;
-        }
-
-        .footer-right ul li a:hover {
-            color: #ff7f00;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .social-icon {
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 900;
-            font-size: 24px;
-            color: #fff;
-            transition: color 0.3s ease;
-        }
-
-        .social-icon:hover {
-            color: #ff7f00;
-        }
-
-        .facebook { content: '\f09a'; }
-        .twitter { content: '\f099'; }
-        .instagram { content: '\f16d'; }
-        .youtube { content: '\f167'; }
     </style>
 
-    <h1>Free Steam Game Codes</h1>
-    <h3>✅ <a href="javascript:location.reload()">Refresh the page*</a> to check for new codes!</h3>
-    <h3>✅ Fresh codes added weekly <a href="https://freepcgames.online/register">sign up</a> for premium codes!</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Game Codes</title>
+    <style>
+        /* Styling for blurred codes with a smooth transition */
+        .code-cell span {
+            filter: blur(5px); /* Apply initial blur */
+            opacity: 1; /* Keep the code visible */
+            transition: opacity 0.5s ease, filter 0.5s ease; /* Smooth fade-in and blur effect */
+        }
 
+        /* Optional: Add some basic styling for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .show-code-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .show-code-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Styling for the 'Hide Code' button (optional) */
+        .show-code-btn.hide {
+            background-color: #f44336; /* Red background for Hide button */
+        }
+    </style>
+
+    <!-- Code table for Steam game codes -->
     <div class="centered">
         <table class="code-table">
             <tr>
@@ -209,37 +269,85 @@
                 <td class="code-cell"><span>HH0AX-TRHYZ-FMZZW</span></td>
                 <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
             </tr>
-            <!-- Repeat for other game entries -->
+            <tr>
+                <td>Invasion</td>
+                <td>World wide</td>
+                <td class="code-cell"><span>JICY7-RIRR5-X273V</span></td>
+                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+            </tr>
+            <tr>
+                <td>7 Days to Die</td>
+                <td>World wide</td>
+                <td class="code-cell"><span>4N44Y-JPII8-A8N2H</span></td>
+                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+            </tr>
+            <tr>
+                <td>Dying Light definitive edition</td>
+                <td>World wide</td>
+                <td class="code-cell"><span>LVRT0-2NTNX-GPM9H</span></td>
+                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+            </tr>
+            <tr>
+                <td>Mirrors Edge Comp</td>
+                <td>EU Only</td>
+                <td class="code-cell"><span>ZYKTZ-DRJAG-I08BM</span></td>
+                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+            </tr>
+            <tr>
+                <td>Two Worlds Epic Edition</td>
+                <td>World wide</td>
+                <td class="code-cell"><span>8RXGF-2N5GH-NX7BD</span></td>
+                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+            </tr>
         </table>
     </div>
 
     <script>
         function showCode(button) {
+            // Find the parent row (tr) and the code (span) element
             var row = button.closest('tr');
             var codeCell = row.querySelector('.code-cell span');
-            codeCell.classList.toggle('visible');
-            button.textContent = codeCell.classList.contains('visible') ? 'Hide Code' : 'Show Code';
+
+            // Toggle the blur effect and opacity
+            if (codeCell.style.filter === 'blur(5px)') {
+                // Remove the blur and transition to clear text
+                codeCell.style.filter = 'blur(0px)';
+                button.textContent = 'Hide Code'; // Change button text to "Hide Code"
+                button.classList.add('hide'); // Optionally change button color
+            } else {
+                // Reapply the blur effect and transition to blur text
+                codeCell.style.filter = 'blur(5px)';
+                button.textContent = 'Show Code'; // Revert button text to "Show Code"
+                button.classList.remove('hide');
+            }
         }
     </script>
 
+    </div>
     <script src="https://static.elfsight.com/platform/platform.js" async></script>
-    <div class="elfsight-app-e853409c-50e5-424a-b3c4-81a8cd677e07" data-elfsight-app-lazy></div>
+<div class="elfsight-app-e853409c-50e5-424a-b3c4-81a8cd677e07" data-elfsight-app-lazy></div>
 
-    <!-- Input Form -->
+<!-- Input Form -->
     <div class="input-container">
         <form action="" method="POST">
             <div class="styled-input">
                 <input type="text" name="key" required>
                 <label for="key">Donate game key (steam only)</label>
             </div>
+
             <button type="submit" class="submit-btn">Post</button>
         </form>
     </div>
 
+    </div>
+
+
     <h1>Premium Titles</h1>
     <h3>Your activation code will be sent instantly!</h3>
 
+    <!-- Ecwid Store and Widgets -->
     <div class="store-section">
+       
         <div id="my-store-109248026"></div>
         <script data-cfasync="false" type="text/javascript" src="https://app.ecwid.com/script.js?109248026&data_platform=code&data_date=2024-10-24" charset="utf-8"></script>
         <script type="text/javascript">
@@ -247,42 +355,152 @@
         </script>
     </div>
 
-    <div class="steam-widgets">
-        <!-- Add iframe elements as required -->
-    </div>
 
-    <div style="height: 50px;"></div>
+        <!-- googlereviews Widget -->
+    <script src="https://static.elfsight.com/platform/platform.js" async></script>
+<div class="elfsight-app-f59ba269-3fc2-4cd3-ad4c-e060a928c04c" data-elfsight-app-lazy></div>
 
-    <script src="js/main.js"></script>
+       <h1>Free To Play On Steam</h1>
+<h3>Best rated free steam games by our members!</h3>
 
-    <script>
-        function toggleMenu() {
-            const menu = document.querySelector('.menu');
-            const hamburger = document.querySelector('.hamburger');
-            menu.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        }
-    </script>
+    <!-- Steam Widgets Section -->
+<div class="steam-widgets">
+    <iframe src="https://store.steampowered.com/widget/2239140/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/1222670/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/2139460/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/1085660/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/1172470/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/552990/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/444200/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/314000/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/1286830/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/1818450/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/386180/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/212500/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/1240440/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/386360/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/8500/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/380600/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/1292630/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/2707930/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/2325290/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/440/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/1721470/" frameborder="0"></iframe>
+    <iframe src="https://store.steampowered.com/widget/2811830/" frameborder="0"></iframe>#
+</div>
 
-    <div class="footer">
-        <div class="footer-container">
-            <div class="footer-left">
-                <p>&copy; 2025 <span>freePCgames</span></p>
-            </div>
-            <div class="footer-right">
-                <ul>
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="/privacy-policy">Privacy Policy</a></li>
-                    <li><a href="/terms">Terms</a></li>
-                </ul>
-                <div class="social-icons">
-                    <a href="#" class="social-icon facebook">Facebook</a>
-                    <a href="#" class="social-icon twitter">Twitter</a>
-                    <a href="#" class="social-icon instagram">Instagram</a>
-                    <a href="#" class="social-icon youtube">YouTube</a>
-                </div>
-            </div>
+<div style="height: 50px;"></div> <!-- Adds 20px of space -->
+
+<br>
+<br>
+
+
+<!-- Link to your main.js file -->
+ <script src="js/main.js"></script>
+
+<script src="main.js"></script> <!-- Link to your main.js file -->
+
+ <script>
+    function toggleMenu() {
+        const menu = document.querySelector('.menu');
+        const hamburger = document.querySelector('.hamburger');
+        
+        menu.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    }
+</script>
+
+
+</body>
+
+<!-- footer -->
+<div class="footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <p>&copy; 2025 <span>freePCgames</span></p>
+        </div>
+        <div class="footer-right">
+            <ul>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/terms-of-service">Terms of Service</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
         </div>
     </div>
-
 </div>
+
+<style>
+    /* Basic styles for the footer */
+    .footer {
+        background: #1f1f1f; /* Dark background for contrast */
+        color: #fff;
+        font-family: 'Roboto', sans-serif;
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    .footer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .footer-left p {
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .footer-left span {
+        font-weight: bold;
+        color: #ff7f00; /* Accent color */
+    }
+
+    .footer-right ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 20px;
+    }
+
+    .footer-right ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+    }
+
+    .footer-right ul li a:hover {
+        color: #ff7f00; /* Hover effect */
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .social-icon {
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        font-size: 24px;
+        color: #fff;
+        transition: color 0.3s ease;
+    }
+
+    .social-icon:hover {
+        color: #ff7f00;
+    }
+
+    .facebook { content: '\f09a'; }
+    .twitter { content: '\f099'; }
+    .instagram { content: '\f16d'; }
+    .youtube { content: '\f167'; }
+</style>
+ 
+
+</html>
