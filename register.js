@@ -19,7 +19,7 @@ async function signUp(email, password) {
             // Successful sign-up
             console.log('User signed up:', user);
             // Redirect to the login page or show a success message
-            window.location.href = 'login.html';  // Redirect to login page after sign-up
+            window.location.href = 'pages/login.html';  // Redirect to login page after sign-up
         }
     } catch (err) {
         console.error('Unexpected error during sign-up:', err);
