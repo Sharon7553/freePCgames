@@ -27,47 +27,53 @@ document.addEventListener('copy', function(e) {
 
 
 
-import { createClient } from '@supabase/supabase-js'
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize Supabase
+    const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your actual Supabase key
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'
-const supabaseKey = process.env.SUPABASE_KEY
-const supabase = createClient(supabaseUrl, supabaseKey)
+    // Sign up function
+    async function signUp() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
 
-// Import Supabase library if it's not already in your HTML
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js';
+        try {
+            const { user, error } = await supabase.auth.signUp({ email, password });
 
-// Supabase initialization
-const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'
-const supabaseKey = process.env.SUPABASE_KEY
-const supabase = createClient(supabaseUrl, supabaseKey)
-
-$(function(){
-  $('.hide-show').show();
-  $('.hide-show span').addClass('show')
-  
-  $('.hide-show span').click(function(){
-    if( $(this).hasClass('show') ) {
-      $(this).text('Hide');
-      $('input[name="login[password]"]').attr('type','text');
-      $(this).removeClass('show');
-    } else {
-       $(this).text('Show');
-       $('input[name="login[password]"]').attr('type','password');
-       $(this).addClass('show');
+            if (error) {
+                console.error("Error during sign-up:", error);
+                alert(error.message); // Show error if any
+            } else {
+                console.log("Sign-up successful:", user);
+                window.location.href = "/pages/login.html"; // Redirect to login page
+            }
+        } catch (err) {
+            console.error("Error during sign-up:", err);
+            alert("An unexpected error occurred during sign-up.");
+        }
     }
-  });
-    
-    $('form button[type="submit"]').on('click', function(){
-        $('.hide-show span').text('Show').addClass('show');
-        $('.hide-show').parent().find('input[name="login[password]"]').attr('type','password');
-    }); 
+
+    // Handle form submission
+    const signupForm = document.getElementById("signup");
+    signupForm.addEventListener("submit", function (event) {
+        event.preventDefault();  // Prevent default form submission
+        signUp();  // Call the signUp function
+    });
+
+    // Password visibility toggle
+    const passwordToggle = document.querySelector('.hide-show span');
+    const passwordInput = document.getElementById("password");
+
+    passwordToggle.addEventListener('click', function () {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            passwordToggle.textContent = 'Hide';
+        } else {
+            passwordInput.type = 'password';
+            passwordToggle.textContent = 'Show';
+        }
+    });
 });
 
 
