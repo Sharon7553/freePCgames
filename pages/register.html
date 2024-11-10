@@ -35,21 +35,23 @@
         </form>
 
         <div class="login-link">
-            <p>Already have an account? <a href="/login.html">Log in here</a></p>
+            <p>Already have an account? <a href="/pages/login.html">Log in here</a></p>
         </div>
     </div>
 
     <!-- Move the script tag below the body content -->
     <script>
         // Step 1: Initialize Supabase client (ensure this runs first)
-        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';  // Use your actual Supabase URL
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Use your actual Supabase Key
+        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';  // Your Supabase URL
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Your Supabase Key
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         // Step 2: Define the signUp function
         async function signUp() {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
+
+            console.log("Attempting to sign up with:", email);
 
             try {
                 // Attempt to sign up using Supabase Auth
@@ -58,11 +60,11 @@
                 if (error) {
                     // Handle error if sign-up fails
                     console.error("Error during sign-up:", error);
-                    alert(error.message);
+                    alert(error.message); // Show error message from Supabase
                 } else {
-                    // Successful sign-up, redirect to dashboard
+                    // Successful sign-up, redirect to login page
                     console.log("Sign-up successful:", user);
-                    window.location.href = "/pages/dashboard.html";  // Adjust path if needed
+                    window.location.href = "/pages/login.html";  // Redirect to login page after sign-up
                 }
             } catch (err) {
                 // Catch any unexpected errors
@@ -71,7 +73,7 @@
             }
         }
 
-        // Step 3: Toggle password visibility
+        // Step 3: Password visibility toggle
         document.querySelector('.hide-show span').addEventListener('click', function () {
             const passwordInput = document.getElementById("password");
             if (this.classList.contains('show')) {
