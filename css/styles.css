@@ -1,14 +1,4 @@
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #1b1b1b;
-        color: #fff;
-        margin: 0;
-        padding: 0;
-        background-image: url('assets/images/banner.jpeg');
-        background-size: cover; /* Ensures background image covers the full viewport */
-        background-position: center; /* Centers the background image */
-    }
+
 
     *, *:before, *:after {
   -moz-box-sizing: border-box; 
