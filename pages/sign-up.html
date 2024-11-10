@@ -72,48 +72,52 @@
   <!-- Include Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    // Ensure this part runs first before any other code
-    const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
+    // Make sure the supabase client is initialized first
+    const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Use your actual Supabase URL
+    const supabaseKey = 'your-anon-key'; // Replace with your Supabase anon key
 
     // Initialize Supabase client
     const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // Set up event listener after Supabase client is initialized
-    const form = document.getElementById('sign-up-form');
-    const errorMessage = document.getElementById('error-message');
-    const successMessage = document.getElementById('success-message');
+    // Now that supabase is initialized, we can safely handle the form submission
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('sign-up-form');
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault(); // Prevent default form submission
+      // Listen for the form submit
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent the default form submission
 
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-      // Hide previous messages
-      errorMessage.style.display = 'none';
-      successMessage.style.display = 'none';
+        // Hide any previous messages
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
 
-      try {
-        // Calling the Supabase sign-up method after the client is initialized
-        const { user, error } = await supabase.auth.signUp({
-          email: email,
-          password: password
-        });
+        try {
+          // Call Supabase signUp method
+          const { user, error } = await supabase.auth.signUp({
+            email: email,
+            password: password
+          });
 
-        // If there's an error during sign-up
-        if (error) {
+          if (error) {
+            // If an error occurs
+            errorMessage.style.display = 'block';
+            console.error('Error signing up:', error.message);
+          } else {
+            // If sign-up is successful
+            successMessage.style.display = 'block';
+            console.log('User signed up:', user);
+          }
+        } catch (error) {
+          // Handle other errors
           errorMessage.style.display = 'block';
-          console.error('Error signing up:', error.message);
-        } else {
-          successMessage.style.display = 'block';
-          console.log('User signed up:', user);
+          console.error('Error signing up:', error);
         }
-      } catch (error) {
-        // If there is an issue during the try block
-        errorMessage.style.display = 'block';
-        console.error('Error signing up:', error);
-      }
+      });
     });
   </script>
 
