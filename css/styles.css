@@ -266,6 +266,14 @@
         border-top: 1px solid #39ff14;
     }
 
+
+.widget-wrapper {
+    background-color: rgba(0, 0, 0, 0.8); /* Dark overlay with some transparency */
+    padding: 10px; /* Add padding to separate the overlay from the widget’s content */
+    border-radius: 8px; /* Optional: Rounded corners */
+}
+
+
     @media (max-width: 768px) {
         .container {
             width: 100%;
