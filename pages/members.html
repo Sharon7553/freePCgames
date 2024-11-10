@@ -3,88 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
-    <link rel="stylesheet" href="styles/main.css">
-    <script src="https://static.elfsight.com/platform/platform.js" async></script>
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Check if the user is logged in
+        const user = supabase.auth.user();
+
+        if (!user) {
+            // If not logged in, redirect to login page
+            window.location.href = "/login.html"; // Adjust path as needed
+        } else {
+            // Display the user's dashboard content
+            document.getElementById("dashboard").innerHTML = `
+                <h1>Welcome, ${user.email}</h1>
+                <button onclick="signOut()">Sign Out</button>
+            `;
+        }
+
+        function signOut() {
+            supabase.auth.signOut().then(() => {
+                window.location.href = "/login.html"; // Redirect to login page
+            });
+        }
+    </script>
 </head>
 <body>
-
-    <!-- Main Dashboard Section -->
-    <div id="main-dashboard">
-        
-        <!-- Social Share Buttons at Top -->
-        <div class="social-buttons">
-            <div class="elfsight-app-e853409c-50e5-424a-b3c4-81a8cd677e07" data-elfsight-app-lazy></div>
-        </div>
-        
-        <!-- User Info and Coin Balance at top-right -->
-        <div class="header">
-            <div class="user-info">
-                <h1 id="user-greeting">Hello fellow gamer!</h1>
-                <p>User ID: <span id="user-id-value">120-893-162-440</span></p>
-            </div>
-            <div id="coins-container">
-                <span id="coins-text">Coins: $50</span>
-            </div>
-        </div>
-
-        <!-- Main Task Area -->
-<div class="main-area">
-    <!-- Tasks Section -->
-    <div id="tasks">
-        <h2>Tasks</h2>
-        <div class="task-cards-container" id="task-container">
-            <!-- Task Card Example -->
-            <div class="task-card" id="task-card-1">
-                <h3>Create Profile</h3>
-                <div class="upload-section">
-                    <h4>Upload Screenshot for Task Completion</h4>
-                    <input type="file" id="upload-1" accept="image/*">
-                    <button id="upload-btn-1" class="upload-btn" onclick="handleUpload(1)">Upload Screenshot</button>
-                </div>
-                <button id="complete-btn-1" class="complete-btn" onclick="completeTask(1, 'https://www.google.com')">Complete Task</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Spend Coins Section -->
-    <div id="spending-options">
-        <h2>Spend Your Coins</h2>
-        <div class="spending-option" id="spend-vip" onclick="spendCoins('VIP Membership', 500, 'https://www.vipmembership.com')">
-            <p>VIP Membership - 500 coins</p>
-        </div>
-        <div class="spending-option" id="spend-raffle" onclick="spendCoins('Raffle Ticket', 1000, 'https://www.raffledraw.com')">
-            <p>Raffle Ticket - 1000 coins (Weekly Draw)</p>
-        </div>
-        <div class="spending-option" id="spend-steam" onclick="spendCoins('Random Steam Key', 3000, 'https://www.steamsale.com')">
-            <p>Random Steam Key - 3000 coins</p>
-        </div>
-        <div class="spending-option" id="spend-game" onclick="spendCoins('Any Game', 5000, 'https://www.gameStore.com')">
-            <p>Any Game from our Store - 5000 coins</p>
-        </div>
-    </div>
-
-    <!-- Coin Balance Display -->
-    <div class="header">
-        <div class="user-info">
-            <h1 id="user-greeting">Hello, User</h1>
-            <p>User ID: <span id="user-id-value">12345</span></p>
-        </div>
-        <div id="coins-container">
-            <span id="coins-text">Coins: 50</span>
-        </div>
-    </div>
-
-</div>
-
-
-        <!-- Motivational Message -->
-        <div class="motivational-message">
-            <p>Complete tasks and collect coins for rewards!</p>
-        </div>
-
-    </div>
-
-    <script src="js/main.js"></script>
+    <div id="dashboard"></div>
 </body>
 </html>
