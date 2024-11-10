@@ -1,228 +1,206 @@
-<div class="login_form">
-  <section class="login-wrapper">
-    
-    <div class="logo">
-      <a target="_blank" rel="noopener" href="https://unrealnavigation.com">
-        <img src="www.google.com" alt="">
-      </a>
-    </div>
-    
-    <h2>Sign Up</h2>
-    <form id="signup" method="post" action="#" onsubmit="event.preventDefault(); signUp();">
-      <label for="email">Email</label>
-      <input type="email" id="email" required name="email" autocapitalize="off" autocorrect="off" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-      <label for="password">Password</label>
-      <input class="password" type="password" id="password" required name="password" />
+    body {
+      background: #1d1f25;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-      <div class="hide-show">
-        <span>Show</span>
+    .signup-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .signup-box {
+      background: #121212;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .logo img {
+      width: 180px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .input-group label {
+      color: #fff;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 20px;
+      font-size: 16px;
+      background: #1f1f1f;
+      border: 2px solid #333;
+      border-radius: 5px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: #00ff00;
+    }
+
+    .toggle-password {
+      text-align: right;
+      margin-top: -15px;
+      cursor: pointer;
+    }
+
+    .toggle-password span {
+      color: #00ff00;
+      font-size: 14px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: #00ff00;
+      border: none;
+      color: #000;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #1fd100;
+    }
+
+    .login-link {
+      margin-top: 20px;
+      color: #ccc;
+    }
+
+    .login-link a {
+      color: #00ff00;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .signup-box {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      .input-group input {
+        font-size: 14px;
+        padding: 10px 15px;
+      }
+
+      .submit-btn {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="signup-container">
+    <div class="signup-box">
+      <div class="logo">
+        <a target="_blank" href="https://unrealnavigation.com">
+          <img src="https://unrealnavigation.com/_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt="Unreal Navigation">
+        </a>
       </div>
 
-      <button type="submit">Sign Up</button>
-    </form>
-    
-  </section>
-</div>
+      <h2>Sign Up</h2>
+      <form id="signup-form" method="post" onsubmit="event.preventDefault(); signUp();">
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email">
+        </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<script>
-  // Replace these with your actual Supabase credentials
-  const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
-  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Create a password">
+          <div class="toggle-password">
+            <span>Show</span>
+          </div>
+        </div>
 
-  // Function to handle sign up
-  async function signUp() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+        <button type="submit" class="submit-btn">Sign Up</button>
+      </form>
 
-    const { user, error } = await supabase.auth.signUp({ email, password });
+      <div class="login-link">
+        <p>Already have an account? <a href="/login.html">Log In</a></p>
+      </div>
+    </div>
+  </div>
 
-    if (error) {
-      console.error("Error signing up:", error.message);
-      alert(error.message); // Show the error message to the user
-    } else {
-      console.log("Sign-up successful:", user);
-      // Optionally, redirect the user to the login page or dashboard
-      window.location.href = "/login.html"; // Adjust this URL if necessary
-    }
-  }
+  <script>
+    const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-  $(function() {
-    // Hide/show password functionality
-    $('.hide-show').show();
-    $('.hide-show span').addClass('show');
+    async function signUp() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-    $('.hide-show span').click(function() {
-      if ($(this).hasClass('show')) {
-        $(this).text('Hide');
-        $('input[name="password"]').attr('type', 'text');
-        $(this).removeClass('show');
+      const { user, error } = await supabase.auth.signUp({ email, password });
+
+      if (error) {
+        alert(error.message);
       } else {
-        $(this).text('Show');
-        $('input[name="password"]').attr('type', 'password');
-        $(this).addClass('show');
-      }
-    });
-
-    // Reset password visibility when submitting
-    $('form button[type="submit"]').on('click', function() {
-      $('.hide-show span').text('Show').addClass('show');
-      $('.hide-show').parent().find('input[name="password"]').attr('type', 'password');
-    });
-  });
-</script>
-
-<style>
-  *, *:before, *:after {
-    -moz-box-sizing: border-box; 
-    -webkit-box-sizing: border-box; 
-    box-sizing: border-box;
-  }
-
-  $maincolor: #1fd100;
-  $maincolor2: #262626;
-  @mixin flexbox() {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-  }
-
-  @mixin flex($flex-value) {
-    -webkit-box-flex: $flex-value;
-    -moz-box-flex: $flex-value;
-    -webkit-flex: $flex-value;
-    -ms-flex: $flex-value;
-    flex: $flex-value;
-  }
-
-  @mixin justify($justify-value) {
-    -webkit-justify-content: $justify-value;
-    -moz-justify-content: $justify-value;
-    justify-content: $justify-value;
-  }
-
-  @mixin box-pack($box-pack) {
-    -webkit-box-pack: $box-pack;
-    -moz-box-pack: $box-pack;
-    -ms-flex-pack: $box-pack;
-  }
-
-  @mixin trans ($prop, $time) {
-    -webkit-transition: $prop $time;
-    -moz-transition: $prop $time;
-    -ms-transition: $prop $time;
-    -o-transition: $prop $time;
-    transition: $prop $time;
-  }
-
-  @mixin border-radius($bdrs) {
-    -webkit-border-radius: $bdrs;
-    -moz-border-radius: $bdrs;
-    border-radius: $bdrs;
-  }
-
-  body, html, .login_form {
-    height: 100%; 
-  }
-
-  body {
-    background: $maincolor2;
-  }
-
-  .login_form {
-    @include flexbox;
-    @include flex(center);
-    @include justify(center);
-    @include box-pack(center);
-    -webkit-align-items: center;
-    align-items: center;
-  }
-
-  .login-wrapper {
-    max-width: 500px;
-    width: 100%;
-  }
-
-  .logo {
-    text-align: center;
-    
-    img {
-      max-width: 200px;
-      width: 100%;
-      margin: 1em auto 2em;
-    }
-  }
-
-  form {
-    background: #000;
-    padding: 2em 1em;
-    font-family: helvetica, sans-serif;
-    @include border-radius(5px);
-    
-    label {
-      color: #fff;
-      margin: 0 3% .25em;
-      display: block;
-      font-family: helvetica, sans-serif;
-    }
-
-    input {
-      width: 94%;
-      padding: .5em .25em;
-      margin: 0 3% 1em;
-      font-size: 1.2em;
-      border: 2px solid #000;
-      outline: none;
-      @include trans(all, .25s);
-      @include border-radius(5px);
-    
-      &.password {
-        padding-right: 4rem;
+        window.location.href = "/login.html";
       }
     }
 
-    input:focus {
-      border: 2px solid $maincolor;
-    }
+    document.querySelector('.toggle-password span').addEventListener('click', function() {
+      const passwordInput = document.getElementById('password');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        this.textContent = 'Hide';
+      } else {
+        passwordInput.type = 'password';
+        this.textContent = 'Show';
+      }
+    });
+  </script>
 
-    button {
-      width: 94%;
-      margin: 2em 3% 0;
-      border: none;
-      background: $maincolor;
-      padding: 1em 0;
-      font-size: 1.25em;
-      clear: both;
-      color: #000;
-      @include border-radius(5px);
-      outline: none;
-      @include trans(all, .25s);
-      cursor: pointer;
-    }
-
-    button:focus, button:hover {
-      background: $maincolor2;
-    }
-  }
-
-  .hide-show {
-    width: 94%;
-    margin: -3.62em 3% 0 1.5%;
-    position: relative;
-    z-index: 5;
-    display: none;
-    
-    span {
-      background: $maincolor;
-      font-size: 1em;
-      padding: .5em;
-      float: right;
-      @include border-radius(5px);
-      cursor: pointer;
-    }
-  }
-</style>
+</body>
+</html>
