@@ -1,47 +1,150 @@
-<div class="login_form">
-  <section class="login-wrapper">
-    
-    <div class="logo">
-      <a target="_blank" rel="noopener" href="https://unrealnavigation.com">
-        <img src="https://unrealnavigation.com/_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt="">
-      </a>
-    </div>
-    
-    <h2>Sign Up</h2>
-    <form id="signup" method="post" action="#" onsubmit="event.preventDefault(); signUp();">
-      <label for="email">Email</label>
-      <input type="email" id="email" required name="email" autocapitalize="off" autocorrect="off" />
-
-      <label for="password">Password</label>
-      <input class="password" type="password" id="password" required name="password" />
-
-      <button type="submit">Sign Up</button>
-    </form>
-    
-  </section>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<script>
-  // Replace these with your actual Supabase credentials
-  const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
-  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-  // Function to handle sign up
-  async function signUp() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    const { user, error } = await supabase.auth.signUp({ email, password });
-
-    if (error) {
-      console.error("Error signing up:", error.message);
-      alert(error.message); // Show the error message to the user
-    } else {
-      console.log("Sign-up successful:", user);
-      // Optionally, redirect the user to the login page or dashboard
-      window.location.href = "/login.html"; // Adjust this URL if necessary
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
     }
-  }
-</script>
+    h2 {
+      text-align: center;
+    }
+    .form-group {
+      margin: 10px 0;
+    }
+    .form-group label {
+      display: block;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .form-group button:hover {
+      background-color: #45a049;
+    }
+    .error-message {
+      color: red;
+      font-size: 14px;
+      display: none;
+    }
+    .success-message {
+      color: green;
+      font-size: 14px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Login</h2>
+
+  <div id="error-message" class="error-message">Error: Could not log in. Please check your credentials and try again.</div>
+  <div id="success-message" class="success-message">Success! You are now logged in. Redirecting...</div>
+
+  <form id="login-form">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="Enter your email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required placeholder="Enter your password">
+    </div>
+    <div class="form-group">
+      <button type="submit">Login</button>
+    </div>
+  </form>
+
+  <!-- Include Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    // Function to initialize Supabase client
+    function initializeSupabase() {
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
+      return supabase.createClient(supabaseUrl, supabaseKey);
+    }
+
+    // Rate-limiting logic
+    let lastLoginAttempt = 0;
+    const loginCooldown = 5000; // 5 seconds cooldown
+
+    // Handle form submission
+    function handleLogin(supabase) {
+      const form = document.getElementById('login-form');
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent the default form submission
+
+        // Check if the user is rate-limited
+        const currentTime = Date.now();
+        if (currentTime - lastLoginAttempt < loginCooldown) {
+          errorMessage.textContent = 'Please wait before trying again.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+
+        // Update last login attempt time
+        lastLoginAttempt = currentTime;
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Hide any previous messages
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+
+        try {
+          // Call Supabase signIn method
+          const { user, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+          });
+
+          if (error) {
+            // If an error occurs
+            errorMessage.style.display = 'block';
+            console.error('Error logging in:', error.message);
+          } else {
+            // If login is successful
+            successMessage.style.display = 'block';
+            console.log('User logged in:', user);
+
+            // Redirect to the dashboard after 2 seconds
+            setTimeout(() => {
+              window.location.href = '/pages/dashboard';  // Redirect to the dashboard page
+            }, 2000); // Wait 2 seconds to show the success message before redirect
+          }
+        } catch (error) {
+          // Handle other errors
+          errorMessage.style.display = 'block';
+          console.error('Error logging in:', error);
+        }
+      });
+    }
+
+    // Wait for the window to load, then initialize Supabase and set up the form
+    window.onload = function() {
+      const supabase = initializeSupabase();  // Initialize Supabase
+      handleLogin(supabase);  // Handle the login process
+    };
+  </script>
+
+</body>
+</html>
