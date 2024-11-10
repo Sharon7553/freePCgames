@@ -1,38 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .dashboard-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #1f1f1f;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .dashboard-container h1 {
+            font-size: 32px;
+        }
+
+        .task-boxes {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .task-box {
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 8px;
+            width: 45%;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .task-box.completed {
+            background-color: #3b9b56;
+        }
+
+        .task-box h3 {
+            margin-top: 0;
+        }
+
+        .task-box button {
+            background-color: #1fd100;
+            color: black;
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .task-box button:hover {
+            background-color: #0e7d00;
+        }
+
+        .logout-btn {
+            background-color: #e74c3c;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .user-info {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="dashboard" class="dashboard-container" style="display:none;">
+        <h1>Welcome, <span id="username"></span></h1>
+        <div class="user-info">
+            <p>Here are your tasks. Keep track of your progress!</p>
+        </div>
+
+        <!-- Task Boxes -->
+        <div class="task-boxes">
+            <div class="task-box" id="task1">
+                <h3>Complete Tutorial</h3>
+                <p>Finish the onboarding tutorial.</p>
+                <button onclick="toggleTask('task1')">Mark as Complete</button>
+            </div>
+            <div class="task-box" id="task2">
+                <h3>Finish Project</h3>
+                <p>Work on the final project and submit.</p>
+                <button onclick="toggleTask('task2')">Mark as Complete</button>
+            </div>
+            <div class="task-box" id="task3">
+                <h3>Update Profile</h3>
+                <p>Update your profile with the latest information.</p>
+                <button onclick="toggleTask('task3')">Mark as Complete</button>
+            </div>
+        </div>
+
+        <button class="logout-btn" id="logoutButton">Log Out</button>
+    </div>
+
     <script>
-        const supabaseUrl = 'https://YOUR_SUPABASE_URL';
-        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+        // Supabase setup (replace these with your actual credentials)
+        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Check if the user is logged in
-        const user = supabase.auth.user();
+        // Fetch user info
+        async function checkAuth() {
+            const user = supabase.auth.user();
 
-        if (!user) {
-            // If not logged in, redirect to login page
-            window.location.href = "/login.html"; // Adjust path as needed
-        } else {
-            // User is logged in, display the user's information
-            document.getElementById("dashboard").innerHTML = `
-                <h1>Welcome, ${user.email}</h1>
-                <button onclick="signOut()">Sign Out</button>
-            `;
+            if (user) {
+                // Show the dashboard
+                document.getElementById("dashboard").style.display = "block";
+                document.getElementById("username").textContent = user.email; // Display username (email in this case)
+            } else {
+                // Redirect to login page if not authenticated
+                window.location.href = '/pages/login.html';
+            }
         }
 
-        // Handle sign out
-        function signOut() {
-            supabase.auth.signOut().then(() => {
-                window.location.href = "/login.html"; // Redirect to login page
-            });
+        // Task toggle function to mark tasks as complete/incomplete
+        function toggleTask(taskId) {
+            const taskElement = document.getElementById(taskId);
+            taskElement.classList.toggle("completed");
+
+            // Optionally, you can update the task status in Supabase (to persist across sessions).
+            // For now, this is just toggling the class for visual effect.
+            // You could store the task state in your Supabase database if desired.
         }
+
+        // Call the checkAuth function when the page loads
+        checkAuth();
+
+        // Handle logout
+        document.getElementById("logoutButton").addEventListener('click', async () => {
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+                console.error('Error logging out:', error.message);
+            } else {
+                // Redirect to login page after logout
+                window.location.href = '/pages/login.html';
+            }
+        });
     </script>
-</head>
-<body>
-    <div id="dashboard"></div>
 </body>
+
 </html>
