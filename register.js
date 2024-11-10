@@ -1,7 +1,12 @@
 // Initialize Supabase client
 const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';  // Your Supabase URL
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Your Supabase Key
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+// Import the createClient function from Supabase
+const { createClient } = supabase; // Assuming the supabase-js SDK is loaded
+
+// Create the Supabase client
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Sign-up function
 async function signUp(email, password) {
