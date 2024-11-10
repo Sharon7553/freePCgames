@@ -140,14 +140,14 @@
 
         <!-- Add a link to the login page -->
         <div class="login-link">
-            <p>Already have an account? <a href="/pages/login.html">Log in here</a></p>
+            <p>Already have an account? <a href="/login.html">Log in here</a></p>
         </div>
     </div>
 
     <script>
         // Replace these with your actual Supabase credentials
         const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
+        const supabaseKey = 'your-supabase-key'; // Make sure to replace with your actual key
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         // Function to handle sign-up
@@ -155,15 +155,21 @@
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
-            const { user, error } = await supabase.auth.signUp({ email, password });
+            try {
+                const { user, error } = await supabase.auth.signUp({ email, password });
 
-            if (error) {
-                alert(error.message); // Show error if any
-            } else {
-                console.log("Sign-up successful:", user);
+                if (error) {
+                    console.error("Error during sign-up:", error);
+                    alert(error.message); // Show error if any
+                } else {
+                    console.log("Sign-up successful:", user);
 
-                // Redirect to dashboard after successful sign-up
-                window.location.href = "/pages/dashboard.html"; // Assuming it's part of your project
+                    // Redirect to dashboard after successful sign-up
+                    window.location.href = "/pages/dashboard.html"; // Assuming it's part of your project
+                }
+            } catch (err) {
+                console.error("Error during sign-up:", err);
+                alert("An unexpected error occurred during sign-up.");
             }
         }
 
