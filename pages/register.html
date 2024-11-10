@@ -1,206 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <style>
+        /* Reset and Base Styles */
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
 
-    body {
-      background: #1d1f25;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #181818;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .signup-container {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+        .login_form {
+            width: 100%;
+            max-width: 500px;
+            padding: 2em;
+            background-color: #1f1f1f;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
 
-    .signup-box {
-      background: #121212;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-      text-align: center;
-      max-width: 400px;
-      width: 100%;
-    }
+        .login_form h2 {
+            font-size: 24px;
+            color: white;
+            margin-bottom: 1.5em;
+        }
 
-    .logo img {
-      width: 180px;
-      margin-bottom: 20px;
-    }
+        .logo img {
+            max-width: 200px;
+            width: 100%;
+            margin: 1em auto;
+        }
 
-    h2 {
-      color: #fff;
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
+        .login_form label {
+            color: white;
+            font-size: 14px;
+            margin-bottom: 5px;
+            text-align: left;
+            display: block;
+        }
 
-    .input-group {
-      margin-bottom: 20px;
-      text-align: left;
-    }
+        .login_form input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 20px;
+            font-size: 16px;
+            color: #333;
+            background-color: #333;
+            border: 2px solid #444;
+            border-radius: 6px;
+            color: white;
+            outline: none;
+        }
 
-    .input-group label {
-      color: #fff;
-      margin-bottom: 5px;
-      font-size: 14px;
-    }
+        .login_form input:focus {
+            border-color: #1fd100;
+        }
 
-    .input-group input {
-      width: 100%;
-      padding: 12px 20px;
-      font-size: 16px;
-      background: #1f1f1f;
-      border: 2px solid #333;
-      border-radius: 5px;
-      color: #fff;
-      outline: none;
-      transition: border-color 0.3s;
-    }
+        .login_form button {
+            width: 100%;
+            padding: 14px;
+            background-color: #1fd100;
+            color: #000;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-    .input-group input:focus {
-      border-color: #00ff00;
-    }
+        .login_form button:hover {
+            background-color: #0e7d00;
+        }
 
-    .toggle-password {
-      text-align: right;
-      margin-top: -15px;
-      cursor: pointer;
-    }
+        .login_form .hide-show {
+            margin: -15px 0;
+            display: none;
+            text-align: right;
+        }
 
-    .toggle-password span {
-      color: #00ff00;
-      font-size: 14px;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 14px;
-      background: #00ff00;
-      border: none;
-      color: #000;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
-
-    .submit-btn:hover {
-      background: #1fd100;
-    }
-
-    .login-link {
-      margin-top: 20px;
-      color: #ccc;
-    }
-
-    .login-link a {
-      color: #00ff00;
-      text-decoration: none;
-    }
-
-    .login-link a:hover {
-      text-decoration: underline;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 600px) {
-      .signup-box {
-        padding: 20px;
-      }
-
-      h2 {
-        font-size: 20px;
-      }
-
-      .input-group input {
-        font-size: 14px;
-        padding: 10px 15px;
-      }
-
-      .submit-btn {
-        font-size: 14px;
-      }
-    }
-  </style>
+        .login_form .hide-show span {
+            color: #1fd100;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
-
-  <div class="signup-container">
-    <div class="signup-box">
-      <div class="logo">
-        <a target="_blank" href="https://unrealnavigation.com">
-          <img src="https://unrealnavigation.com/_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt="Unreal Navigation">
-        </a>
-      </div>
-
-      <h2>Sign Up</h2>
-      <form id="signup-form" method="post" onsubmit="event.preventDefault(); signUp();">
-        <div class="input-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required placeholder="Enter your email">
+    <div class="login_form">
+        <div class="logo">
+            <a href="https://unrealnavigation.com" target="_blank" rel="noopener">
+                <img src="https://unrealnavigation.com/_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt="Logo">
+            </a>
         </div>
 
-        <div class="input-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required placeholder="Create a password">
-          <div class="toggle-password">
-            <span>Show</span>
-          </div>
-        </div>
+        <h2>Sign Up</h2>
+        <form id="signup" method="post" action="#" onsubmit="event.preventDefault(); signUp();">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required autocapitalize="off" autocorrect="off" />
 
-        <button type="submit" class="submit-btn">Sign Up</button>
-      </form>
+            <label for="password">Password</label>
+            <input class="password" type="password" id="password" name="password" required />
 
-      <div class="login-link">
-        <p>Already have an account? <a href="/login.html">Log In</a></p>
-      </div>
+            <div class="hide-show">
+                <span>Show</span>
+            </div>
+
+            <button type="submit">Sign Up</button>
+        </form>
     </div>
-  </div>
 
-  <script>
-    const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    <script>
+        // Replace these with your actual Supabase credentials
+        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    async function signUp() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+        // Function to handle sign-up
+        async function signUp() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-      const { user, error } = await supabase.auth.signUp({ email, password });
+            const { user, error } = await supabase.auth.signUp({ email, password });
 
-      if (error) {
-        alert(error.message);
-      } else {
-        window.location.href = "/login.html";
-      }
-    }
+            if (error) {
+                alert(error.message); // Show error if any
+            } else {
+                console.log("Sign-up successful:", user);
 
-    document.querySelector('.toggle-password span').addEventListener('click', function() {
-      const passwordInput = document.getElementById('password');
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        this.textContent = 'Hide';
-      } else {
-        passwordInput.type = 'password';
-        this.textContent = 'Show';
-      }
-    });
-  </script>
+                // Redirect to dashboard after successful sign-up
+                window.location.href = "/pages/dashboard.html"; // This redirects the user to the dashboard
+            }
+        }
 
+        // Password visibility toggle
+        document.querySelector('.hide-show span').addEventListener('click', function () {
+            const passwordInput = document.getElementById("password");
+            if (this.classList.contains('show')) {
+                this.textContent = "Show";
+                passwordInput.type = "password";
+                this.classList.remove('show');
+            } else {
+                this.textContent = "Hide";
+                passwordInput.type = "text";
+                this.classList.add('show');
+            }
+        });
+    </script>
 </body>
+
 </html>
