@@ -72,20 +72,19 @@
   <!-- Include Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    // Make sure the supabase client is initialized first
-    const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Use your actual Supabase URL
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
+    // Function to initialize Supabase client
+    function initializeSupabase() {
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
+      return supabase.createClient(supabaseUrl, supabaseKey);
+    }
 
-    // Initialize Supabase client
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-    // Now that supabase is initialized, we can safely handle the form submission
-    document.addEventListener('DOMContentLoaded', function () {
+    // Handle form submission
+    function handleSignUp(supabase) {
       const form = document.getElementById('sign-up-form');
       const errorMessage = document.getElementById('error-message');
       const successMessage = document.getElementById('success-message');
 
-      // Listen for the form submit
       form.addEventListener('submit', async (e) => {
         e.preventDefault(); // Prevent the default form submission
 
@@ -118,7 +117,13 @@
           console.error('Error signing up:', error);
         }
       });
-    });
+    }
+
+    // Wait for the window to load, then initialize Supabase and set up the form
+    window.onload = function() {
+      const supabase = initializeSupabase();  // Initialize Supabase
+      handleSignUp(supabase);  // Handle the sign-up process
+    };
   </script>
 
 </body>
