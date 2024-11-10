@@ -126,7 +126,7 @@
         </div>
 
         <h2>Sign Up</h2>
-        <form id="signup" method="post" action="#" onsubmit="event.preventDefault(); signUp();">
+        <form id="signup" method="post">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required autocapitalize="off" autocorrect="off" />
 
@@ -152,7 +152,8 @@
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         // Sign Up function
-        async function signUp() {
+        async function signUp(event) {
+            event.preventDefault();  // Prevent form from submitting traditionally
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
@@ -191,6 +192,9 @@
                 this.classList.add('show');
             }
         });
+
+        // Attach event listener for form submit
+        document.getElementById("signup").addEventListener("submit", signUp);
     </script>
 </body>
 
