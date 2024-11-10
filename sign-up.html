@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Load Supabase Library First -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <style>
-        /* Reset and Base Styles */
-        *, *:before, *:after {
-            box-sizing: border-box;
-        }
 
+    <!-- Supabase JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+    <!-- Inline Styles for your page -->
+    <style>
         body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #181818;
-            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100%;
         }
 
         .login_form {
@@ -41,20 +37,6 @@
             margin-bottom: 1.5em;
         }
 
-        .logo img {
-            max-width: 200px;
-            width: 100%;
-            margin: 1em auto;
-        }
-
-        .login_form label {
-            color: white;
-            font-size: 14px;
-            margin-bottom: 5px;
-            text-align: left;
-            display: block;
-        }
-
         .login_form input {
             width: 100%;
             padding: 12px;
@@ -66,10 +48,6 @@
             border-radius: 6px;
             color: white;
             outline: none;
-        }
-
-        .login_form input:focus {
-            border-color: #1fd100;
         }
 
         .login_form button {
@@ -88,72 +66,51 @@
             background-color: #0e7d00;
         }
 
-        .login_form .hide-show {
-            margin: -15px 0;
-            display: none;
-            text-align: right;
-        }
-
-        .login_form .hide-show span {
-            color: #1fd100;
-            cursor: pointer;
-        }
-
-        /* Link Styling */
-        .login-link {
+        .login_form .login-link {
             color: white;
             font-size: 14px;
             margin-top: 1em;
         }
 
-        .login-link a {
+        .login_form .login-link a {
             color: #1fd100;
             text-decoration: none;
         }
-
-        .login-link a:hover {
+        .login_form .login-link a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
-
 <body>
-    <div class="login_form">
-        <div class="logo">
-            <a href="https://freepcgames.online" target="_blank" rel="noopener">
-                <img src="_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt="Logo">
-            </a>
-        </div>
 
+    <div class="login_form">
         <h2>Sign Up</h2>
         <form id="signup" method="post">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required autocapitalize="off" autocorrect="off" />
 
             <label for="password">Password</label>
-            <input class="password" type="password" id="password" name="password" required />
-
-            <div class="hide-show">
-                <span>Show</span>
-            </div>
+            <input type="password" id="password" name="password" required />
 
             <button type="submit">Sign Up</button>
         </form>
 
         <div class="login-link">
-            <p>Already have an account? <a href="pages/login.html">Log in here</a></p>
+            <p>Already have an account? <a href="login.html">Log in here</a></p>
         </div>
     </div>
 
+    <!-- Initialize Supabase Client -->
     <script>
-        // Initialize Supabase Client
-        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';  // Your Supabase URL
+        // Step 1: Initialize Supabase Client (Must be first)
+        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Your Supabase URL
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Your Supabase Key
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Sign Up function
+        // Step 2: Sign Up Function
         async function signUp(event) {
             event.preventDefault();  // Prevent form from submitting traditionally
+
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
@@ -170,7 +127,7 @@
                 } else {
                     // Successful sign-up
                     console.log("Sign-up successful:", user);
-                    window.location.href = "pages/login.html";  // Redirect to login page after successful sign-up
+                    window.location.href = "login.html";  // Redirect to login page after successful sign-up
                 }
             } catch (err) {
                 // Handle unexpected errors
@@ -179,23 +136,9 @@
             }
         }
 
-        // Password visibility toggle
-        document.querySelector('.hide-show span').addEventListener('click', function () {
-            const passwordInput = document.getElementById("password");
-            if (this.classList.contains('show')) {
-                this.textContent = "Show";
-                passwordInput.type = "password";
-                this.classList.remove('show');
-            } else {
-                this.textContent = "Hide";
-                passwordInput.type = "text";
-                this.classList.add('show');
-            }
-        });
-
-        // Attach event listener for form submit
+        // Step 3: Attach sign-up function to form
         document.getElementById("signup").addEventListener("submit", signUp);
     </script>
-</body>
 
+</body>
 </html>
