@@ -2,93 +2,84 @@
 <html lang="en">
 
 <head>
-  <!-- Initialize Supabase Client FIRST -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <script>
-        // Initialize Supabase client FIRST
-        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';  // Your Supabase URL
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Your Supabase Key
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-    </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <style>
-        /* Your styles here */
-    </style>
+
+    <!-- Ensure your CSS is loaded first -->
+    <link rel="stylesheet" href="styles.css">
+  
+    <!-- Initialize Supabase client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+        // Initialize Supabase client
+        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';  // Your Supabase URL
+        const supabaseKey = 'your_supabase_key'; // Your Supabase Key
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    </script>
 </head>
 
 <body>
-    <div class="login_form">
-        <div class="logo">
-            <a href="https://freepcgames.online" target="_blank" rel="noopener">
-                <img src="_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt="Logo">
-            </a>
-        </div>
+  <div class="login_form">
+    <h2>Sign Up</h2>
+    <form id="signup" method="post" onsubmit="event.preventDefault(); signUp();">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required autocapitalize="off" autocorrect="off" />
 
-        <h2>Sign Up</h2>
-        <form id="signup" method="post" action="#" onsubmit="event.preventDefault(); signUp();">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required autocapitalize="off" autocorrect="off" />
+      <label for="password">Password</label>
+      <input class="password" type="password" id="password" name="password" required />
 
-            <label for="password">Password</label>
-            <input class="password" type="password" id="password" name="password" required />
+      <div class="hide-show">
+        <span>Show</span>
+      </div>
 
-            <div class="hide-show">
-                <span>Show</span>
-            </div>
+      <button type="submit">Sign Up</button>
+    </form>
 
-            <button type="submit">Sign Up</button>
-        </form>
-
-        <div class="login-link">
-            <p>Already have an account? <a href="pages/login.html">Log in here</a></p>
-        </div>
+    <div class="login-link">
+      <p>Already have an account? <a href="login.html">Log in here</a></p>
     </div>
+  </div>
 
-    <!-- Sign Up Function -->
-    <script>
-        async function signUp() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+  <!-- Ensure that your JavaScript that handles the sign-up form is below -->
+  <script>
+    // Sign-up function
+    async function signUp() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-            console.log("Attempting to sign up with:", email);
+      console.log("Attempting to sign up with:", email);
 
-            try {
-                // Attempt to sign up with Supabase Auth
-                const { user, error } = await supabase.auth.signUp({ email, password });
+      try {
+        const { user, error } = await supabase.auth.signUp({ email, password });
 
-                if (error) {
-                    // Handle error
-                    console.error("Error during sign-up:", error);
-                    alert(error.message);
-                } else {
-                    // Successful sign-up
-                    console.log("Sign-up successful:", user);
-                    window.location.href = "https://yourdomain.com/login";  // Redirect to login page after successful sign-up
-                }
-            } catch (err) {
-                // Handle unexpected errors
-                console.error("Unexpected error during sign-up:", err);
-                alert("An unexpected error occurred during sign-up.");
-            }
+        if (error) {
+          console.error("Error during sign-up:", error);
+          alert(error.message);
+        } else {
+          console.log("Sign-up successful:", user);
+          window.location.href = "login.html";  // Redirect to login page after successful sign-up
         }
+      } catch (err) {
+        console.error("Unexpected error during sign-up:", err);
+        alert("An unexpected error occurred during sign-up.");
+      }
+    }
 
-        // Password visibility toggle
-        document.querySelector('.hide-show span').addEventListener('click', function () {
-            const passwordInput = document.getElementById("password");
-            if (this.classList.contains('show')) {
-                this.textContent = "Show";
-                passwordInput.type = "password";
-                this.classList.remove('show');
-            } else {
-                this.textContent = "Hide";
-                passwordInput.type = "text";
-                this.classList.add('show');
-            }
-        });
-    </script>
+    // Password visibility toggle
+    document.querySelector('.hide-show span').addEventListener('click', function () {
+      const passwordInput = document.getElementById("password");
+      if (this.classList.contains('show')) {
+        this.textContent = "Show";
+        passwordInput.type = "password";
+        this.classList.remove('show');
+      } else {
+        this.textContent = "Hide";
+        passwordInput.type = "text";
+        this.classList.add('show');
+      }
+    });
+  </script>
 </body>
 
 </html>
