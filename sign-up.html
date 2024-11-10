@@ -2,12 +2,13 @@
 <html lang="en">
 
 <head>
-    <!-- Load Supabase Library First -->
+    <!-- Initialize Supabase Library First -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+
     <style>
         /* Reset and Base Styles */
         *, *:before, *:after {
@@ -147,7 +148,7 @@
     </div>
 
     <script>
-        // Initialize Supabase Client
+        // Initialize Supabase Client (this is important: it must come first)
         const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';  // Your Supabase URL
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Your Supabase Key
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
