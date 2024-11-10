@@ -46,59 +46,41 @@
       font-size: 14px;
       display: none;
     }
-    p {
-      text-align: center;
-    }
   </style>
 </head>
 <body>
 
   <h2>Sign Up</h2>
 
-  <!-- Error and success messages -->
   <div id="error-message" class="error-message">Error: Could not create account. Please try again.</div>
   <div id="success-message" class="success-message">Success! Please check your email to confirm your account.</div>
 
   <form id="sign-up-form">
-    <!-- Email Field -->
     <div class="form-group">
       <label for="email">Email</label>
       <input type="email" id="email" name="email" required placeholder="Enter your email">
     </div>
-
-    <!-- Password Field -->
     <div class="form-group">
       <label for="password">Password</label>
       <input type="password" id="password" name="password" required placeholder="Enter your password">
     </div>
-
-    <!-- Display Name Field -->
-    <div class="form-group">
-      <label for="displayName">Display Name</label>
-      <input type="text" id="displayName" name="displayName" required placeholder="Enter your display name">
-    </div>
-
-    <!-- Submit Button -->
     <div class="form-group">
       <button type="submit">Sign Up</button>
     </div>
   </form>
-
-  <!-- Login Link -->
-  <p>Already have an account? <a href="login.html">Log in here</a></p>
 
   <!-- Include Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
     // Function to initialize Supabase client
     function initializeSupabase() {
-      const supabaseUrl = 'https://your-project.supabase.co'; // Replace with your Supabase URL
-      const supabaseKey = 'your-anon-key'; // Replace with your Supabase anon key
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
       return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
     // Handle form submission
-    async function handleSignUp(supabase) {
+    function handleSignUp(supabase) {
       const form = document.getElementById('sign-up-form');
       const errorMessage = document.getElementById('error-message');
       const successMessage = document.getElementById('success-message');
@@ -108,7 +90,6 @@
 
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        const displayName = document.getElementById('displayName').value;
 
         // Hide any previous messages
         errorMessage.style.display = 'none';
@@ -126,27 +107,9 @@
             errorMessage.style.display = 'block';
             console.error('Error signing up:', error.message);
           } else {
-            // After sign-up, update the user's profile with the display name
-            const { error: profileError } = await supabase
-              .from('users')  // Assuming you have a 'users' table in your database
-              .upsert({ id: user.id, display_name: displayName });
-
-            if (profileError) {
-              console.error('Error updating profile:', profileError.message);
-            }
-
-            // Force email verification
-            await supabase.auth.api.sendVerificationEmail(email);
-            console.log('Verification email sent to:', email);
-
-            // Show success message and redirect to the login page
+            // If sign-up is successful
             successMessage.style.display = 'block';
             console.log('User signed up:', user);
-
-            // Redirect to the login page after successful sign-up
-            setTimeout(() => {
-              window.location.href = 'login.html';  // Redirect to login page
-            }, 2000);  // Wait 2 seconds before redirecting
           }
         } catch (error) {
           // Handle other errors
