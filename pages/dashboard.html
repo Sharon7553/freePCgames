@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+        const supabaseUrl = 'https://YOUR_SUPABASE_URL';
+        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Check if the user is logged in
+        const user = supabase.auth.user();
+
+        if (!user) {
+            // If not logged in, redirect to login page
+            window.location.href = "/login.html"; // Adjust path as needed
+        } else {
+            // User is logged in, display the user's information
+            document.getElementById("dashboard").innerHTML = `
+                <h1>Welcome, ${user.email}</h1>
+                <button onclick="signOut()">Sign Out</button>
+            `;
+        }
+
+        // Handle sign out
+        function signOut() {
+            supabase.auth.signOut().then(() => {
+                window.location.href = "/login.html"; // Redirect to login page
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="dashboard"></div>
+</body>
+</html>
