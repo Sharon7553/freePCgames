@@ -25,6 +25,14 @@ document.addEventListener('copy', function(e) {
     alert('Copying is disabled on this page.');
 });
 
+
+
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'
+const supabaseKey = process.env.SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey)
+
 // Import Supabase library if it's not already in your HTML
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js';
 
@@ -32,6 +40,13 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
 const supabase = createClient(supabaseUrl, supabaseKey);
+
+
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'
+const supabaseKey = process.env.SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 $(function(){
   $('.hide-show').show();
