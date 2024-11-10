@@ -97,19 +97,18 @@
             cursor: pointer;
         }
 
-        /* Link to Login */
-        .login_form .login-link {
-            margin-top: 20px;
+        /* Link Styling */
+        .login-link {
+            color: white;
             font-size: 14px;
-            color: #fff;
+            margin-top: 1em;
         }
 
-        .login_form .login-link a {
+        .login-link a {
             color: #1fd100;
             text-decoration: none;
         }
-
-        .login_form .login-link a:hover {
+        .login-link a:hover {
             text-decoration: underline;
         }
     </style>
@@ -119,7 +118,7 @@
     <div class="login_form">
         <div class="logo">
             <a href="https://freepcgames.online" target="_blank" rel="noopener">
-                <img src=" _themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt="Logo">
+                <img src="_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt="Logo">
             </a>
         </div>
 
@@ -138,58 +137,56 @@
             <button type="submit">Sign Up</button>
         </form>
 
-        <!-- Add a link to the login page -->
         <div class="login-link">
-            <p>Already have an account? <a href="pages/login.html">Log in here</a></p>
+            <p>Already have an account? <a href="/pages/login.html">Log in here</a></p>
         </div>
     </div>
 
     <script>
-        // Wait for the DOM to load fully before executing code
-        document.addEventListener('DOMContentLoaded', function () {
-            // Replace these with your actual Supabase credentials
-            const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Make sure to replace with your actual key
+        // Initialize Supabase client
+        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Your Supabase URL
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Your Supabase Key
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-            // Initialize the Supabase client here
-            const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        // Sign Up function
+        async function signUp() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-            // Function to handle sign-up
-            async function signUp() {
-                const email = document.getElementById("email").value;
-                const password = document.getElementById("password").value;
+            console.log("Attempting to sign up with:", email);
 
-                try {
-                    const { user, error } = await supabase.auth.signUp({ email, password });
+            try {
+                // Attempt to sign up with Supabase Auth
+                const { user, error } = await supabase.auth.signUp({ email, password });
 
-                    if (error) {
-                        console.error("Error during sign-up:", error);
-                        alert(error.message); // Show error if any
-                    } else {
-                        console.log("Sign-up successful:", user);
-
-                        // Redirect to login page after successful sign-up
-                        window.location.href = "pages/login.html"; // Assuming your login page is /login.html
-                    }
-                } catch (err) {
-                    console.error("Error during sign-up:", err);
-                    alert("An unexpected error occurred during sign-up.");
-                }
-            }
-
-            // Password visibility toggle
-            document.querySelector('.hide-show span').addEventListener('click', function () {
-                const passwordInput = document.getElementById("password");
-                if (this.classList.contains('show')) {
-                    this.textContent = "Show";
-                    passwordInput.type = "password";
-                    this.classList.remove('show');
+                if (error) {
+                    // Handle error
+                    console.error("Error during sign-up:", error);
+                    alert(error.message);
                 } else {
-                    this.textContent = "Hide";
-                    passwordInput.type = "text";
-                    this.classList.add('show');
+                    // Successful sign-up
+                    console.log("Sign-up successful:", user);
+                    window.location.href = "/pages/login.html";  // Redirect to login page after successful sign-up
                 }
-            });
+            } catch (err) {
+                // Handle unexpected errors
+                console.error("Unexpected error during sign-up:", err);
+                alert("An unexpected error occurred during sign-up.");
+            }
+        }
+
+        // Password visibility toggle
+        document.querySelector('.hide-show span').addEventListener('click', function () {
+            const passwordInput = document.getElementById("password");
+            if (this.classList.contains('show')) {
+                this.textContent = "Show";
+                passwordInput.type = "password";
+                this.classList.remove('show');
+            } else {
+                this.textContent = "Hide";
+                passwordInput.type = "text";
+                this.classList.add('show');
+            }
         });
     </script>
 </body>
