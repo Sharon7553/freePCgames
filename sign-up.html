@@ -2,13 +2,14 @@
 <html lang="en">
 
 <head>
+    <!-- Load Supabase Library First -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <!-- Include Supabase.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <style>
-        /* Your existing CSS code for styling... */
+        /* Reset and Base Styles */
         *, *:before, *:after {
             box-sizing: border-box;
         }
@@ -145,52 +146,50 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Supabase client AFTER the DOM is ready
-            const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';  // Your Supabase URL
-            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Your Supabase Key
-            const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        // Initialize Supabase Client
+        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';  // Your Supabase URL
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Your Supabase Key
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-            // Sign Up function
-            async function signUp() {
-                const email = document.getElementById("email").value;
-                const password = document.getElementById("password").value;
+        // Sign Up function
+        async function signUp() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-                console.log("Attempting to sign up with:", email);
+            console.log("Attempting to sign up with:", email);
 
-                try {
-                    // Attempt to sign up with Supabase Auth
-                    const { user, error } = await supabase.auth.signUp({ email, password });
+            try {
+                // Attempt to sign up with Supabase Auth
+                const { user, error } = await supabase.auth.signUp({ email, password });
 
-                    if (error) {
-                        // Handle error
-                        console.error("Error during sign-up:", error);
-                        alert(error.message);
-                    } else {
-                        // Successful sign-up
-                        console.log("Sign-up successful:", user);
-                        window.location.href = "pages/login.html";  // Redirect to login page after successful sign-up
-                    }
-                } catch (err) {
-                    // Handle unexpected errors
-                    console.error("Unexpected error during sign-up:", err);
-                    alert("An unexpected error occurred during sign-up.");
-                }
-            }
-
-            // Password visibility toggle
-            document.querySelector('.hide-show span').addEventListener('click', function () {
-                const passwordInput = document.getElementById("password");
-                if (this.classList.contains('show')) {
-                    this.textContent = "Show";
-                    passwordInput.type = "password";
-                    this.classList.remove('show');
+                if (error) {
+                    // Handle error
+                    console.error("Error during sign-up:", error);
+                    alert(error.message);
                 } else {
-                    this.textContent = "Hide";
-                    passwordInput.type = "text";
-                    this.classList.add('show');
+                    // Successful sign-up
+                    console.log("Sign-up successful:", user);
+                    window.location.href = "pages/login.html";  // Redirect to login page after successful sign-up
                 }
-            });
+            } catch (err) {
+                // Handle unexpected errors
+                console.error("Unexpected error during sign-up:", err);
+                alert("An unexpected error occurred during sign-up.");
+            }
+        }
+
+        // Password visibility toggle
+        document.querySelector('.hide-show span').addEventListener('click', function () {
+            const passwordInput = document.getElementById("password");
+            if (this.classList.contains('show')) {
+                this.textContent = "Show";
+                passwordInput.type = "password";
+                this.classList.remove('show');
+            } else {
+                this.textContent = "Hide";
+                passwordInput.type = "text";
+                this.classList.add('show');
+            }
         });
     </script>
 </body>
