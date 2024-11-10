@@ -27,7 +27,7 @@ $maincolor2: #262626;
 html, body {
     height: 100%; /* Ensure the height of the page takes up the full viewport */
     margin: 0; /* Remove default margin */
-    background: url('your-image-url.jpg') no-repeat center center fixed; 
+    background: url('banner.jpg') no-repeat center center fixed; 
     background-size: cover; /* Ensures the image covers the entire page */
     background-position: center; /* Centers the image */
 }
