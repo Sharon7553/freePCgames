@@ -2,75 +2,81 @@
 <html lang="en">
 
 <head>
+    <!-- Load Supabase Library First -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <style>
-        /* Basic Reset and Layout */
-        * {
-            margin: 0;
-            padding: 0;
+        /* Reset and Base Styles */
+        *, *:before, *:after {
             box-sizing: border-box;
         }
 
         body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #181818;
             height: 100%;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .form-container {
-            background-color: white;
-            padding: 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+        .login_form {
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
+            padding: 2em;
+            background-color: #1f1f1f;
+            border-radius: 8px;
             text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
+        .login_form h2 {
+            font-size: 24px;
+            color: white;
+            margin-bottom: 1.5em;
         }
 
         .logo img {
-            max-width: 180px;
-            margin-bottom: 20px;
+            max-width: 200px;
+            width: 100%;
+            margin: 1em auto;
         }
 
-        label {
+        .login_form label {
+            color: white;
             font-size: 14px;
-            margin-bottom: 8px;
-            display: block;
-            color: #555;
+            margin-bottom: 5px;
             text-align: left;
+            display: block;
         }
 
-        input {
+        .login_form input {
             width: 100%;
             padding: 12px;
-            margin: 8px 0;
+            margin: 8px 0 20px;
             font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            outline: none;
             color: #333;
+            background-color: #333;
+            border: 2px solid #444;
+            border-radius: 6px;
+            color: white;
+            outline: none;
         }
 
-        input:focus {
-            border-color: #4caf50;
+        .login_form input:focus {
+            border-color: #1fd100;
         }
 
-        button {
+        .login_form button {
             width: 100%;
             padding: 14px;
-            background-color: #4caf50;
-            color: white;
+            background-color: #1fd100;
+            color: #000;
             font-size: 16px;
             border: none;
             border-radius: 6px;
@@ -78,30 +84,30 @@
             transition: background-color 0.3s;
         }
 
-        button:hover {
-            background-color: #45a049;
+        .login_form button:hover {
+            background-color: #0e7d00;
         }
 
-        .toggle-password {
-            margin-top: -10px;
-            display: block;
+        .login_form .hide-show {
+            margin: -15px 0;
+            display: none;
             text-align: right;
-            font-size: 14px;
-            color: #4caf50;
+        }
+
+        .login_form .hide-show span {
+            color: #1fd100;
             cursor: pointer;
         }
 
-        .toggle-password:hover {
-            text-decoration: underline;
-        }
-
+        /* Link Styling */
         .login-link {
-            margin-top: 20px;
+            color: white;
             font-size: 14px;
+            margin-top: 1em;
         }
 
         .login-link a {
-            color: #4caf50;
+            color: #1fd100;
             text-decoration: none;
         }
 
@@ -112,41 +118,42 @@
 </head>
 
 <body>
-    <div class="form-container">
-        <!-- Logo (optional) -->
+    <div class="login_form">
         <div class="logo">
-            <img src="logo.png" alt="Logo">
+            <a href="https://freepcgames.online" target="_blank" rel="noopener">
+                <img src="_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt="Logo">
+            </a>
         </div>
 
-        <h2>Create an Account</h2>
-
-        <!-- Sign Up Form -->
-        <form id="signup" onsubmit="event.preventDefault(); signUp(event);">
+        <h2>Sign Up</h2>
+        <form id="signup" method="post">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="Enter your email">
+            <input type="email" id="email" name="email" required autocapitalize="off" autocorrect="off" />
 
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" required placeholder="Enter your password">
+            <input class="password" type="password" id="password" name="password" required />
 
-            <span class="toggle-password">Show Password</span>
+            <div class="hide-show">
+                <span>Show</span>
+            </div>
 
             <button type="submit">Sign Up</button>
         </form>
 
-        <!-- Link to Login Page -->
         <div class="login-link">
-            <p>Already have an account? <a href="login.html">Log in here</a></p>
+            <p>Already have an account? <a href="pages/login.html">Log in here</a></p>
         </div>
     </div>
 
     <script>
-        // Initialize Supabase Client (this must come first)
-        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Your Supabase URL
+        // Initialize Supabase Client
+        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';  // Your Supabase URL
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Your Supabase Key
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         // Sign Up function
         async function signUp(event) {
+            event.preventDefault();  // Prevent form from submitting traditionally
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
@@ -163,7 +170,7 @@
                 } else {
                     // Successful sign-up
                     console.log("Sign-up successful:", user);
-                    window.location.href = "login.html";  // Redirect to login page after successful sign-up
+                    window.location.href = "pages/login.html";  // Redirect to login page after successful sign-up
                 }
             } catch (err) {
                 // Handle unexpected errors
@@ -173,18 +180,21 @@
         }
 
         // Password visibility toggle
-        document.querySelector('.toggle-password').addEventListener('click', function () {
+        document.querySelector('.hide-show span').addEventListener('click', function () {
             const passwordInput = document.getElementById("password");
-            const currentType = passwordInput.type;
-
-            if (currentType === "password") {
-                passwordInput.type = "text";
-                this.textContent = "Hide Password";
-            } else {
+            if (this.classList.contains('show')) {
+                this.textContent = "Show";
                 passwordInput.type = "password";
-                this.textContent = "Show Password";
+                this.classList.remove('show');
+            } else {
+                this.textContent = "Hide";
+                passwordInput.type = "text";
+                this.classList.add('show');
             }
         });
+
+        // Attach event listener for form submit
+        document.getElementById("signup").addEventListener("submit", signUp);
     </script>
 </body>
 
