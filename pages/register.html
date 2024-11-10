@@ -145,46 +145,51 @@
     </div>
 
     <script>
-        // Replace these with your actual Supabase credentials
-        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Make sure to replace with your actual key
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        // Wait for the DOM to load fully before executing code
+        document.addEventListener('DOMContentLoaded', function () {
+            // Replace these with your actual Supabase credentials
+            const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Make sure to replace with your actual key
 
-        // Function to handle sign-up
-        async function signUp() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+            // Initialize the Supabase client here
+            const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-            try {
-                const { user, error } = await supabase.auth.signUp({ email, password });
+            // Function to handle sign-up
+            async function signUp() {
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
 
-                if (error) {
-                    console.error("Error during sign-up:", error);
-                    alert(error.message); // Show error if any
-                } else {
-                    console.log("Sign-up successful:", user);
+                try {
+                    const { user, error } = await supabase.auth.signUp({ email, password });
 
-                    // Redirect to dashboard after successful sign-up
-                    window.location.href = "/pages/dashboard.html"; // Assuming it's part of your project
+                    if (error) {
+                        console.error("Error during sign-up:", error);
+                        alert(error.message); // Show error if any
+                    } else {
+                        console.log("Sign-up successful:", user);
+
+                        // Redirect to dashboard after successful sign-up
+                        window.location.href = "/pages/dashboard.html"; // Assuming it's part of your project
+                    }
+                } catch (err) {
+                    console.error("Error during sign-up:", err);
+                    alert("An unexpected error occurred during sign-up.");
                 }
-            } catch (err) {
-                console.error("Error during sign-up:", err);
-                alert("An unexpected error occurred during sign-up.");
             }
-        }
 
-        // Password visibility toggle
-        document.querySelector('.hide-show span').addEventListener('click', function () {
-            const passwordInput = document.getElementById("password");
-            if (this.classList.contains('show')) {
-                this.textContent = "Show";
-                passwordInput.type = "password";
-                this.classList.remove('show');
-            } else {
-                this.textContent = "Hide";
-                passwordInput.type = "text";
-                this.classList.add('show');
-            }
+            // Password visibility toggle
+            document.querySelector('.hide-show span').addEventListener('click', function () {
+                const passwordInput = document.getElementById("password");
+                if (this.classList.contains('show')) {
+                    this.textContent = "Show";
+                    passwordInput.type = "password";
+                    this.classList.remove('show');
+                } else {
+                    this.textContent = "Hide";
+                    passwordInput.type = "text";
+                    this.classList.add('show');
+                }
+            });
         });
     </script>
 </body>
