@@ -494,5 +494,8 @@ body {
     user-select: none;
 }
 
-
+/* Change small text color to black inside the codes table */
+.code-table small {
+    color: black;
+}
 
