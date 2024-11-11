@@ -158,6 +158,9 @@
 
     <div class="coin-info">
       Coins: <span id="coins-value">Loading...</span>
+
+      <p>Coins: <span id="coins-value">0</span> <img src="coin-icon.png" alt="Coin Icon" class="coin-icon"></p>
+      
     </div>
 
     <!-- Task Boxes -->
@@ -222,7 +225,7 @@
         await displayCoins(user.id); // Display user coins
       } else {
         // User is not authenticated, redirect to login page
-        window.location.href = '/pages/login.html';
+        window.location.href = 'login.html';
       }
     }
 
