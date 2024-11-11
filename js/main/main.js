@@ -119,5 +119,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+async function receiveReward() {
+  const uuid = 'user-uuid'; // Replace with actual UUID
+  const coins = await getCoins(uuid); // Get current coins
+  const newCoins = coins + 50;
+
+  // Update the coin count in the database
+  await supabase
+    .from('memberstats')
+    .update({ coins: newCoins })
+    .eq('uuid', uuid);
+
+  updateCoins(uuid); // Update the coin display
+  alert('You received 50 coins!');
+}
+
+
+
+
+async function purchaseTicket() {
+  const uuid = 'user-uuid'; // Replace with actual UUID
+  const coins = await getCoins(uuid); // Get current coins
+
+  if (coins >= 50) {
+    const newCoins = coins - 50;
+
+    // Update the coin balance in the database
+    await supabase
+      .from('memberstats')
+      .update({ coins: newCoins })
+      .eq('uuid', uuid);
+
+    updateCoins(uuid); // Update the displayed coin count
+    alert('Ticket purchased successfully!');
+  } else {
+    alert('You do not have enough coins!');
+  }
+}
+
+
+
+
 
 

@@ -494,8 +494,35 @@ body {
     user-select: none;
 }
 
-/* Change small text color to black inside the codes table */
-.code-table small {
-    color: black;
+
+.reward-button {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
 }
+
+.reward-button:hover {
+  background-color: #2980b9;
+}
+
+
+.ticket-button {
+  background-color: #e74c3c;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.ticket-button:hover {
+  background-color: #c0392b;
+}
+
+
 
