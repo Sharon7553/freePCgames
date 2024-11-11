@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <div class="container">
 
     <!-- Navigation Bar -->
@@ -119,11 +120,12 @@
         menu.classList.toggle('active');
     }
 </script>
+
+.
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up</title>
-
-
+  <title>Login</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -170,26 +172,21 @@
 </head>
 <body>
 
-  <h2>Sign Up</h2>
+  <h2>Login</h2>
 
-  <div id="error-message" class="error-message">Error: Could not create account. Please try again.</div>
-  <div id="success-message" class="success-message">Success! Please check your email to confirm your account.</div>
 
-  <form id="sign-up-form">
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required placeholder="Enter your email">
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required placeholder="Enter your password">
-    </div>
-    <div class="form-group">
-      <button type="submit">Sign Up</button>
-    </div>
-  </form>
 
-  <!-- Include Supabase JS SDK -->
+
+
+
+Coming soon
+
+
+
+
+
+
+<!-- Include Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
     // Function to initialize Supabase client
@@ -199,14 +196,29 @@
       return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
+    // Rate-limiting logic
+    let lastLoginAttempt = 0;
+    const loginCooldown = 5000; // 5 seconds cooldown
+
     // Handle form submission
-    function handleSignUp(supabase) {
-      const form = document.getElementById('sign-up-form');
+    function handleLogin(supabase) {
+      const form = document.getElementById('login-form');
       const errorMessage = document.getElementById('error-message');
       const successMessage = document.getElementById('success-message');
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault(); // Prevent the default form submission
+
+        // Check if the user is rate-limited
+        const currentTime = Date.now();
+        if (currentTime - lastLoginAttempt < loginCooldown) {
+          errorMessage.textContent = 'Please wait before trying again.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+
+        // Update last login attempt time
+        lastLoginAttempt = currentTime;
 
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
@@ -216,8 +228,8 @@
         successMessage.style.display = 'none';
 
         try {
-          // Call Supabase signUp method
-          const { user, error } = await supabase.auth.signUp({
+          // Call Supabase signIn method
+          const { user, error } = await supabase.auth.signInWithPassword({
             email: email,
             password: password
           });
@@ -225,16 +237,21 @@
           if (error) {
             // If an error occurs
             errorMessage.style.display = 'block';
-            console.error('Error signing up:', error.message);
+            console.error('Error logging in:', error.message);
           } else {
-            // If sign-up is successful
+            // If login is successful
             successMessage.style.display = 'block';
-            console.log('User signed up:', user);
+            console.log('User logged in:', user);
+
+            // Redirect to the dashboard after 2 seconds
+            setTimeout(() => {
+              window.location.href = '/pages/dashboard';  // Redirect to the dashboard page
+            }, 2000); // Wait 2 seconds to show the success message before redirect
           }
         } catch (error) {
           // Handle other errors
           errorMessage.style.display = 'block';
-          console.error('Error signing up:', error);
+          console.error('Error logging in:', error);
         }
       });
     }
@@ -242,7 +259,7 @@
     // Wait for the window to load, then initialize Supabase and set up the form
     window.onload = function() {
       const supabase = initializeSupabase();  // Initialize Supabase
-      handleSignUp(supabase);  // Handle the sign-up process
+      handleLogin(supabase);  // Handle the login process
     };
   </script>
 
