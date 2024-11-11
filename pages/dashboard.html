@@ -36,86 +36,7 @@
     <span class="coin-amount" id="coin-amount">$<span id="coin-value">50</span> Coins</span>
     <span class="coin-text" id="coin-text">Earn your rewards!</span>
 
-<style>
-    /* Add this CSS for the buttons styling */
-    nav .menu a {
-        padding: 8px 15px;
-        color: white;
-        font-size: 16px;
-        text-decoration: none;
-        border-radius: 5px;
-        display: flex;
-        align-items: center;
-        margin-left: 10px;
-        transition: background-color 0.3s ease;
-    }
 
-    /* Style for Login Button */
-    nav .menu a.login-btn {
-        background-color: #4CAF50;
-    }
-
-    nav .menu a.login-btn:hover {
-        background-color: #45a049;
-    }
-
-    nav .menu a.login-btn span {
-        margin-right: 5px;
-    }
-
-    /* Style for Register Button */
-    nav .menu a.register-btn {
-        background-color: #f39c12;
-    }
-
-    nav .menu a.register-btn:hover {
-        background-color: #e67e22;
-    }
-
-    nav .menu a.register-btn span {
-        margin-right: 5px;
-    }
-
-    /* Style for Account Button */
-    nav .menu a.account-btn {
-        background-color: #3498db;
-    }
-
-    nav .menu a.account-btn:hover {
-        background-color: #2980b9;
-    }
-
-    nav .menu a.account-btn span {
-        margin-right: 5px;
-    }
-
-    /* Hamburger Menu */
-    .hamburger {
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 30px;
-        height: 21px;
-    }
-
-    .hamburger div {
-        height: 3px;
-        background-color: white;
-    }
-
-    /* Menu Toggle */
-    .menu.active {
-        display: block;
-    }
-
-    .menu {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        width: 100%;
-    }
-</style>
 
 <script>
     function toggleMenu() {
@@ -126,7 +47,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="dash.css">
 
     <title>freePCames</title>
    <!DOCTYPE html>
@@ -135,53 +56,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steam Game Codes</title>
-    <style>
-        /* Styling for blurred codes with a smooth transition */
-        .code-cell span {
-            filter: blur(5px); /* Apply initial blur */
-            opacity: 1; /* Keep the code visible */
-            transition: opacity 0.5s ease, filter 0.5s ease; /* Smooth fade-in and blur effect */
-        }
 
-        /* Optional: Add some basic styling for the table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        th, td {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-
-        th {
-            background-color: #f4f4f4;
-        }
-
-        .show-code-btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .show-code-btn:hover {
-            background-color: #45a049;
-        }
-
-        .padlock {
-            margin-left: 8px;
-        }
-
-        /* Styling for the 'Hide Code' button (optional) */
-        .show-code-btn.hide {
-            background-color: #f44336; /* Red background for Hide button */
-        }
-    </style>
 
 <h1>Welcome, <span id="username"></span></h1> 
     <div class="user-info">
@@ -309,338 +184,25 @@
 </html>
 
 
-<style>
-    /* Add neon green border to the table */
-    .code-table {
-        width: 100%;
-        border-collapse: collapse;
-        border: 2px solid #39FF14;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
-        animation: glow 1.5s infinite alternate;
-    }
-
-    @keyframes glow {
-        0% { box-shadow: 0 0 5px rgba(57, 255, 20, 0.7); }
-        100% { box-shadow: 0 0 15px rgba(57, 255, 20, 1); }
-    }
-
-    /* Position the new buttons just above the table, inside the frame's green border */
-    .top-buttons {
-        position: absolute;
-        top: -30px; /* Adjust this value as needed to move buttons lower ----------------------------------------------------- */                           
-        right: 20px;
-        display: flex;
-        gap: 15px;
-        z-index: 100;
-    }
-
-    .top-buttons button {
-        padding: 10px 15px;
-        font-size: 14px;
-        font-family: 'Roboto', sans-serif;
-        background-color: #222;
-        color: #39FF14;
-        border: 2px solid #39FF14;
-        border-radius: 5px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .top-buttons button:hover {
-        background-color: #39FF14;
-        color: #111;
-    }
-
-    /* Donate a code button input and submit button */
-    .donate-btn {
-        display: flex;
-        gap: 5px;
-    }
-
-    .donate-btn input {
-        padding: 5px;
-        margin-left: 5px;
-        font-size: 14px;
-        width: 120px; /* 18 characters width */
-        border: 1px solid #39FF14;
-        border-radius: 3px;
-        background-color: #111;
-        color: #eee;
-    }
-
-    .submit-btn {
-        padding: 5px 10px;
-        background-color: #39FF14;
-        color: #111;
-        border: 1px solid #39FF14;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    /* Refresh icon */
-    .refresh-icon {
-        font-size: 16px;
-        animation: spin 1.2s infinite linear;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    /* Extra button */
-    .extra-btn {
-        background-color: #222;
-        color: #39FF14;
-        border: 2px solid #39FF14;
-        padding: 10px 15px;
-        cursor: pointer;
-    }
-
-    /* Table headers */
-    .code-table th {
-        padding: 12px;
-        background-color: #222;
-        color: #39FF14;
-        font-weight: bold;
-        text-align: center;
-        font-family: 'Roboto', sans-serif;
-    }
-
-    /* Table cells */
-    .code-table td {
-        padding: 10px;
-        text-align: center;
-        font-family: 'Roboto', sans-serif;
-        color: #eee;
-    }
-
-    /* Neon button effect */
-    .show-code-btn {
-        padding: 8px 16px;
-        background-color: #39FF14;
-        color: #111;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-        text-transform: uppercase;
-        font-family: 'Roboto', sans-serif;
-        transition: transform 0.2s ease, box-shadow 0.3s ease;
-    }
-
-    /* Button hover animation */
-    .show-code-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 10px rgba(57, 255, 20, 0.9);
-    }
-
-    /* Code cell style */
-    .code-cell {
-        position: relative;
-    }
-
-    .code-cell span {
-        filter: blur(5px);
-        transition: filter 0.3s ease;
-    }
-
-    /* Hide button when code is revealed */
-    .show-code-btn.hide {
-        background-color: #FF5C5C;
-        box-shadow: 0 0 8px rgba(255, 92, 92, 0.7);
-    }
-
-    /* Center the table */
-    .centered {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        margin-top: 20px;
-        position: relative;
-    }
-
-    /* Popup Styles */
-    .popup {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: rgba(0, 0, 0, 0.7);
-        color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        font-size: 18px;
-        font-family: 'Roboto', sans-serif;
-        z-index: 1000;
-        text-align: center;
-        animation: popupAnimation 0.5s ease-in-out;
-    }
-
-</style>
 
 <<!-- Input ----------------------------------------------------------------------------------------------------------------------------  Form -->
 
 
-<style>
-    /* Button styles */
-    .submit-btn {
-        padding: 10px 20px; /* Smaller size */
-        font-size: 14px;
-        background-color: #333;
-        border: 2px solid #0f0; /* Neon green border */
-        color: #0f0; /* Neon green text */
-        text-transform: uppercase;
-        border-radius: 5px;
-        cursor: pointer;
-        outline: none;
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
-    }
 
-    /* Hover effect for the button */
-    .submit-btn:hover {
-        background-color: #0f0; /* Neon green background on hover */
-        color: #121212; /* Dark text on hover */
-        transform: scale(1.1); /* Slight zoom effect */
-    }
-
-    /* Active button effect */
-    .submit-btn:active {
-        background-color: #0d0; /* Darker green on click */
-        transform: scale(0.98); /* Button slightly shrinks */
-    }
-
-    /* Button animation: Pulse effect */
-    .submit-btn {
-        animation: pulse 1.5s infinite; /* Pulse animation */
-    }
-
-    @keyframes pulse {
-        0% {
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.7), 0 0 20px rgba(0, 255, 0, 0.7);
-        }
-        50% {
-            box-shadow: 0 0 30px rgba(0, 255, 0, 1), 0 0 60px rgba(0, 255, 0, 1);
-        }
-        100% {
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.7), 0 0 20px rgba(0, 255, 0, 0.7);
-        }
-    }
-
-    /* Responsive design for mobile devices */
-    @media (max-width: 600px) {
-        .submit-btn {
-            padding: 8px 15px; /* Smaller padding for mobile */
-            font-size: 12px;
-        }
-    }
 
 
 
 <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
-  <style>
-
-   {
-      font-family: Arial, sans-serif;
-      background-color: #181818;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .dashboard-container {
-      max-width: 800px;
-      margin: 0 auto;
-      background-color: #1f1f1f;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-      display: none;
-    }
-
-    .dashboard-container h1 {
-      font-size: 32px;
-    }
-
-    .task-boxes {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .task-box {
-      background-color: #2c2c2c;
-      padding: 15px;
-      border-radius: 8px;
-      width: 45%;
-      margin: 10px 0;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-
-    .task-box.completed {
-      background-color: #3b9b56;
-    }
-
-    .task-box h3 {
-      margin-top: 0;
-    }
-
-    .task-box button {
-      background-color: #1fd100;
-      color: black;
-      padding: 8px 16px;
-      font-size: 14px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .task-box button:hover {
-      background-color: #0e7d00;
-    }
-
-    .logout-btn {
-      background-color: #e74c3c;
-      padding: 12px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    .logout-btn:hover {
-      background-color: #c0392b;
-    }
-
-    .user-info {
-      margin: 20px 0;
-      font-size: 18px;
-    }
-
-    #loading-message {
-      color: white;
-      font-size: 18px;
-      margin-top: 20px;
-    }
-  </style>
+  
 </head>
    <div id="dashboard" class="dashboard-container">
     <h1>Welcome, <span id="username"></span></h1>
 </style>
 
 <body>
-    
+
 
   <div id="loading-message">Loading dashboard, please wait...</div>
 
@@ -682,151 +244,6 @@
     <button class="logout-btn" id="logoutButton">Log Out</button>
 </div>
 
-<style>
-    /* Main User Info Section */
-    .user-info {
-        background-color: #2c2c2c;
-        padding: 20px;
-        margin-top: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        font-size: 18px;
-        color: #eee;
-        text-align: left;
-    }
-
-    .greeting {
-        font-size: 22px;
-        font-weight: bold;
-        color: #4CAF50;
-        margin-bottom: 10px;
-    }
-
-    .greeting i {
-        margin-right: 10px;
-        color: #FFEB3B;
-    }
-
-    .user-info p {
-        margin: 8px 0;
-    }
-
-    .user-info p i {
-        margin-right: 8px;
-        color: #00bcd4;
-    }
-
-    .user-info p:nth-child(2) {
-        font-style: italic;
-    }
-
-    .user-info p:nth-child(3) {
-        font-weight: bold;
-    }
-
-    /* Coins Box Styling */
-    .coins-box {
-        background-color: #333;
-        padding: 20px;
-        margin-top: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        text-align: center;
-    }
-
-    .coins {
-        font-size: 24px;
-        font-weight: bold;
-        color: #00FF00; /* Green Color for Coins */
-        padding: 15px;
-        border-radius: 5px;
-        background-color: #2c2c2c;
-        display: inline-block;
-        transition: text-shadow 0.3s ease;
-    }
-
-    .coins.glow-green {
-        animation: glow-green 1s ease-in-out infinite alternate;
-    }
-
-    .coins.glow-red {
-        animation: glow-red 1s ease-in-out infinite alternate;
-    }
-
-    .coins-description {
-        font-size: 16px;
-        color: #eee;
-        margin-top: 10px;
-    }
-
-    /* Task Box Styles */
-    .task-box {
-        background-color: #2c2c2c;
-        padding: 15px;
-        border-radius: 8px;
-        width: 45%;
-        margin: 10px 0;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        text-align: left;
-    }
-
-    .task-box h3 {
-        margin-top: 0;
-        color: #4CAF50;
-    }
-
-    .task-box button {
-        background-color: #1fd100;
-        color: black;
-        padding: 8px 16px;
-        font-size: 14px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        margin-top: 10px;
-    }
-
-    .task-box button:hover {
-        background-color: #0e7d00;
-    }
-
-    /* Hover Effects for User Info and Task Boxes */
-    .user-info:hover {
-        background-color: #333;
-        box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
-    }
-
-    .task-box:hover {
-        background-color: #3b9b56;
-    }
-
-    /* Glow Effects */
-    @keyframes glow-green {
-        0% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00; }
-        100% { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00; }
-    }
-
-    @keyframes glow-red {
-        0% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000; }
-        100% { text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000; }
-    }
-
-    /* Claim Box */
-    .claim-box {
-        background-color: #4CAF50;
-        padding: 15px;
-        border-radius: 8px;
-        width: 300px;
-        margin: 20px auto;
-        display: none;
-        cursor: pointer;
-    }
-
-    .claim-box h3 {
-        margin: 0;
-        color: white;
-    }
-</style>
 
 <script>
   // Local storage to track if the user has claimed today
@@ -1022,31 +439,12 @@
     
   </script>
 
-
-
-</style>
- <!-- end add steam form -->
 <!-- Add this in your dashboard-container, before logout button -->
 <div id="claim-box" class="claim-box" style="display: none;">
   <h3>Claim 50 Coins for Signing In Today!</h3>
 </div>
 
-<style>
-  .claim-box {
-    background-color: #4CAF50;
-    padding: 15px;
-    border-radius: 8px;
-    width: 300px;
-    margin: 20px auto;
-    display: none;
-    cursor: pointer;
-  }
 
-  .claim-box h3 {
-    margin: 0;
-    color: white;
-  }
-</style>
 <script>
   // Local storage to track if the user has claimed today
   function checkDailyClaim() {
@@ -1132,77 +530,5 @@
 
 <script src="js/main/js.js"></script>
 
-<style>
-    /* Basic styles for the footer */
-    .footer {
-        background: #1f1f1f; /* Dark background for contrast */
-        color: #fff;
-        font-family: 'Roboto', sans-serif;
-        padding: 20px 0;
-        text-align: center;
-    }
-
-    .footer-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
-
-    .footer-left p {
-        margin: 0;
-        font-size: 16px;
-    }
-
-    .footer-left span {
-        font-weight: bold;
-        color: #ff7f00; /* Accent color */
-    }
-
-    .footer-right ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        gap: 20px;
-    }
-
-    .footer-right ul li a {
-        color: #fff;
-        text-decoration: none;
-        font-size: 14px;
-        transition: color 0.3s ease;
-    }
-
-    .footer-right ul li a:hover {
-        color: #ff7f00; /* Hover effect */
-    }
-
-    .social-icons {
-        display: flex;
-        gap: 15px;
-        margin-top: 10px;
-    }
-
-    .social-icon {
-        font-family: 'Font Awesome 5 Free';
-        font-weight: 900;
-        font-size: 24px;
-        color: #fff;
-        transition: color 0.3s ease;
-    }
-
-    .social-icon:hover {
-        color: #ff7f00;
-    }
-
-    .facebook { content: '\f09a'; }
-    .twitter { content: '\f099'; }
-    .instagram { content: '\f16d'; }
-    .youtube { content: '\f167'; }
-</style>
- 
 
 </html>
