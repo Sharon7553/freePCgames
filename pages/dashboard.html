@@ -137,7 +137,7 @@
     // Handle auth check and dashboard rendering
     async function checkAuth() {
       const supabase = initializeSupabase();  // Initialize Supabase
-      const user = supabase.auth.user(); // Check if user is authenticated
+      const { data: { user }, error } = await supabase.auth.getUser(); // Correct method to get current user
 
       // Handle loading and dashboard display
       const loadingMessage = document.getElementById('loading-message');
