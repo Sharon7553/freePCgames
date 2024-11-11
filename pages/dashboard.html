@@ -90,57 +90,44 @@
       font-size: 18px;
       margin-top: 20px;
     }
-
-    .coins {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #fff;
-      padding: 10px;
-      border-radius: 5px;
-      background-color: #2c2c2c;
-    }
-
-    .coins.glow-green {
-      animation: glow-green 1s ease-in-out infinite alternate;
-    }
-
-    .coins.glow-red {
-      animation: glow-red 1s ease-in-out infinite alternate;
-    }
-
-    @keyframes glow-green {
-      0% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00; }
-      100% { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00; }
-    }
-
-    @keyframes glow-red {
-      0% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000; }
-      100% { text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000; }
-    }
-
-    .claim-box {
-      background-color: #4CAF50;
-      padding: 15px;
-      border-radius: 8px;
-      width: 300px;
-      margin: 20px auto;
-      display: none;
-      cursor: pointer;
-    }
-
-    .claim-box h3 {
-      margin: 0;
-      color: white;
-    }
   </style>
 </head>
-<body>
+<!-- Place this right after the opening <body> tag -->
+<div id="coins" class="coins">$COINS: 0</div>
 
-  <!-- Display coins in top right corner -->
-  <div id="coins" class="coins">$COINS: 0</div>
+<style>
+  .coins {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #2c2c2c;
+  }
+
+  .coins.glow-green {
+    animation: glow-green 1s ease-in-out infinite alternate;
+  }
+
+  .coins.glow-red {
+    animation: glow-red 1s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow-green {
+    0% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00; }
+    100% { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00; }
+  }
+
+  @keyframes glow-red {
+    0% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000; }
+    100% { text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000; }
+  }
+</style>
+
+<body>
 
   <div id="loading-message">Loading dashboard, please wait...</div>
 
@@ -169,10 +156,83 @@
       </div>
     </div>
 
-    <!-- Claim 50 Coins Section -->
-    <div id="claim-box" class="claim-box" style="display: none;">
-      <h3>Claim 50 Coins for Signing In Today!</h3>
-    </div>
+    <!-- Add this in your dashboard-container, before logout button -->
+<div id="claim-box" class="claim-box" style="display: none;">
+  <h3>Claim 50 Coins for Signing In Today!</h3>
+</div>
+
+<style>
+  .claim-box {
+    background-color: #4CAF50;
+    padding: 15px;
+    border-radius: 8px;
+    width: 300px;
+    margin: 20px auto;
+    display: none;
+    cursor: pointer;
+  }
+
+  .claim-box h3 {
+    margin: 0;
+    color: white;
+  }
+</style>
+<script>
+  // Local storage to track if the user has claimed today
+  function checkDailyClaim() {
+    const lastClaimed = localStorage.getItem('lastClaimed');
+    const currentTime = new Date().getTime();
+
+    // Show the claim box if 24 hours have passed since last claim
+    if (!lastClaimed || currentTime - lastClaimed >= 86400000) {
+      document.getElementById('claim-box').style.display = 'block';
+    }
+  }
+
+  // Function to handle coin claim
+  document.getElementById('claim-box').addEventListener('click', function () {
+    const coinsElement = document.getElementById('coins');
+    let currentCoins = parseInt(coinsElement.textContent.replace('$COINS: ', ''));
+    currentCoins += 50; // Add 50 coins
+    coinsElement.textContent = `$COINS: ${currentCoins}`;
+    coinsElement.classList.add('glow-green'); // Green glow effect on coin increase
+
+    // Hide the claim box and store the claim time in localStorage
+    localStorage.setItem('lastClaimed', new Date().getTime());
+    document.getElementById('claim-box').style.display = 'none';
+
+    setTimeout(() => {
+      coinsElement.classList.remove('glow-green'); // Remove the glow after 1 second
+    }, 1000);
+  });
+
+  // Check if the user has already claimed the prize when the page loads
+  window.onload = checkDailyClaim;
+</script>
+
+
+<script>
+  // Function to display time-based greeting
+  function displayGreeting() {
+    const hour = new Date().getHours();
+    const greeting = document.getElementById('greeting');
+    
+    if (hour < 12) {
+      greeting.textContent = 'Good Morning!';
+    } else if (hour < 18) {
+      greeting.textContent = 'Good Afternoon!';
+    } else {
+      greeting.textContent = 'Good Evening!';
+    }
+  }
+
+  // Call greeting function on page load
+  window.onload = function() {
+    displayGreeting();
+    checkDailyClaim();
+  }
+</script>
+
 
     <button class="logout-btn" id="logoutButton">Log Out</button>
   </div>
@@ -180,86 +240,46 @@
   <!-- Include Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    // Initialize Supabase client
+    // Function to initialize Supabase client
     function initializeSupabase() {
       const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
       const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
       return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
-    // Check if user is authenticated
+    // Handle auth check and dashboard rendering
     async function checkAuth() {
       const supabase = initializeSupabase();  // Initialize Supabase
       const { data: { user }, error } = await supabase.auth.getUser(); // Correct method to get current user
 
+      // Handle loading and dashboard display
       const loadingMessage = document.getElementById('loading-message');
       const dashboardContainer = document.getElementById('dashboard');
       const usernameSpan = document.getElementById('username');
 
       if (user) {
-        // Display user info and dashboard
+        // User is authenticated, show dashboard
         usernameSpan.textContent = user.email; // Display username (email in this case)
         dashboardContainer.style.display = 'block';
         loadingMessage.style.display = 'none'; // Hide loading message
       } else {
-        // Redirect to login page if not authenticated
-        window.location.href = '/pages/login.html';  // Redirect to login page
+        // User is not authenticated, redirect to login page
+        console.log("User not authenticated, redirecting to login.");
+        window.location.href = '/pages/login.html'; // Redirect to login page
       }
     }
 
-    // Task toggle function
+    // Task toggle function to mark tasks as complete/incomplete
     function toggleTask(taskId) {
       const taskElement = document.getElementById(taskId);
       taskElement.classList.toggle("completed");
+
+      // Optionally, you can update the task status in Supabase (to persist across sessions).
+      // For now, this is just toggling the class for visual effect.
     }
 
-    // Function to handle coin claim
-    document.getElementById('claim-box').addEventListener('click', function () {
-      const coinsElement = document.getElementById('coins');
-      let currentCoins = parseInt(coinsElement.textContent.replace('$COINS: ', ''));
-      currentCoins += 50; // Add 50 coins
-      coinsElement.textContent = `$COINS: ${currentCoins}`;
-      coinsElement.classList.add('glow-green'); // Green glow effect on coin increase
-
-      // Hide the claim box and store claim time
-      localStorage.setItem('lastClaimed', new Date().getTime());
-      document.getElementById('claim-box').style.display = 'none';
-
-      setTimeout(() => {
-        coinsElement.classList.remove('glow-green'); // Remove glow after 1 second
-      }, 1000);
-    });
-
-    // Local storage to track if the user has claimed today
-    function checkDailyClaim() {
-      const lastClaimed = localStorage.getItem('lastClaimed');
-      const currentTime = new Date().getTime();
-
-      if (!lastClaimed || currentTime - lastClaimed >= 86400000) {
-        document.getElementById('claim-box').style.display = 'block';
-      }
-    }
-
-    // Display time-based greeting
-    function displayGreeting() {
-      const hour = new Date().getHours();
-      const greeting = document.getElementById('greeting');
-      
-      if (hour < 12) {
-        greeting.textContent = 'Good Morning!';
-      } else if (hour < 18) {
-        greeting.textContent = 'Good Afternoon!';
-      } else {
-        greeting.textContent = 'Good Evening!';
-      }
-    }
-
-    // Call greeting function on page load
-    window.onload = function() {
-      displayGreeting();
-      checkDailyClaim();
-      checkAuth();
-    };
+    // Wait for the window to load, then initialize Supabase and check auth
+    window.onload = checkAuth;
 
     // Handle logout action
     document.getElementById("logoutButton").addEventListener('click', async () => {
@@ -268,6 +288,7 @@
       if (error) {
         console.error('Error logging out:', error.message);
       } else {
+        // Redirect to login page after logout
         window.location.href = '/pages/login.html';  // Correct login path after logout
       }
     });
