@@ -22,7 +22,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            display: none; /* Initially hidden until authentication is checked */
+            display: none;
         }
 
         .dashboard-container h1 {
@@ -139,6 +139,7 @@
             const user = supabase.auth.user();
             console.log("User:", user); // Debugging log
 
+            // Check if user is authenticated
             if (user) {
                 // Show the dashboard and hide the loading message
                 document.getElementById("dashboard").style.display = "block";
