@@ -130,25 +130,37 @@
     <script>
         // Supabase setup (replace these with your actual credentials)
         const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-        const supabaseKey = 'YOUR_SUPABASE_KEY';
+        const supabaseKey = 'YOUR_SUPABASE_KEY'; // Replace this with your actual Supabase key
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Fetch user info
-        async function checkAuth() {
+        // Ensure the code runs after the DOM content is fully loaded
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Fetch user info once the page is fully loaded
             const user = supabase.auth.user();
             console.log("User:", user); // Debugging log
 
             if (user) {
-                // Show the dashboard
+                // Show the dashboard and hide the loading message
                 document.getElementById("dashboard").style.display = "block";
                 document.getElementById("username").textContent = user.email; // Display username (email in this case)
                 document.getElementById("loading-message").style.display = "none"; // Hide loading message
             } else {
-                // Redirect to login page if not authenticated
+                // If the user is not authenticated, redirect to login page
                 console.log("User not authenticated, redirecting to login.");
                 window.location.href = '/pages/login.html'; // Ensure the path is correct
             }
-        }
+
+            // Handle logout action
+            document.getElementById("logoutButton").addEventListener('click', async () => {
+                const { error } = await supabase.auth.signOut();
+                if (error) {
+                    console.error('Error logging out:', error.message);
+                } else {
+                    // Redirect to login page after logout
+                    window.location.href = '/pages/login.html';  // Correct login path after logout
+                }
+            });
+        });
 
         // Task toggle function to mark tasks as complete/incomplete
         function toggleTask(taskId) {
@@ -158,20 +170,6 @@
             // Optionally, you can update the task status in Supabase (to persist across sessions).
             // For now, this is just toggling the class for visual effect.
         }
-
-        // Call the checkAuth function when the page loads
-        document.addEventListener('DOMContentLoaded', checkAuth); // Ensure this runs after the page is fully loaded
-
-        // Handle logout
-        document.getElementById("logoutButton").addEventListener('click', async () => {
-            const { error } = await supabase.auth.signOut();
-            if (error) {
-                console.error('Error logging out:', error.message);
-            } else {
-                // Redirect to login page after logout
-                window.location.href = '/pages/login.html';  // Correct login path after logout
-            }
-        });
     </script>
 </body>
 
