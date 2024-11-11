@@ -569,7 +569,22 @@
   <h3>Claim 50 Coins for Signing In Today!</h3>
 </div>
 
+<style>
+  .claim-box {
+    background-color: #4CAF50;
+    padding: 15px;
+    border-radius: 8px;
+    width: 300px;
+    margin: 20px auto;
+    display: none;
+    cursor: pointer;
+  }
 
+  .claim-box h3 {
+    margin: 0;
+    color: white;
+  }
+</style>
 <script>
   // Local storage to track if the user has claimed today
   function checkDailyClaim() {
