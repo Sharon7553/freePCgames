@@ -1,220 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steam Game Codes</title>
-    <style>
-        /* Styling for blurred codes with a smooth transition */
-        .code-cell span {
-            filter: blur(5px); /* Apply initial blur */
-            opacity: 1; /* Keep the code visible */
-            transition: opacity 0.5s ease, filter 0.5s ease; /* Smooth fade-in and blur effect */
-        }
 
-        /* Optional: Add some basic styling for the table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
 
-        th, td {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
 
-        th {
-            background-color: #f4f4f4;
-        }
 
-        /* Styling for the padlock icon */
-        .padlock {
-            margin-right: 8px;
-            cursor: pointer;
-            font-size: 20px;
-            transition: transform 0.3s ease;
-        }
+<div class="container">
 
-        .padlock:hover {
-            transform: scale(1.1);
-        }
-
-        .show-code-btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
-        }
-
-        .show-code-btn:hover {
-            background-color: #45a049;
-        }
-
-        .show-code-btn.clicked {
-            background-color: #f44336; /* Red background when clicked */
-        }
-
-        /* Styling for the 'Hide Code' button */
-        .show-code-btn.hide {
-            background-color: #f44336; /* Red background for Hide button */
-        }
-
-        /* Styling for the 'Coming Soon' message box */
-        .coming-soon-message {
-            background-color: #ffcc00;
-            color: #333;
-            padding: 5px 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-    </style>
-</head>
-<body>
-
-<!-- Code table for Steam game codes -->
-<div class="centered">
-    <!-- New buttons just above the table and below the border -->
-    <div class="top-buttons">
-        <button class="donate-btn">
-            Donate game code <input type="text" class="code-input" placeholder="Enter code">
-            <button class="submit-btn" onclick="showPopup()">Submit</button>
-        </button>
-        <button class="refresh-btn" onclick="refreshPage()">
-            <span class="refresh-icon">&#x21bb;</span> Refresh
-        </button>
-        <button class="extra-btn" placeholder="Text here">More codes&gt;</button>
-    </div>
-
-    <table class="code-table">
-        <tr>
-            <th>Game</th>
-            <th>Availability</th>
-            <th>Steam Code</th>
-            <th>Action</th>
-        </tr>
-        <!-- Row 1 (First Row Always Locked) -->
-        <tr id="row-1">
-            <td>Tekken 7</td>
-            <td>World wide</td>
-            <td class="code-cell"><span>HH0AX-TRHYZ-FMZZW</span></td>
-            <td>
-                <span class="padlock" id="padlock-1">🔒</span>
-                <button class="show-code-btn" onclick="toggleCodeVisibility(this, 1)">🔓 Show Code</button>
-                <div id="coming-soon-1" class="coming-soon-message" style="display:none;">This code is coming soon. Please check back later.</div>
-            </td>
-        </tr>
-        <!-- Row 2 -->
-        <tr id="row-2">
-            <td>Invasion</td>
-            <td>World wide</td>
-            <td class="code-cell"><span>JICY7-RIRR5-X273V</span></td>
-            <td>
-                <span class="padlock" id="padlock-2">🔒</span>
-                <button class="show-code-btn" onclick="toggleCodeVisibility(this, 2)">🔓 Show Code</button>
-            </td>
-        </tr>
-        <!-- Row 3 -->
-        <tr id="row-3">
-            <td>7 Days to Die</td>
-            <td>World wide</td>
-            <td class="code-cell"><span>4N44Y-JPII8-A8N2H</span></td>
-            <td>
-                <span class="padlock" id="padlock-3">🔒</span>
-                <button class="show-code-btn" onclick="toggleCodeVisibility(this, 3)">🔓 Show Code</button>
-            </td>
-        </tr>
-        <!-- Row 4 -->
-        <tr id="row-4">
-            <td>Dying Light definitive edition</td>
-            <td>World wide</td>
-            <td class="code-cell"><span>LVRT0-2NTNX-GPM9H</span></td>
-            <td>
-                <span class="padlock" id="padlock-4">🔒</span>
-                <button class="show-code-btn" onclick="toggleCodeVisibility(this, 4)">🔓 Show Code</button>
-            </td>
-        </tr>
-        <!-- Row 5 -->
-        <tr id="row-5">
-            <td>Mirrors Edge Comp</td>
-            <td>EU Only</td>
-            <td class="code-cell"><span>ZYKTZ-DRJAG-I08BM</span></td>
-            <td>
-                <span class="padlock" id="padlock-5">🔒</span>
-                <button class="show-code-btn" onclick="toggleCodeVisibility(this, 5)">🔓 Show Code</button>
-            </td>
-        </tr>
-        <!-- Row 6 -->
-        <tr id="row-6">
-            <td>Two Worlds Epic Edition</td>
-            <td>World wide</td>
-            <td class="code-cell"><span>8RXGF-2N5GH-NX7BD</span></td>
-            <td>
-                <span class="padlock" id="padlock-6">🔒</span>
-                <button class="show-code-btn" onclick="toggleCodeVisibility(this, 6)">🔓 Show Code</button>
-            </td>
-        </tr>
-    </table>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">free.PC.games</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="menu">
+            <a href="https://www.freepcgames.online/">Home</a>
+            <a href="pages/games.html">Browser games</a>
+            <a href="pages/free-steam-games.html">Steam games</a>
+            <a href="pages/store.html">Premium games</a>
+            <a href="pages/About-us.html">About</a>
+            <a href="https://www.freepcgames.online/#!/~/account">Store</a>
+            
+            <!-- New Login Button -->
+            <a href="pages/login.html" class="login-btn"><span>👤</span> Login</a>
+            
+            <!-- New Register Button -->
+            <a href="pages/sign-up.html" class="register-btn"><span>📝</span> Register</a>
+            
+            <!-- New Account Button -->
+            <a href="https://www.freepcgames.online/#!/~/account" class="account-btn"><span>🏠</span> Account</a>
+        </div>
+    </nav>
 </div>
 
-<!-- Popup for thanks -->
-<div id="popup" class="popup">
-    <div class="popup-content">
-        <span class="popup-message">Thanks! Code received!</span>
-    </div>
-</div>
+<style>
+    /* Add this CSS for the buttons styling */
+    nav .menu a {
+        padding: 8px 15px;
+        color: white;
+        font-size: 16px;
+        text-decoration: none;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Style for Login Button */
+    nav .menu a.login-btn {
+        background-color: #4CAF50;
+    }
+
+    nav .menu a.login-btn:hover {
+        background-color: #45a049;
+    }
+
+    nav .menu a.login-btn span {
+        margin-right: 5px;
+    }
+
+    /* Style for Register Button */
+    nav .menu a.register-btn {
+        background-color: #f39c12;
+    }
+
+    nav .menu a.register-btn:hover {
+        background-color: #e67e22;
+    }
+
+    nav .menu a.register-btn span {
+        margin-right: 5px;
+    }
+
+    /* Style for Account Button */
+    nav .menu a.account-btn {
+        background-color: #3498db;
+    }
+
+    nav .menu a.account-btn:hover {
+        background-color: #2980b9;
+    }
+
+    nav .menu a.account-btn span {
+        margin-right: 5px;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+    }
+
+    .hamburger div {
+        height: 3px;
+        background-color: white;
+    }
+
+    /* Menu Toggle */
+    .menu.active {
+        display: block;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+    }
+</style>
 
 <script>
-    // Function to toggle code visibility
-    function toggleCodeVisibility(button, rowId) {
-        var row = document.getElementById('row-' + rowId);
-        var codeCell = row.querySelector('.code-cell span');
-        var padlockIcon = row.querySelector('.padlock');
-        var comingSoonMessage = document.getElementById('coming-soon-' + rowId);
-
-        // Handle the first row which always shows the "Coming Soon" message
-        if (rowId === 1) {
-            // Prevent toggle on the first row
-            comingSoonMessage.style.display = 'block';
-            button.classList.add('clicked');
-            button.textContent = 'Coming Soon';
-            return; // Do nothing else for the first row
-        }
-
-        if (codeCell.style.filter === 'blur(5px)') {
-            // Reveal code and change padlock to unlocked
-            codeCell.style.filter = 'blur(0px)';
-            padlockIcon.textContent = '🔓'; // Unlock padlock
-            button.textContent = 'Hide Code';
-            button.classList.add('hide');
-        } else {
-            // Hide code and revert padlock to locked
-            codeCell.style.filter = 'blur(5px)';
-            padlockIcon.textContent = '🔒'; // Lock padlock
-            button.textContent = 'Show Code';
-            button.classList.remove('hide');
-        }
-    }
-
-    // Function to refresh the page
-    function refreshPage() {
-        location.reload();
-    }
-
-    // Show popup on submit
-    function showPopup() {
-        var popup = document.getElementById("popup");
-        popup.style.display = "block";
-        setTimeout(function () {
-            popup.style.display = "none";
-        }, 2000); // Close after 2 seconds
+    function toggleMenu() {
+        const menu = document.querySelector('.menu');
+        menu.classList.toggle('active');
     }
 </script>
 
