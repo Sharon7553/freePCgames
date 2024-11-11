@@ -1031,6 +1031,59 @@
 
 </style>
  <!-- end add steam form -->
+<!-- Add this in your dashboard-container, before logout button -->
+<div id="claim-box" class="claim-box" style="display: none;">
+  <h3>Claim 50 Coins for Signing In Today!</h3>
+</div>
+
+<style>
+  .claim-box {
+    background-color: #4CAF50;
+    padding: 15px;
+    border-radius: 8px;
+    width: 300px;
+    margin: 20px auto;
+    display: none;
+    cursor: pointer;
+  }
+
+  .claim-box h3 {
+    margin: 0;
+    color: white;
+  }
+</style>
+<script>
+  // Local storage to track if the user has claimed today
+  function checkDailyClaim() {
+    const lastClaimed = localStorage.getItem('lastClaimed');
+    const currentTime = new Date().getTime();
+
+    // Show the claim box if 24 hours have passed since last claim
+    if (!lastClaimed || currentTime - lastClaimed >= 86400000) {
+      document.getElementById('claim-box').style.display = 'block';
+    }
+  }
+
+  // Function to handle coin claim
+  document.getElementById('claim-box').addEventListener('click', function () {
+    const coinsElement = document.getElementById('coins');
+    let currentCoins = parseInt(coinsElement.textContent.replace('$COINS: ', ''));
+    currentCoins += 50; // Add 50 coins
+    coinsElement.textContent = `$COINS: ${currentCoins}`;
+    coinsElement.classList.add('glow-green'); // Green glow effect on coin increase
+
+    // Hide the claim box and store the claim time in localStorage
+    localStorage.setItem('lastClaimed', new Date().getTime());
+    document.getElementById('claim-box').style.display = 'none';
+
+    setTimeout(() => {
+      coinsElement.classList.remove('glow-green'); // Remove the glow after 1 second
+    }, 1000);
+  });
+
+  // Check if the user has already claimed the prize when the page loads
+  window.onload = checkDailyClaim;
+</script>
 
 
     <h1>Premium Titles</h1>
