@@ -22,6 +22,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            display: none; /* Initially hidden until authentication is checked */
         }
 
         .dashboard-container h1 {
@@ -85,11 +86,20 @@
             margin: 20px 0;
             font-size: 18px;
         }
+
+        #loading-message {
+            color: white;
+            font-size: 18px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 
 <body>
-    <div id="dashboard" class="dashboard-container" style="display:none;">
+    <!-- Loading message before the auth check -->
+    <div id="loading-message">Loading dashboard, please wait...</div>
+
+    <div id="dashboard" class="dashboard-container">
         <h1>Welcome, <span id="username"></span></h1>
         <div class="user-info">
             <p>Here are your tasks. Keep track of your progress!</p>
@@ -120,20 +130,23 @@
     <script>
         // Supabase setup (replace these with your actual credentials)
         const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
+        const supabaseKey = 'YOUR_SUPABASE_KEY';
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         // Fetch user info
         async function checkAuth() {
             const user = supabase.auth.user();
+            console.log("User:", user); // Debugging log
 
             if (user) {
                 // Show the dashboard
                 document.getElementById("dashboard").style.display = "block";
                 document.getElementById("username").textContent = user.email; // Display username (email in this case)
+                document.getElementById("loading-message").style.display = "none"; // Hide loading message
             } else {
                 // Redirect to login page if not authenticated
-                window.location.href = '/pages/login.html';
+                console.log("User not authenticated, redirecting to login.");
+                window.location.href = '/pages/login.html'; // Ensure the path is correct
             }
         }
 
@@ -144,11 +157,10 @@
 
             // Optionally, you can update the task status in Supabase (to persist across sessions).
             // For now, this is just toggling the class for visual effect.
-            // You could store the task state in your Supabase database if desired.
         }
 
         // Call the checkAuth function when the page loads
-        checkAuth();
+        document.addEventListener('DOMContentLoaded', checkAuth); // Ensure this runs after the page is fully loaded
 
         // Handle logout
         document.getElementById("logoutButton").addEventListener('click', async () => {
@@ -157,7 +169,7 @@
                 console.error('Error logging out:', error.message);
             } else {
                 // Redirect to login page after logout
-                window.location.href = '/pages/dashboard.html';
+                window.location.href = '/pages/login.html';  // Correct login path after logout
             }
         });
     </script>
