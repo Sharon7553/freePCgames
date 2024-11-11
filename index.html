@@ -266,158 +266,149 @@
 </section>
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steam Game Codes</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #121212;
-            color: #fff;
-            margin: 0;
-            padding: 0;
+
+<!-- Code table for Steam game codes -->
+<div class="centered">
+    <table class="code-table">
+        <tr>
+            <th>Game</th>
+            <th>Availability</th>
+            <th>Steam Code</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <td>Tekken 7</td>
+            <td>World wide</td>
+            <td class="code-cell"><span>HH0AX-TRHYZ-FMZZW</span></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+        </tr>
+        <tr>
+            <td>Invasion</td>
+            <td>World wide</td>
+            <td class="code-cell"><span>JICY7-RIRR5-X273V</span></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+        </tr>
+        <tr>
+            <td>7 Days to Die</td>
+            <td>World wide</td>
+            <td class="code-cell"><span>4N44Y-JPII8-A8N2H</span></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+        </tr>
+        <tr>
+            <td>Dying Light definitive edition</td>
+            <td>World wide</td>
+            <td class="code-cell"><span>LVRT0-2NTNX-GPM9H</span></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+        </tr>
+        <tr>
+            <td>Mirrors Edge Comp</td>
+            <td>EU Only</td>
+            <td class="code-cell"><span>ZYKTZ-DRJAG-I08BM</span></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+        </tr>
+        <tr>
+            <td>Two Worlds Epic Edition</td>
+            <td>World wide</td>
+            <td class="code-cell"><span>8RXGF-2N5GH-NX7BD</span></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    function showCode(button) {
+        // Find the parent row (tr) and the code (span) element
+        var row = button.closest('tr');
+        var codeCell = row.querySelector('.code-cell span');
+
+        // Toggle the blur effect and opacity
+        if (codeCell.style.filter === 'blur(5px)') {
+            // Remove the blur and transition to clear text
+            codeCell.style.filter = 'blur(0px)';
+            button.textContent = 'Hide Code'; // Change button text to "Hide Code"
+            button.classList.add('hide'); // Optionally change button color
+        } else {
+            // Reapply the blur effect and transition to blur text
+            codeCell.style.filter = 'blur(5px)';
+            button.textContent = 'Show Code'; // Revert button text to "Show Code"
+            button.classList.remove('hide');
         }
+    }
+</script>
 
-        .centered {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #1e1e1e;
-        }
+<style>
+    /* Add neon green border to the table */
+    .code-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 2px solid #39FF14; /* Neon green border */
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+    }
 
-        table.code-table {
-            border-collapse: collapse;
-            width: 80%;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); /* Neon effect */
-        }
+    /* Table headers */
+    .code-table th {
+        padding: 12px;
+        background-color: #222;
+        color: #39FF14;
+        font-weight: bold;
+        text-align: left;
+        font-family: 'Roboto', sans-serif;
+    }
 
-        table.code-table th,
-        table.code-table td {
-            border: 2px solid #1e1e1e;
-            padding: 15px;
-            text-align: center;
-        }
+    /* Table cells */
+    .code-table td {
+        padding: 10px;
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+        color: #eee;
+    }
 
-        table.code-table th {
-            background-color: #333;
-            color: #fff;
-            font-size: 1.1em;
-            font-weight: bold;
-        }
+    /* Neon button effect */
+    .show-code-btn {
+        padding: 8px 16px;
+        background-color: #39FF14;
+        color: #111;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-family: 'Roboto', sans-serif;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
 
-        table.code-table td {
-            background-color: #222;
-            font-weight: bold;
-        }
+    /* Button hover animation */
+    .show-code-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(57, 255, 20, 0.9);
+    }
 
-        .code-cell {
-            filter: blur(5px);
-            transition: all 0.3s ease;
-        }
+    /* Code cell style */
+    .code-cell {
+        position: relative;
+    }
 
-        .show-code-btn {
-            background-color: #2f8d46;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+    .code-cell span {
+        filter: blur(5px);
+        transition: filter 0.3s ease;
+    }
 
-        .show-code-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
-        }
+    /* Hide button when code is revealed */
+    .show-code-btn.hide {
+        background-color: #FF5C5C;
+        box-shadow: 0 0 8px rgba(255, 92, 92, 0.7);
+    }
 
-        .show-code-btn.hide {
-            background-color: #e05e5e;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
-        }
-
-        .show-code-btn:active {
-            transform: scale(1);
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Code table for Steam game codes -->
-    <div class="centered">
-        <table class="code-table">
-            <tr>
-                <th>Game</th>
-                <th>Availability</th>
-                <th>Steam Code</th>
-                <th>Action</th>
-            </tr>
-            <tr>
-                <td>Tekken 7</td>
-                <td>World wide</td>
-                <td class="code-cell"><span>HH0AX-TRHYZ-FMZZW</span></td>
-                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
-            </tr>
-            <tr>
-                <td>Invasion</td>
-                <td>World wide</td>
-                <td class="code-cell"><span>JICY7-RIRR5-X273V</span></td>
-                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
-            </tr>
-            <tr>
-                <td>7 Days to Die</td>
-                <td>World wide</td>
-                <td class="code-cell"><span>4N44Y-JPII8-A8N2H</span></td>
-                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
-            </tr>
-            <tr>
-                <td>Dying Light definitive edition</td>
-                <td>World wide</td>
-                <td class="code-cell"><span>LVRT0-2NTNX-GPM9H</span></td>
-                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
-            </tr>
-            <tr>
-                <td>Mirrors Edge Comp</td>
-                <td>EU Only</td>
-                <td class="code-cell"><span>ZYKTZ-DRJAG-I08BM</span></td>
-                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
-            </tr>
-            <tr>
-                <td>Two Worlds Epic Edition</td>
-                <td>World wide</td>
-                <td class="code-cell"><span>8RXGF-2N5GH-NX7BD</span></td>
-                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
-            </tr>
-        </table>
-    </div>
-
-    <script>
-        function showCode(button) {
-            // Find the parent row (tr) and the code (span) element
-            var row = button.closest('tr');
-            var codeCell = row.querySelector('.code-cell span');
-
-            // Toggle the blur effect and opacity
-            if (codeCell.style.filter === 'blur(5px)' || codeCell.style.filter === '') {
-                // Remove the blur and transition to clear text
-                codeCell.style.filter = 'blur(0px)';
-                button.textContent = 'Hide Code'; // Change button text to "Hide Code"
-                button.classList.add('hide'); // Optionally change button color
-            } else {
-                // Reapply the blur effect and transition to blur text
-                codeCell.style.filter = 'blur(5px)';
-                button.textContent = 'Show Code'; // Revert button text to "Show Code"
-                button.classList.remove('hide');
-            }
-        }
-    </script>
-
-</body>
-</html>
+    /* Center the table */
+    .centered {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+</style>
 
 
     </div>
