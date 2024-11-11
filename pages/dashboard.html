@@ -36,7 +36,86 @@
     <span class="coin-amount" id="coin-amount">$<span id="coin-value">50</span> Coins</span>
     <span class="coin-text" id="coin-text">Earn your rewards!</span>
 
+<style>
+    /* Add this CSS for the buttons styling */
+    nav .menu a {
+        padding: 8px 15px;
+        color: white;
+        font-size: 16px;
+        text-decoration: none;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        transition: background-color 0.3s ease;
+    }
 
+    /* Style for Login Button */
+    nav .menu a.login-btn {
+        background-color: #4CAF50;
+    }
+
+    nav .menu a.login-btn:hover {
+        background-color: #45a049;
+    }
+
+    nav .menu a.login-btn span {
+        margin-right: 5px;
+    }
+
+    /* Style for Register Button */
+    nav .menu a.register-btn {
+        background-color: #f39c12;
+    }
+
+    nav .menu a.register-btn:hover {
+        background-color: #e67e22;
+    }
+
+    nav .menu a.register-btn span {
+        margin-right: 5px;
+    }
+
+    /* Style for Account Button */
+    nav .menu a.account-btn {
+        background-color: #3498db;
+    }
+
+    nav .menu a.account-btn:hover {
+        background-color: #2980b9;
+    }
+
+    nav .menu a.account-btn span {
+        margin-right: 5px;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+    }
+
+    .hamburger div {
+        height: 3px;
+        background-color: white;
+    }
+
+    /* Menu Toggle */
+    .menu.active {
+        display: block;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+    }
+</style>
 
 <script>
     function toggleMenu() {
