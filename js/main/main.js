@@ -1,3 +1,39 @@
+
+
+// Initialize Supabase client
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Use your actual public key
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Function to get coins for a user based on their UUID
+async function getCoins(uuid) {
+  const { data, error } = await supabase
+    .from('memberstats')  // The table name in your Supabase database
+    .select('coins')      // Select the 'coins' column
+    .eq('uuid', uuid)     // Filter by the user's UUID
+    .single();            // .single() ensures only one result is returned
+
+  if (error) {
+    console.error('Error fetching coins:', error);
+    return 0; // Return 0 if there's an error or no record found
+  }
+
+  return data.coins; // Return the coin balance
+}
+
+// Export the function to use it in your HTML page
+export { getCoins };
+
+
+
+
+
+
+
+
+
 function revealCode() {
     var codeElement = document.getElementById('steam-code');
     var codeText = codeElement.querySelector('.blurred');

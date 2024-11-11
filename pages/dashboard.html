@@ -216,6 +216,110 @@
     </div>
 
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Dashboard</title>
+</head>
+<body>
+  <div id="coins-display">
+    <p>Your current coin balance: <span id="coins-value">Loading...</span></p>
+  </div>
+
+  <script type="module">
+    // Import the 'getCoins' function from the 'main.js' file
+    import { getCoins } from './main.js';  // Adjust path if necessary
+
+    // Replace with actual user UUID, either fetched from login or authentication
+    const userUuid = 'user-uuid-here';  // Change this to the actual UUID of the logged-in user
+
+    // Function to display the coin balance on the page
+    async function displayCoins() {
+      const coins = await getCoins(userUuid); // Fetch the coin balance
+      document.getElementById('coins-value').textContent = coins; // Display the coins in the <span> element
+    }
+
+    displayCoins();  // Call the function to fetch and display coins
+  </script>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Dashboard</title>
+</head>
+<body>
+  <div id="coins-display">
+    <p>Your current coin balance: <span id="coins-value">Loading...</span></p>
+    <button id="earn-coins">Earn 10 Coins</button>
+    <button id="spend-coins">Spend 5 Coins</button>
+  </div>
+
+  <script type="module">
+    import { getCoins, updateCoins } from './main.js';  // Import both functions from main.js
+
+    const userUuid = 'user-uuid-here';  // Change this to the actual UUID of the logged-in user
+
+    // Display the current coin balance
+    async function displayCoins() {
+      const coins = await getCoins(userUuid);
+      document.getElementById('coins-value').textContent = coins;
+    }
+
+    // Earn 10 coins
+    async function earnCoins() {
+      let currentCoins = await getCoins(userUuid);
+      let newBalance = currentCoins + 10;
+      const success = await updateCoins(userUuid, newBalance);
+
+      if (success) {
+        alert('You earned 10 coins!');
+        displayCoins(); // Update the displayed coin balance
+      } else {
+        alert('Error earning coins.');
+      }
+    }
+
+    // Spend 5 coins
+    async function spendCoins() {
+      let currentCoins = await getCoins(userUuid);
+      if (currentCoins >= 5) {
+        let newBalance = currentCoins - 5;
+        const success = await updateCoins(userUuid, newBalance);
+
+        if (success) {
+          alert('You spent 5 coins!');
+          displayCoins(); // Update the displayed coin balance
+        } else {
+          alert('Error spending coins.');
+        }
+      } else {
+        alert('Not enough coins to spend.');
+      }
+    }
+
+    // Attach event listeners to buttons
+    document.getElementById('earn-coins').addEventListener('click', earnCoins);
+    document.getElementById('spend-coins').addEventListener('click', spendCoins);
+
+    // Initially display the current coin balance
+    displayCoins();  // Display the current coins when the page loads
+  </script>
+</body>
+</html>
+
+
+
+
+
+
     <table class="code-table">
         <tr>
             <th>Game</th>
