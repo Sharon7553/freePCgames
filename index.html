@@ -256,7 +256,10 @@
         }
     </style>
     <br>
-<br>
+
+<<!-- Input ----------------------------------------------------------------------------------------------------------------------------  Form -->
+
+
 
 <section id="hero" style="text-align: center; padding: 30px 20px 20px 20px; background-color: rgba(0, 0, 0, 0.7); color: #fff; margin-top: 10px;">
     <h1 style="font-size: 4em; font-weight: bold; color: #ff7f00; text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6); margin-bottom: 10px;">Unleash the Power of Free Gaming</h1>
@@ -264,13 +267,18 @@
 </section>
 
 
+
+
+<<!-- Input ----------------------------------------------------------------------------------------------------------------------------  Form -->
+
+
 <!-- Code table for Steam game codes -->
 <div class="centered">
-    <!-- New buttons at the top-right -->
+    <!-- New buttons just above the table and below the border -->
     <div class="top-buttons">
         <button class="donate-btn">
             Donate a code <input type="text" class="code-input" placeholder="Enter code">
-            <button class="submit-btn">Submit</button>
+            <button class="submit-btn" onclick="showPopup()">Submit</button>
         </button>
         <button class="refresh-btn" onclick="refreshPage()">
             <span class="refresh-icon">&#x21bb;</span> Refresh Page
@@ -324,6 +332,13 @@
     </table>
 </div>
 
+<!-- Popup for thanks -->
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="popup-message">Thanks! Code received!</span>
+    </div>
+</div>
+
 <script>
     // Function to toggle code visibility
     function showCode(button) {
@@ -345,6 +360,15 @@
     function refreshPage() {
         location.reload();
     }
+
+    // Show popup on submit
+    function showPopup() {
+        var popup = document.getElementById("popup");
+        popup.style.display = "block";
+        setTimeout(function () {
+            popup.style.display = "none";
+        }, 2000); // Close after 2 seconds
+    }
 </script>
 
 <style>
@@ -363,10 +387,10 @@
         100% { box-shadow: 0 0 15px rgba(57, 255, 20, 1); }
     }
 
-    /* Position the new buttons just above the code table */
+    /* Position the new buttons just above the table, inside the frame's green border */
     .top-buttons {
         position: absolute;
-        top: 10px;
+        top: 60px; /* Adjust this value as needed to move buttons lower */
         right: 20px;
         display: flex;
         gap: 15px;
@@ -499,9 +523,34 @@
         align-items: center;
         flex-direction: column;
         margin-top: 20px;
+        position: relative;
+    }
+
+    /* Popup Styles */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        font-size: 18px;
+        font-family: 'Roboto', sans-serif;
+        z-index: 1000;
+        text-align: center;
+        animation: popupAnimation 0.5s ease-in-out;
+    }
+
+    @keyframes popupAnimation {
+        0% { opacity: 0; transform: translate(-50%, -60%); }
+        100% { opacity: 1; transform: translate(-50%, -50%); }
     }
 </style>
 
+<<!-- Input ----------------------------------------------------------------------------------------------------------------------------  Form -->
 
 <<!-- Input Form -->
 <div class="input-container">
