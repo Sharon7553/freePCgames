@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Member Dashboard</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+  
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -27,6 +30,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
       display: none;
+      animation: fadeIn 1s ease-out;
     }
 
     .dashboard-container h1 {
@@ -45,6 +49,14 @@
       font-weight: bold;
       margin: 20px 0;
       color: #f1c40f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .coin-info img {
+      width: 30px;
+      margin-right: 10px;
     }
 
     .task-boxes {
@@ -60,7 +72,7 @@
       width: 200px;
       border-radius: 8px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
     .task-box h3 {
@@ -81,11 +93,12 @@
       border: none;
       cursor: pointer;
       font-size: 16px;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.2s ease;
     }
 
     .task-box button:hover {
       background-color: #0e7d00;
+      transform: translateY(-3px);
     }
 
     .task-box.completed {
@@ -107,6 +120,7 @@
       margin-top: 20px;
       width: 100%;
       max-width: 200px;
+      transition: background-color 0.3s ease;
     }
 
     .logout-btn:hover {
@@ -139,10 +153,69 @@
       margin: 10px 0;
     }
 
+    .reward-button, .ticket-button {
+      background-color: #1fd100;
+      color: #fff;
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .reward-button:hover, .ticket-button:hover {
+      background-color: #0e7d00;
+      transform: translateY(-3px);
+    }
+
     #loading-message {
       color: white;
       font-size: 18px;
       margin-top: 20px;
+    }
+
+    /* Social Media Dropdown */
+    .social-media-dropdown {
+      margin-top: 20px;
+      background-color: #444;
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    .social-media-dropdown select {
+      background-color: #555;
+      color: #fff;
+      border: 1px solid #444;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 16px;
+      width: 200px;
+    }
+
+    .social-media-dropdown button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .social-media-dropdown button:hover {
+      background-color: #2980b9;
+    }
+
+    /* FadeIn Animation */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
     }
   </style>
 </head>
@@ -156,9 +229,10 @@
       <p>Your tasks and coins are below.</p>
     </div>
 
+    <!-- Coins Info -->
     <div class="coin-info">
+      <img src="coin-icon.png" alt="Coins Icon" />
       Coins: <span id="coins-value">Loading...</span>
-
     </div>
 
     <!-- Task Boxes -->
@@ -180,13 +254,9 @@
       </div>
     </div>
 
-
-<button class="reward-button" onclick="receiveReward()">Click to Receive 50 Coins</button>
-
-
-<button class="ticket-button" onclick="purchaseTicket()">Purchase Ticket for 50 Coins</button>
-
-
+    <!-- Reward and Ticket Buttons -->
+    <button class="reward-button" onclick="receiveReward()">Click to Receive 50 Coins</button>
+    <button class="ticket-button" onclick="purchaseTicket()">Purchase Ticket for 50 Coins</button>
 
     <!-- Prize List -->
     <div class="prize-list">
@@ -200,42 +270,49 @@
       </ul>
     </div>
 
+    <!-- Social Media Share Dropdown -->
+    <div class="social-media-dropdown">
+      <h3>Share on Social Media</h3>
+      <select id="social-media-select">
+        <option value="facebook">Facebook</option>
+        <option value="twitter">Twitter</option>
+        <option value="instagram">Instagram</option>
+        <option value="linkedin">LinkedIn</option>
+      </select>
+      <button onclick="shareOnSocialMedia()">Share</button>
+    </div>
+
     <button class="logout-btn" id="logoutButton">Log Out</button>
   </div>
 
   <!-- Include Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    // Function to initialize Supabase client
+    // Initialize Supabase client
     function initializeSupabase() {
-      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; 
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; 
       return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
-    // Handle auth check and dashboard rendering
     async function checkAuth() {
       const supabase = initializeSupabase();
       const { data: { user }, error } = await supabase.auth.getUser();
 
-      // Handle loading and dashboard display
       const loadingMessage = document.getElementById('loading-message');
       const dashboardContainer = document.getElementById('dashboard');
       const usernameSpan = document.getElementById('username');
 
       if (user) {
-        // User is authenticated, show dashboard
         usernameSpan.textContent = user.email;
         dashboardContainer.style.display = 'block';
         loadingMessage.style.display = 'none';
-        await displayCoins(user.id); // Display user coins
+        await displayCoins(user.id);
       } else {
-        // User is not authenticated, redirect to login page
         window.location.href = 'login.html';
       }
     }
 
-    // Function to get user's coin balance
     async function getCoins(uuid) {
       const supabase = initializeSupabase();
       const { data, error } = await supabase
@@ -243,31 +320,38 @@
         .select('coins')
         .eq('uuid', uuid)
         .single();
-
       if (error) {
         console.error('Error fetching coins:', error);
-        return 0; // Return 0 if there's an error or no record found
+        return 0;
       }
-
       return data.coins;
     }
 
-    // Display the user's coins
     async function displayCoins(uuid) {
       const coins = await getCoins(uuid);
       document.getElementById('coins-value').textContent = coins;
     }
 
-    // Task toggle function to mark tasks as complete/incomplete
     function toggleTask(taskId) {
       const taskElement = document.getElementById(taskId);
       taskElement.classList.toggle("completed");
     }
 
-    // Wait for the window to load, then initialize Supabase and check auth
+    function receiveReward() {
+      alert("You have received 50 coins!");
+    }
+
+    function purchaseTicket() {
+      alert("You have purchased a ticket for 50 coins!");
+    }
+
+    function shareOnSocialMedia() {
+      const socialMedia = document.getElementById("social-media-select").value;
+      alert("Shared on " + socialMedia);
+    }
+
     window.onload = checkAuth;
 
-    // Handle logout action
     document.getElementById("logoutButton").addEventListener('click', async () => {
       const supabase = initializeSupabase();
       const { error } = await supabase.auth.signOut();
@@ -280,13 +364,10 @@
   </script>
 
 
-
 <!-- Link to your main.js file -->
  <script src="js/main.js"></script>
 
-  <script src="main.js"></script>
 
-   <script src="D:\Websites\Github\repos\freePCgames\js\main\main.js"></script>
 
 
 </body>
