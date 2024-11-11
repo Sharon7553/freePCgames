@@ -1,607 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>freePCgames</title>
 
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/dash.css">
+    <link rel="stylesheet" href="dash.css">
+    <link rel="stylesheet" href="pages/dash.css">
+    <link rel="stylesheet" href="/pages/dash.css">
 
+    <!-- External Fonts/Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
-
-<div class="container">
-
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="logo">free.PC.games</div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <div class="menu">
-            <a href="https://www.freepcgames.online/">Home</a>
-            <a href="pages/games.html">Browser games</a>
-            <a href="pages/free-steam-games.html">Steam games</a>
-            <a href="pages/store.html">Premium games</a>
-            <a href="pages/About-us.html">About</a>
-            <a href="pages/store.html">Store</a>
-            
-            <!-- New Login Button -->
-            <a href="pages/login.html" class="login-btn"><span>👤</span> Login</a>
-            
-            <!-- New Register Button -->
-            <a href="pages/sign-up.html" class="register-btn"><span>📝</span> Register</a>
-            
-            <!-- New Account Button -->
-            <a href="pages/dashboard.html" class="account-btn"><span>🏠</span> Account</a>
-        </div>
-    </nav>
-
-    <div class="coin-display" id="coin-display">
-    <span class="coin-icon" id="coin-icon">💰</span>
-    <span class="coin-amount" id="coin-amount">$<span id="coin-value">50</span> Coins</span>
-    <span class="coin-text" id="coin-text">Earn your rewards!</span>
-
-<style>
-    /* Add this CSS for the buttons styling */
-    nav .menu a {
-        padding: 8px 15px;
-        color: white;
-        font-size: 16px;
-        text-decoration: none;
-        border-radius: 5px;
-        display: flex;
-        align-items: center;
-        margin-left: 10px;
-        transition: background-color 0.3s ease;
-    }
-
-    /* Style for Login Button */
-    nav .menu a.login-btn {
-        background-color: #4CAF50;
-    }
-
-    nav .menu a.login-btn:hover {
-        background-color: #45a049;
-    }
-
-    nav .menu a.login-btn span {
-        margin-right: 5px;
-    }
-
-    /* Style for Register Button */
-    nav .menu a.register-btn {
-        background-color: #f39c12;
-    }
-
-    nav .menu a.register-btn:hover {
-        background-color: #e67e22;
-    }
-
-    nav .menu a.register-btn span {
-        margin-right: 5px;
-    }
-
-    /* Style for Account Button */
-    nav .menu a.account-btn {
-        background-color: #3498db;
-    }
-
-    nav .menu a.account-btn:hover {
-        background-color: #2980b9;
-    }
-
-    nav .menu a.account-btn span {
-        margin-right: 5px;
-    }
-
-    /* Hamburger Menu */
-    .hamburger {
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 30px;
-        height: 21px;
-    }
-
-    .hamburger div {
-        height: 3px;
-        background-color: white;
-    }
-
-    /* Menu Toggle */
-    .menu.active {
-        display: block;
-    }
-
-    .menu {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        width: 100%;
-    }
-</style>
-
-<script>
-    function toggleMenu() {
-        const menu = document.querySelector('.menu');
-        menu.classList.toggle('active');
-    }
-</script>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/css/styles.css">
-<link rel="stylesheet" href="/dash.css">
-<link rel="stylesheet" href="pages/dash.css">
-
-
-<h1>Welcome, <span id="username"></span></h1> 
-    <div class="user-info">
-        <div class="greeting">
-        </div>
-        <p>🎮 <strong>Your task dashboard is ready!</strong> Complete tasks to earn coins, and exchange them for exciting rewards!</p>
-        <p>🗓️ New tasks are added regularly. Check back often to maximize your rewards!</p>
-        <p><i class="fas fa-cogs"></i> <strong>Manage your tasks:</strong> Mark them as complete to unlock rewards.</p>
-        <p><i class="fas fa-trophy"></i> <strong>Earn Coins:</strong> Completing tasks and achieving milestones will reward you with coins.</p>
-        <p><i class="fas fa-exchange-alt"></i> <strong>Trade Coins for Game Codes:</strong> Use your earned coins to unlock special game codes!</p>
-
-        <button type="submit" class="submit-btn">Go to tasks</button>
-
-<div id="claim-box" class="claim-box" style="--claim-box-top: 50px; --claim-box-right: -30px;">
-    <h3>Claim 50 Coins for Signing In Today!</h3>
-
-
-<!-- Code table for Steam game codes -->
-<div class="centered">
-    <!-- New buttons just above the table and below the border -->
-    <div class="top-buttons">
-        <button class="donate-btn">
-            Donate game code <input type="text" class="code-input" placeholder="Enter code">
-            <button class="submit-btn" onclick="showPopup()">Submit</button>
-        </button>
-        <button class="refresh-btn" onclick="refreshPage()">
-            <span class="refresh-icon">&#x21bb;</span> Refresh
-        </button>
-        <a href="pages/store.html">Store</a>
-        <button class="extra-btn" href="pages/sign-up.html">More codes&gt;</button>
-    </div>
-
-
-    <table class="code-table">
-        <tr>
-            <th>Game</th>
-            <th>Availability</th>
-            <th>Steam Code</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td>Tekken 7</td>
-            <td>World wide</td>
-            <td class="code-cell"><span>HH0AX-TRHYZ-FMZZW</span></td>
-            <td><button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code <span class="padlock">🔒</span></button></td>
-        </tr>
-        <tr>
-            <td>Invasion</td>
-            <td>World wide</td>
-            <td class="code-cell"><span>JICY7-RIRR5-X273V</span></td>
-            <td><button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code <span class="padlock">🔒</span></button></td>
-        </tr>
-        <tr>
-            <td>7 Days to Die</td>
-            <td>World wide</td>
-            <td class="code-cell"><span>4N44Y-JPII8-A8N2H</span></td>
-            <td><button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code <span class="padlock">🔒</span></button></td>
-        </tr>
-        <tr>
-            <td>Dying Light definitive edition</td>
-            <td>World wide</td>
-            <td class="code-cell"><span>LVRT0-2NTNX-GPM9H</span></td>
-            <td><button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code <span class="padlock">🔒</span></button></td>
-        </tr>
-        <tr>
-            <td>Mirrors Edge Comp</td>
-            <td>EU Only</td>
-            <td class="code-cell"><span>ZYKTZ-DRJAG-I08BM</span></td>
-            <td><button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code <span class="padlock">🔒</span></button></td>
-        </tr>
-        <tr>
-            <td>Two Worlds Epic Edition</td>
-            <td>World wide</td>
-            <td class="code-cell"><span>8RXGF-2N5GH-NX7BD</span></td>
-            <td><button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code <span class="padlock">🔒</span></button></td>
-        </tr>
-    </table>
-</div>
-
-<!-- Popup for thanks -->
-<div id="popup" class="popup">
-    <div class="popup-content">
-        <span class="popup-message">Thanks! Code received!</span>
-    </div>
-</div>
-
-<script>
-    // Function to toggle code visibility
-    function toggleCodeVisibility(button) {
-        var row = button.closest('tr');
-        var codeCell = row.querySelector('.code-cell span');
-        var padlockIcon = button.querySelector('.padlock');
-        
-        if (codeCell.style.filter === 'blur(5px)') {
-            // Reveal code and change padlock to unlocked
-            codeCell.style.filter = 'blur(0px)';
-            padlockIcon.textContent = '🔓'; // Unlock padlock
-            button.textContent = 'Hide Code';
-            button.classList.add('hide');
-        } else {
-            // Hide code and revert padlock to locked
-            codeCell.style.filter = 'blur(5px)';
-            padlockIcon.textContent = '🔒'; // Lock padlock
-            button.textContent = 'Show Code';
-            button.classList.remove('hide');
+    <style>
+        /* Add this CSS for the buttons styling */
+        nav .menu a {
+            padding: 8px 15px;
+            color: white;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
         }
-    }
 
-    // Function to refresh the page
-    function refreshPage() {
-        location.reload();
-    }
+        /* Style for Login Button */
+        nav .menu a.login-btn {
+            background-color: #4CAF50;
+        }
 
-    // Show popup on submit
-    function showPopup() {
-        var popup = document.getElementById("popup");
-        popup.style.display = "block";
-        setTimeout(function () {
-            popup.style.display = "none";
-        }, 2000); // Close after 2 seconds
-    }
-</script>
+        nav .menu a.login-btn:hover {
+            background-color: #45a049;
+        }
 
-</body>
-</html>
+        nav .menu a.login-btn span {
+            margin-right: 5px;
+        }
 
+        /* Style for Register Button */
+        nav .menu a.register-btn {
+            background-color: #f39c12;
+        }
 
+        nav .menu a.register-btn:hover {
+            background-color: #e67e22;
+        }
 
-<<!-- Input ----------------------------------------------------------------------------------------------------------------------------  Form -->
+        nav .menu a.register-btn span {
+            margin-right: 5px;
+        }
 
+        /* Style for Account Button */
+        nav .menu a.account-btn {
+            background-color: #3498db;
+        }
 
+        nav .menu a.account-btn:hover {
+            background-color: #2980b9;
+        }
 
+        nav .menu a.account-btn span {
+            margin-right: 5px;
+        }
 
+        /* Hamburger Menu */
+        .hamburger {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+        }
 
+        .hamburger div {
+            height: 3px;
+            background-color: white;
+        }
 
-<meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
-  
+        /* Menu Toggle */
+        .menu.active {
+            display: block;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+        }
+    </style>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.menu');
+            menu.classList.toggle('active');
+        }
+    </script>
 </head>
-   <div id="dashboard" class="dashboard-container">
-    <h1>Welcome, <span id="username"></span></h1>
-</style>
 
 <body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <nav>
+            <div class="logo">free.PC.games</div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="menu">
+                <a href="https://www.freepcgames.online/">Home</a>
+                <a href="pages/games.html">Browser games</a>
+                <a href="pages/free-steam-games.html">Steam games</a>
+                <a href="pages/store.html">Premium games</a>
+                <a href="pages/About-us.html">About</a>
+                <a href="pages/store.html">Store</a>
+                <a href="pages/login.html" class="login-btn"><span>👤</span> Login</a>
+                <a href="pages/sign-up.html" class="register-btn"><span>📝</span> Register</a>
+                <a href="pages/dashboard.html" class="account-btn"><span>🏠</span> Account</a>
+            </div>
+        </nav>
 
-
-  <div id="loading-message">Loading dashboard, please wait...</div>
-
-  <div id="dashboard" class="dashboard-container">
-    <h1>Welcome, <span id="username"></span></h1>
-    <div class="user-info">
-      <p>Here are your tasks. Keep track of your progress!</p>
-      <p>New tasks are added regularly.</p>
-    </div>
-    
- 
-
-    <!-- Coins Section -->
-    <div id="coins-box" class="coins-box">
-        <div id="coins" class="coins">$COINS: 0</div>
-        <p class="coins-description">Earn coins by completing tasks or trading game codes!</p>
-    </div>
-
-    <!-- Task Boxes -->
-    <div class="task-boxes">
-        <div class="task-box" id="task1">
-            <h3><i class="fas fa-chalkboard-teacher"></i> Complete Tutorial</h3>
-            <p>Finish the onboarding tutorial.</p>
-            <button onclick="toggleTask('task1')">Mark as Complete</button>
+        <!-- Coin Display -->
+        <div class="coin-display" id="coin-display">
+            <span class="coin-icon" id="coin-icon">💰</span>
+            <span class="coin-amount" id="coin-amount">$<span id="coin-value">50</span> Coins</span>
+            <span class="coin-text" id="coin-text">Earn your rewards!</span>
         </div>
-        <div class="task-box" id="task2">
-            <h3><i class="fas fa-briefcase"></i> Finish Project</h3>
-            <p>Work on the final project and submit.</p>
-            <button onclick="toggleTask('task2')">Mark as Complete</button>
+
+        <div id="dashboard" class="dashboard-container">
+            <h1>Welcome, <span id="username"></span></h1>
+
+            <div class="user-info">
+                <div class="greeting">
+                </div>
+                <p>🎮 <strong>Your task dashboard is ready!</strong> Complete tasks to earn coins, and exchange them for exciting rewards!</p>
+                <p>🗓️ New tasks are added regularly. Check back often to maximize your rewards!</p>
+                <p><i class="fas fa-cogs"></i> <strong>Manage your tasks:</strong> Mark them as complete to unlock rewards.</p>
+                <p><i class="fas fa-trophy"></i> <strong>Earn Coins:</strong> Completing tasks and achieving milestones will reward you with coins.</p>
+                <p><i class="fas fa-exchange-alt"></i> <strong>Trade Coins for Game Codes:</strong> Use your earned coins to unlock special game codes!</p>
+
+                <button type="submit" class="submit-btn">Go to tasks</button>
+            </div>
+
+            <!-- Task Boxes -->
+            <div class="task-boxes">
+                <div class="task-box" id="task1">
+                    <h3><i class="fas fa-chalkboard-teacher"></i> Complete Tutorial</h3>
+                    <p>Finish the onboarding tutorial.</p>
+                    <button onclick="toggleTask('task1')">Mark as Complete</button>
+                </div>
+                <div class="task-box" id="task2">
+                    <h3><i class="fas fa-briefcase"></i> Finish Project</h3>
+                    <p>Work on the final project and submit.</p>
+                    <button onclick="toggleTask('task2')">Mark as Complete</button>
+                </div>
+                <div class="task-box" id="task3">
+                    <h3><i class="fas fa-user-edit"></i> Update Profile</h3>
+                    <p>Update your profile with the latest information.</p>
+                    <button onclick="toggleTask('task3')">Mark as Complete</button>
+                </div>
+            </div>
+
+            <button class="logout-btn" id="logoutButton">Log Out</button>
         </div>
-        <div class="task-box" id="task3">
-            <h3><i class="fas fa-user-edit"></i> Update Profile</h3>
-            <p>Update your profile with the latest information.</p>
-            <button onclick="toggleTask('task3')">Mark as Complete</button>
+
+        <div id="claim-box" class="claim-box" style="display: none;">
+            <h3>Claim 50 Coins for Signing In Today!</h3>
         </div>
-    </div>
 
+        <script>
+            // Local storage to track if the user has claimed today
+            function checkDailyClaim() {
+                const lastClaimed = localStorage.getItem('lastClaimed');
+                const currentTime = new Date().getTime();
 
-    <button class="logout-btn" id="logoutButton">Log Out</button>
-</div>
+                // Show the claim box if 24 hours have passed since last claim
+                if (!lastClaimed || currentTime - lastClaimed >= 86400000) {
+                    document.getElementById('claim-box').style.display = 'block';
+                }
+            }
 
+            // Function to handle coin claim
+            document.getElementById('claim-box').addEventListener('click', function () {
+                const coinsElement = document.getElementById('coins');
+                let currentCoins = parseInt(coinsElement.textContent.replace('$COINS: ', ''));
+                currentCoins += 50; // Add 50 coins
+                coinsElement.textContent = `$COINS: ${currentCoins}`;
+                coinsElement.classList.add('glow-green'); // Green glow effect on coin increase
 
-<script>
-  // Local storage to track if the user has claimed today
-  function checkDailyClaim() {
-    const lastClaimed = localStorage.getItem('lastClaimed');
-    const currentTime = new Date().getTime();
+                // Hide the claim box and store the claim time in localStorage
+                localStorage.setItem('lastClaimed', new Date().getTime());
+                document.getElementById('claim-box').style.display = 'none';
 
-    // Show the claim box if 24 hours have passed since last claim
-    if (!lastClaimed || currentTime - lastClaimed >= 86400000) {
-      document.getElementById('claim-box').style.display = 'block';
-    }
-  }
+                setTimeout(() => {
+                    coinsElement.classList.remove('glow-green'); // Remove the glow after 1 second
+                }, 1000);
+            });
 
-  // Function to handle coin claim
-  document.getElementById('claim-box').addEventListener('click', function () {
-    const coinsElement = document.getElementById('coins');
-    let currentCoins = parseInt(coinsElement.textContent.replace('$COINS: ', ''));
-    currentCoins += 50; // Add 50 coins
-    coinsElement.textContent = `$COINS: ${currentCoins}`;
-    coinsElement.classList.add('glow-green'); // Green glow effect on coin increase
+            // Check if the user has already claimed the prize when the page loads
+            window.onload = checkDailyClaim;
 
-    // Hide the claim box and store the claim time in localStorage
-    localStorage.setItem('lastClaimed', new Date().getTime());
-    document.getElementById('claim-box').style.display = 'none';
+            // Task toggle function to mark tasks as complete/incomplete
+            function toggleTask(taskId) {
+                const taskElement = document.getElementById(taskId);
+                taskElement.classList.toggle("completed");
+            }
 
-    setTimeout(() => {
-      coinsElement.classList.remove('glow-green'); // Remove the glow after 1 second
-    }, 1000);
-  });
+            // Handle logout action
+            document.getElementById("logoutButton").addEventListener('click', async () => {
+                const supabase = initializeSupabase();
+                const { error } = await supabase.auth.signOut();
+                if (error) {
+                    console.error('Error logging out:', error.message);
+                } else {
+                    window.location.href = 'pages/login.html';  // Redirect to login page after logout
+                }
+            });
 
-  // Check if the user has already claimed the prize when the page loads
-  window.onload = checkDailyClaim;
-
-  // Function to display time-based greeting
-  function displayGreeting() {
-    const hour = new Date().getHours();
-    const greeting = document.getElementById('greeting');
-    
-    if (hour < 12) {
-      greeting.textContent = 'Good Morning!';
-    } else if (hour < 18) {
-      greeting.textContent = 'Good Afternoon!';
-    } else {
-      greeting.textContent = 'Good Evening!';
-    }
-  }
-
-  // Call greeting function on page load
-  window.onload = function() {
-    displayGreeting();
-    checkDailyClaim();
-  }
-</script>
-
-
-    <!-- Add this in your dashboard-container, before logout button -->
-<div id="claim-box" class="claim-box" style="display: none;">
-  <h3>Claim 50 Coins for Signing In Today!</h3>
-</div>
-
-<style>
-  .claim-box {
-    background-color: #4CAF50;
-    padding: 15px;
-    border-radius: 8px;
-    width: 300px;
-    margin: 20px auto;
-    display: none;
-    cursor: pointer;
-  }
-
-  .claim-box h3 {
-    margin: 0;
-    color: white;
-  }
-</style>
-<script>
-  // Local storage to track if the user has claimed today
-  function checkDailyClaim() {
-    const lastClaimed = localStorage.getItem('lastClaimed');
-    const currentTime = new Date().getTime();
-
-    // Show the claim box if 24 hours have passed since last claim
-    if (!lastClaimed || currentTime - lastClaimed >= 86400000) {
-      document.getElementById('claim-box').style.display = 'block';
-    }
-  }
-
-  // Function to handle coin claim
-  document.getElementById('claim-box').addEventListener('click', function () {
-    const coinsElement = document.getElementById('coins');
-    let currentCoins = parseInt(coinsElement.textContent.replace('$COINS: ', ''));
-    currentCoins += 50; // Add 50 coins
-    coinsElement.textContent = `$COINS: ${currentCoins}`;
-    coinsElement.classList.add('glow-green'); // Green glow effect on coin increase
-
-    // Hide the claim box and store the claim time in localStorage
-    localStorage.setItem('lastClaimed', new Date().getTime());
-    document.getElementById('claim-box').style.display = 'none';
-
-    setTimeout(() => {
-      coinsElement.classList.remove('glow-green'); // Remove the glow after 1 second
-    }, 1000);
-  });
-
-  // Check if the user has already claimed the prize when the page loads
-  window.onload = checkDailyClaim;
-</script>
-
-
-<script>
-  // Function to display time-based greeting
-  function displayGreeting() {
-    const hour = new Date().getHours();
-    const greeting = document.getElementById('greeting');
-    
-    if (hour < 12) {
-      greeting.textContent = 'Good Morning!';
-    } else if (hour < 18) {
-      greeting.textContent = 'Good Afternoon!';
-    } else {
-      greeting.textContent = 'Good Evening!';
-    }
-  }
-
-  // Call greeting function on page load
-  window.onload = function() {
-    displayGreeting();
-    checkDailyClaim();
-  }
-</script>
-
-
-    <button class="logout-btn" id="logoutButton">Log Out</button>
-  </div>
-
-  <!-- Include Supabase JS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script>
-    // Function to initialize Supabase client
-    function initializeSupabase() {
-      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
-      return supabase.createClient(supabaseUrl, supabaseKey);
-    }
-
-    // Handle auth check and dashboard rendering
-    async function checkAuth() {
-      const supabase = initializeSupabase();  // Initialize Supabase
-      const { data: { user }, error } = await supabase.auth.getUser(); // Correct method to get current user
-
-      // Handle loading and dashboard display
-      const loadingMessage = document.getElementById('loading-message');
-      const dashboardContainer = document.getElementById('dashboard');
-      const usernameSpan = document.getElementById('username');
-
-      if (user) {
-        // User is authenticated, show dashboard
-        usernameSpan.textContent = user.email; // Display username (email in this case)
-        dashboardContainer.style.display = 'block';
-        loadingMessage.style.display = 'none'; // Hide loading message
-      } else {
-        // User is not authenticated, redirect to login page
-        console.log("User not authenticated, redirecting to login.");
-        window.location.href = 'pages/login.html'; // Redirect to login page
-      }
-    }
-
-    // Task toggle function to mark tasks as complete/incomplete
-    function toggleTask(taskId) {
-      const taskElement = document.getElementById(taskId);
-      taskElement.classList.toggle("completed");
-
-      // Optionally, you can update the task status in Supabase (to persist across sessions).
-      // For now, this is just toggling the class for visual effect.
-    }
-
-    // Wait for the window to load, then initialize Supabase and check auth
-    window.onload = checkAuth;
-
-    // Handle logout action
-    document.getElementById("logoutButton").addEventListener('click', async () => {
-      const supabase = initializeSupabase();
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error('Error logging out:', error.message);
-      } else {
-        // Redirect to login page after logout
-        window.location.href = 'pages/login.html';  // Correct login path after logout
-      }
-    });
-
-    
-  </script>
-
-<!-- Add this in your dashboard-container, before logout button -->
-<div id="claim-box" class="claim-box" style="display: none;">
-  <h3>Claim 50 Coins for Signing In Today!</h3>
-</div>
-
-
-<script>
-  // Local storage to track if the user has claimed today
-  function checkDailyClaim() {
-    const lastClaimed = localStorage.getItem('lastClaimed');
-    const currentTime = new Date().getTime();
-
-    // Show the claim box if 24 hours have passed since last claim
-    if (!lastClaimed || currentTime - lastClaimed >= 86400000) {
-      document.getElementById('claim-box').style.display = 'block';
-    }
-  }
-
-  // Function to handle coin claim
-  document.getElementById('claim-box').addEventListener('click', function () {
-    const coinsElement = document.getElementById('coins');
-    let currentCoins = parseInt(coinsElement.textContent.replace('$COINS: ', ''));
-    currentCoins += 50; // Add 50 coins
-    coinsElement.textContent = `$COINS: ${currentCoins}`;
-    coinsElement.classList.add('glow-green'); // Green glow effect on coin increase
-
-    // Hide the claim box and store the claim time in localStorage
-    localStorage.setItem('lastClaimed', new Date().getTime());
-    document.getElementById('claim-box').style.display = 'none';
-
-    setTimeout(() => {
-      coinsElement.classList.remove('glow-green'); // Remove the glow after 1 second
-    }, 1000);
-  });
-
-  // Check if the user has already claimed the prize when the page loads
-  window.onload = checkDailyClaim;
-</script>
-
-
-    <h1>Premium Titles</h1>
-    <h3>Your activation code will be sent instantly!</h3>
-
-    <!-- Ecwid Store and Widgets -->
-    <div class="store-section">
-       
-        <div id="my-store-109248026"></div>
-        <script data-cfasync="false" type="text/javascript" src="https://app.ecwid.com/script.js?109248026&data_platform=code&data_date=2024-10-24" charset="utf-8"></script>
-        <script type="text/javascript">
-            xProductBrowser("categoriesPerRow=3", "views=grid(20,3) list(60) table(60)", "categoryView=grid", "searchView=list", "id=my-store-109248026");
         </script>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-container">
+                <div class="footer-left">
+                    <p>&copy; 2025 <span>freePCgames</span></p>
+                </div>
+                <div class="footer-right">
+                    <ul>
+                        <li><a href="pages/about-us">About Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-
-
-<!-- Link to your main.js file -->
- <script src="js/main.js"></script>
-
- <script>
-    function toggleMenu() {
-        const menu = document.querySelector('.menu');
-        const hamburger = document.querySelector('.hamburger');
-        
-        menu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    }
-</script>
-
-
 </body>
-
-<!-- footer -->
-<div class="footer">
-    <div class="footer-container">
-        <div class="footer-left">
-            <p>&copy; 2025 <span>freePCgames</span></p>
-        </div>
-        <div class="footer-right">
-            <ul>
-                <li><a href="pages/about-us">About Us</a></li>
-                <li><a href="pages/privacy-policy">Privacy Policy</a></li>
-                <li><a href="pages/terms-of-service">Terms of Service</a></li>
-                <li><a href="pages/partners">Partners</a></li>
-                <li><a href="pages/contact-us.html">Contact-us</a></li>
-
-            </ul>
-        </div>
-    </div>
-</div>
-
-<script src="js/main/js.js"></script>
-
-
 </html>
