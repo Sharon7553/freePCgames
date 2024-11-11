@@ -269,52 +269,149 @@
 
 
     <!-- Code table for Steam game codes -->
-    <div class="centered">
-        <table class="code-table">
-            <tr>
-                <th>Game</th>
-                <th>Availability</th>
-                <th>Steam Code</th>
-                <th>Action</th>
-            </tr>
-            <tr>
-                <td>Tekken 7</td>
-                <td>World wide</td>
-                <td class="code-cell"><span>HH0AX-TRHYZ-FMZZW</span></td>
-                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
-            </tr>
-            <tr>
-                <td>Invasion</td>
-                <td>World wide</td>
-                <td class="code-cell"><span>JICY7-RIRR5-X273V</span></td>
-                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
-            </tr>
-            <tr>
-                <td>7 Days to Die</td>
-                <td>World wide</td>
-                <td class="code-cell"><span>4N44Y-JPII8-A8N2H</span></td>
-                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
-            </tr>
-            <tr>
-                <td>Dying Light definitive edition</td>
-                <td>World wide</td>
-                <td class="code-cell"><span>LVRT0-2NTNX-GPM9H</span></td>
-                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
-            </tr>
-            <tr>
-                <td>Mirrors Edge Comp</td>
-                <td>EU Only</td>
-                <td class="code-cell"><span>ZYKTZ-DRJAG-I08BM</span></td>
-                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
-            </tr>
-            <tr>
-                <td>Two Worlds Epic Edition</td>
-                <td>World wide</td>
-                <td class="code-cell"><span>8RXGF-2N5GH-NX7BD</span></td>
-                <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
-            </tr>
-        </table>
-    </div>
+<div class="centered">
+    <table class="code-table">
+        <tr>
+            <th>Game</th>
+            <th>Availability</th>
+            <th>Steam Code</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <td>Tekken 7</td>
+            <td>World wide</td>
+            <td class="code-cell"><span>HH0AX-TRHYZ-FMZZW</span></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+        </tr>
+        <tr>
+            <td>Invasion</td>
+            <td>World wide</td>
+            <td class="code-cell"><span>JICY7-RIRR5-X273V</span></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+        </tr>
+        <tr>
+            <td>7 Days to Die</td>
+            <td>World wide</td>
+            <td class="code-cell"><span>4N44Y-JPII8-A8N2H</span></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+        </tr>
+        <tr>
+            <td>Dying Light definitive edition</td>
+            <td>World wide</td>
+            <td class="code-cell"><span>LVRT0-2NTNX-GPM9H</span></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+        </tr>
+        <tr>
+            <td>Mirrors Edge Comp</td>
+            <td>EU Only</td>
+            <td class="code-cell"><span>ZYKTZ-DRJAG-I08BM</span></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+        </tr>
+        <tr>
+            <td>Two Worlds Epic Edition</td>
+            <td>World wide</td>
+            <td class="code-cell"><span>8RXGF-2N5GH-NX7BD</span></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">Show Code</button></td>
+        </tr>
+    </table>
+</div>
+
+<!-- JavaScript for showing/hiding the code -->
+<script>
+    function showCode(button) {
+        var row = button.closest('tr');
+        var codeCell = row.querySelector('.code-cell span');
+
+        if (codeCell.style.display === 'none') {
+            codeCell.style.display = 'inline';
+            button.textContent = 'Hide Code';
+        } else {
+            codeCell.style.display = 'none';
+            button.textContent = 'Show Code';
+        }
+    }
+</script>
+
+<!-- CSS for styling -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #1d1d1d;
+        color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .centered {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .code-table {
+        border: 3px solid #00ff00; /* Neon green border */
+        border-radius: 10px;
+        width: 80%;
+        background-color: #222;
+        text-align: left;
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+        margin: 20px 0;
+        padding: 10px;
+    }
+
+    .code-table th, .code-table td {
+        padding: 12px;
+        font-size: 18px;
+    }
+
+    .code-table th {
+        color: #00ff00;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-shadow: 0 0 5px #00ff00;
+    }
+
+    .code-table td {
+        color: #e0e0e0;
+    }
+
+    .code-cell {
+        display: none;
+        color: #ffcc00;
+        font-weight: bold;
+    }
+
+    .show-code-btn {
+        background-color: transparent;
+        border: 2px solid #00ff00;
+        color: #00ff00;
+        font-size: 16px;
+        padding: 8px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .show-code-btn:hover {
+        background-color: #00ff00;
+        color: #222;
+        box-shadow: 0 0 10px #00ff00;
+        transform: scale(1.1);
+    }
+
+    .show-code-btn:focus {
+        outline: none;
+        box-shadow: 0 0 15px #00ff00;
+    }
+
+    .show-code-btn:active {
+        transform: scale(1.05);
+    }
+</style>
+
 
     <script>
         function showCode(button) {
