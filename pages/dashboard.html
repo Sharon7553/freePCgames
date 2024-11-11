@@ -135,26 +135,256 @@
     <h1>Welcome, <span id="username"></span></h1>
     <div class="user-info">
       <p>Here are your tasks. Keep track of your progress!</p>
+      <p>New tasks are added regularly.</p>
+    </div>
+
+   <div id="dashboard" class="dashboard-container">
+    <h1>Welcome, <span id="username"></span></h1>
+    
+    <!-- Greeting and User Info Section -->
+    <div class="user-info">
+        <div class="greeting">
+            <i class="fas fa-smile"></i> <span id="greeting">Good Day!</span>
+        </div>
+        <p>🎮 <strong>Your task dashboard is ready!</strong> Complete tasks to earn coins, and exchange them for exciting rewards!</p>
+        <p>🗓️ New tasks are added regularly. Check back often to maximize your rewards!</p>
+        <p><i class="fas fa-cogs"></i> <strong>Manage your tasks:</strong> Mark them as complete to unlock rewards.</p>
+        <p><i class="fas fa-trophy"></i> <strong>Earn Coins:</strong> Completing tasks and achieving milestones will reward you with coins.</p>
+        <p><i class="fas fa-exchange-alt"></i> <strong>Trade Coins for Game Codes:</strong> Use your earned coins to unlock special game codes!</p>
+    </div>
+
+    <!-- Coins Section -->
+    <div id="coins-box" class="coins-box">
+        <div id="coins" class="coins">$COINS: 0</div>
+        <p class="coins-description">Earn coins by completing tasks or trading game codes!</p>
     </div>
 
     <!-- Task Boxes -->
     <div class="task-boxes">
-      <div class="task-box" id="task1">
-        <h3>Complete Tutorial</h3>
-        <p>Finish the onboarding tutorial.</p>
-        <button onclick="toggleTask('task1')">Mark as Complete</button>
-      </div>
-      <div class="task-box" id="task2">
-        <h3>Finish Project</h3>
-        <p>Work on the final project and submit.</p>
-        <button onclick="toggleTask('task2')">Mark as Complete</button>
-      </div>
-      <div class="task-box" id="task3">
-        <h3>Update Profile</h3>
-        <p>Update your profile with the latest information.</p>
-        <button onclick="toggleTask('task3')">Mark as Complete</button>
-      </div>
+        <div class="task-box" id="task1">
+            <h3><i class="fas fa-chalkboard-teacher"></i> Complete Tutorial</h3>
+            <p>Finish the onboarding tutorial.</p>
+            <button onclick="toggleTask('task1')">Mark as Complete</button>
+        </div>
+        <div class="task-box" id="task2">
+            <h3><i class="fas fa-briefcase"></i> Finish Project</h3>
+            <p>Work on the final project and submit.</p>
+            <button onclick="toggleTask('task2')">Mark as Complete</button>
+        </div>
+        <div class="task-box" id="task3">
+            <h3><i class="fas fa-user-edit"></i> Update Profile</h3>
+            <p>Update your profile with the latest information.</p>
+            <button onclick="toggleTask('task3')">Mark as Complete</button>
+        </div>
     </div>
+
+    <!-- Claim Box -->
+    <div id="claim-box" class="claim-box" style="display: none;">
+        <h3>Claim 50 Coins for Signing In Today!</h3>
+    </div>
+
+    <button class="logout-btn" id="logoutButton">Log Out</button>
+</div>
+
+<style>
+    /* Main User Info Section */
+    .user-info {
+        background-color: #2c2c2c;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        font-size: 18px;
+        color: #eee;
+        text-align: left;
+    }
+
+    .greeting {
+        font-size: 22px;
+        font-weight: bold;
+        color: #4CAF50;
+        margin-bottom: 10px;
+    }
+
+    .greeting i {
+        margin-right: 10px;
+        color: #FFEB3B;
+    }
+
+    .user-info p {
+        margin: 8px 0;
+    }
+
+    .user-info p i {
+        margin-right: 8px;
+        color: #00bcd4;
+    }
+
+    .user-info p:nth-child(2) {
+        font-style: italic;
+    }
+
+    .user-info p:nth-child(3) {
+        font-weight: bold;
+    }
+
+    /* Coins Box Styling */
+    .coins-box {
+        background-color: #333;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+
+    .coins {
+        font-size: 24px;
+        font-weight: bold;
+        color: #00FF00; /* Green Color for Coins */
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #2c2c2c;
+        display: inline-block;
+        transition: text-shadow 0.3s ease;
+    }
+
+    .coins.glow-green {
+        animation: glow-green 1s ease-in-out infinite alternate;
+    }
+
+    .coins.glow-red {
+        animation: glow-red 1s ease-in-out infinite alternate;
+    }
+
+    .coins-description {
+        font-size: 16px;
+        color: #eee;
+        margin-top: 10px;
+    }
+
+    /* Task Box Styles */
+    .task-box {
+        background-color: #2c2c2c;
+        padding: 15px;
+        border-radius: 8px;
+        width: 45%;
+        margin: 10px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        text-align: left;
+    }
+
+    .task-box h3 {
+        margin-top: 0;
+        color: #4CAF50;
+    }
+
+    .task-box button {
+        background-color: #1fd100;
+        color: black;
+        padding: 8px 16px;
+        font-size: 14px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .task-box button:hover {
+        background-color: #0e7d00;
+    }
+
+    /* Hover Effects for User Info and Task Boxes */
+    .user-info:hover {
+        background-color: #333;
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    }
+
+    .task-box:hover {
+        background-color: #3b9b56;
+    }
+
+    /* Glow Effects */
+    @keyframes glow-green {
+        0% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00; }
+        100% { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00; }
+    }
+
+    @keyframes glow-red {
+        0% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000; }
+        100% { text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000; }
+    }
+
+    /* Claim Box */
+    .claim-box {
+        background-color: #4CAF50;
+        padding: 15px;
+        border-radius: 8px;
+        width: 300px;
+        margin: 20px auto;
+        display: none;
+        cursor: pointer;
+    }
+
+    .claim-box h3 {
+        margin: 0;
+        color: white;
+    }
+</style>
+
+<script>
+  // Local storage to track if the user has claimed today
+  function checkDailyClaim() {
+    const lastClaimed = localStorage.getItem('lastClaimed');
+    const currentTime = new Date().getTime();
+
+    // Show the claim box if 24 hours have passed since last claim
+    if (!lastClaimed || currentTime - lastClaimed >= 86400000) {
+      document.getElementById('claim-box').style.display = 'block';
+    }
+  }
+
+  // Function to handle coin claim
+  document.getElementById('claim-box').addEventListener('click', function () {
+    const coinsElement = document.getElementById('coins');
+    let currentCoins = parseInt(coinsElement.textContent.replace('$COINS: ', ''));
+    currentCoins += 50; // Add 50 coins
+    coinsElement.textContent = `$COINS: ${currentCoins}`;
+    coinsElement.classList.add('glow-green'); // Green glow effect on coin increase
+
+    // Hide the claim box and store the claim time in localStorage
+    localStorage.setItem('lastClaimed', new Date().getTime());
+    document.getElementById('claim-box').style.display = 'none';
+
+    setTimeout(() => {
+      coinsElement.classList.remove('glow-green'); // Remove the glow after 1 second
+    }, 1000);
+  });
+
+  // Check if the user has already claimed the prize when the page loads
+  window.onload = checkDailyClaim;
+
+  // Function to display time-based greeting
+  function displayGreeting() {
+    const hour = new Date().getHours();
+    const greeting = document.getElementById('greeting');
+    
+    if (hour < 12) {
+      greeting.textContent = 'Good Morning!';
+    } else if (hour < 18) {
+      greeting.textContent = 'Good Afternoon!';
+    } else {
+      greeting.textContent = 'Good Evening!';
+    }
+  }
+
+  // Call greeting function on page load
+  window.onload = function() {
+    displayGreeting();
+    checkDailyClaim();
+  }
+</script>
+
 
     <!-- Add this in your dashboard-container, before logout button -->
 <div id="claim-box" class="claim-box" style="display: none;">
