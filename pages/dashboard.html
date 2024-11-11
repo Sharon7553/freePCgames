@@ -313,7 +313,59 @@
 <<!-- Input ----------------------------------------------------------------------------------------------------------------------------  Form -->
 
 
+<style>
+    /* Button styles */
+    .submit-btn {
+        padding: 10px 20px; /* Smaller size */
+        font-size: 14px;
+        background-color: #333;
+        border: 2px solid #0f0; /* Neon green border */
+        color: #0f0; /* Neon green text */
+        text-transform: uppercase;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+    }
 
+    /* Hover effect for the button */
+    .submit-btn:hover {
+        background-color: #0f0; /* Neon green background on hover */
+        color: #121212; /* Dark text on hover */
+        transform: scale(1.1); /* Slight zoom effect */
+    }
+
+    /* Active button effect */
+    .submit-btn:active {
+        background-color: #0d0; /* Darker green on click */
+        transform: scale(0.98); /* Button slightly shrinks */
+    }
+
+    /* Button animation: Pulse effect */
+    .submit-btn {
+        animation: pulse 1.5s infinite; /* Pulse animation */
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.7), 0 0 20px rgba(0, 255, 0, 0.7);
+        }
+        50% {
+            box-shadow: 0 0 30px rgba(0, 255, 0, 1), 0 0 60px rgba(0, 255, 0, 1);
+        }
+        100% {
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.7), 0 0 20px rgba(0, 255, 0, 0.7);
+        }
+    }
+
+    /* Responsive design for mobile devices */
+    @media (max-width: 600px) {
+        .submit-btn {
+            padding: 8px 15px; /* Smaller padding for mobile */
+            font-size: 12px;
+        }
+    }
 
 
 
