@@ -31,11 +31,6 @@
         </div>
     </nav>
 
-    <div class="coin-display" id="coin-display">
-    <span class="coin-icon" id="coin-icon">💰</span>
-    <span class="coin-amount" id="coin-amount">$<span id="coin-value">50</span> Coins</span>
-    <span class="coin-text" id="coin-text">Earn your rewards!</span>
-
 <style>
     /* Add this CSS for the buttons styling */
     nav .menu a {
@@ -183,9 +178,11 @@
         }
     </style>
 
-<h1>Welcome, <span id="username"></span></h1> 
+
     <div class="user-info">
         <div class="greeting">
+            <h1>Welcome, <span id="username"></span></h1> 
+            <i class="fas fa-smile"></i> <span id="greeting">Good Day!</span>
         </div>
         <p>🎮 <strong>Your task dashboard is ready!</strong> Complete tasks to earn coins, and exchange them for exciting rewards!</p>
         <p>🗓️ New tasks are added regularly. Check back often to maximize your rewards!</p>
@@ -195,9 +192,12 @@
 
         <button type="submit" class="submit-btn">Go to tasks</button>
 
-<div id="claim-box" class="claim-box" style="--claim-box-top: 50px; --claim-box-right: 30px;">
-    <h3>Claim 50 Coins for Signing In Today!</h3>
+    </div>
 
+     <!-- Claim Box -->
+    <div id="claim-box" class="claim-box" style="display: none;">
+        <h3>Claim 50 Coins for Signing In Today!</h3>
+    </div>
 
 <!-- Code table for Steam game codes -->
 <div class="centered">
@@ -679,6 +679,10 @@
         </div>
     </div>
 
+    <!-- Claim Box -->
+    <div id="claim-box" class="claim-box" style="display: none;">
+        <h3>Claim 50 Coins for Signing In Today!</h3>
+    </div>
 
     <button class="logout-btn" id="logoutButton">Log Out</button>
 </div>
