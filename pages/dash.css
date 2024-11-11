@@ -683,3 +683,11 @@
         width: 100%;
     }
 </style>
+
+
+#username {
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    margin-left: 10px;
+}
