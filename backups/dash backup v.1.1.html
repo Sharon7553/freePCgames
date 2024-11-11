@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Dashboard</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #181818;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .dashboard-container {
+      width: 100%;
+      max-width: 900px;
+      background-color: #2a2a2a;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      display: none;
+    }
+
+    .dashboard-container h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .user-info p {
+      font-size: 18px;
+      color: #a7a7a7;
+    }
+
+    .coin-info {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #f1c40f;
+    }
+
+    .task-boxes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .task-box {
+      background-color: #333;
+      padding: 20px;
+      width: 200px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: background-color 0.3s ease;
+    }
+
+    .task-box h3 {
+      color: #f1f1f1;
+      margin: 0 0 10px;
+    }
+
+    .task-box p {
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .task-box button {
+      background-color: #1fd100;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .task-box button:hover {
+      background-color: #0e7d00;
+    }
+
+    .task-box.completed {
+      background-color: #3b9b56;
+    }
+
+    .task-box.completed button {
+      background-color: #27ae60;
+    }
+
+    .logout-btn {
+      background-color: #e74c3c;
+      color: #fff;
+      padding: 12px 25px;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .logout-btn:hover {
+      background-color: #c0392b;
+    }
+
+    .prize-list {
+      background-color: #333;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      margin-top: 30px;
+    }
+
+    .prize-list h3 {
+      color: #fff;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .prize-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: #fff;
+    }
+
+    .prize-list ul li {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    #loading-message {
+      color: white;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading-message">Loading dashboard, please wait...</div>
+
+  <div id="dashboard" class="dashboard-container">
+    <h1>Welcome, <span id="username"></span></h1>
+    <div class="user-info">
+      <p>Your tasks and coins are below.</p>
+    </div>
+
+    <div class="coin-info">
+      Coins: <span id="coins-value">Loading...</span>
+    </div>
+
+    <!-- Task Boxes -->
+    <div class="task-boxes">
+      <div class="task-box" id="task1">
+        <h3>Complete Tutorial</h3>
+        <p>Finish the onboarding tutorial.</p>
+        <button onclick="toggleTask('task1')">Mark as Complete</button>
+      </div>
+      <div class="task-box" id="task2">
+        <h3>Finish Project</h3>
+        <p>Work on the final project and submit.</p>
+        <button onclick="toggleTask('task2')">Mark as Complete</button>
+      </div>
+      <div class="task-box" id="task3">
+        <h3>Update Profile</h3>
+        <p>Update your profile with the latest information.</p>
+        <button onclick="toggleTask('task3')">Mark as Complete</button>
+      </div>
+    </div>
+
+    <!-- Prize List -->
+    <div class="prize-list">
+      <h3>Prize List</h3>
+      <ul>
+        <li>100 Coins - Custom Profile Theme</li>
+        <li>200 Coins - Premium Account Features</li>
+        <li>500 Coins - VIP Badge</li>
+        <li>1000 Coins - Exclusive Content Access</li>
+        <li>5000 Coins - Special Event Tickets</li>
+      </ul>
+    </div>
+
+    <button class="logout-btn" id="logoutButton">Log Out</button>
+  </div>
+
+  <!-- Include Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    // Function to initialize Supabase client
+    function initializeSupabase() {
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
+      return supabase.createClient(supabaseUrl, supabaseKey);
+    }
+
+    // Handle auth check and dashboard rendering
+    async function checkAuth() {
+      const supabase = initializeSupabase();
+      const { data: { user }, error } = await supabase.auth.getUser();
+
+      // Handle loading and dashboard display
+      const loadingMessage = document.getElementById('loading-message');
+      const dashboardContainer = document.getElementById('dashboard');
+      const usernameSpan = document.getElementById('username');
+
+      if (user) {
+        // User is authenticated, show dashboard
+        usernameSpan.textContent = user.email;
+        dashboardContainer.style.display = 'block';
+        loadingMessage.style.display = 'none';
+        await displayCoins(user.id); // Display user coins
+      } else {
+        // User is not authenticated, redirect to login page
+        window.location.href = '/pages/login.html';
+      }
+    }
+
+    // Function to get user's coin balance
+    async function getCoins(uuid) {
+      const supabase = initializeSupabase();
+      const { data, error } = await supabase
+        .from('memberstats')
+        .select('coins')
+        .eq('uuid', uuid)
+        .single();
+
+      if (error) {
+        console.error('Error fetching coins:', error);
+        return 0; // Return 0 if there's an error or no record found
+      }
+
+      return data.coins;
+    }
+
+    // Display the user's coins
+    async function displayCoins(uuid) {
+      const coins = await getCoins(uuid);
+      document.getElementById('coins-value').textContent = coins;
+    }
+
+    // Task toggle function to mark tasks as complete/incomplete
+    function toggleTask(taskId) {
+      const taskElement = document.getElementById(taskId);
+      taskElement.classList.toggle("completed");
+    }
+
+    // Wait for the window to load, then initialize Supabase and check auth
+    window.onload = checkAuth;
+
+    // Handle logout action
+    document.getElementById("logoutButton").addEventListener('click', async () => {
+      const supabase = initializeSupabase();
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Error logging out:', error.message);
+      } else {
+        window.location.href = '/pages/login.html';
+      }
+    });
+  </script>
+</body>
+</html>
