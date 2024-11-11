@@ -109,8 +109,6 @@
     </style>
 
 
-
-
 <div id="sfcsu66r8mh1lg2e79pgbxsqa2e2ubwdaqt"></div>
 <script type="text/javascript" src="https://counter6.optistats.ovh/private/counter.js?c=su66r8mh1lg2e79pgbxsqa2e2ubwdaqt&down=async" async></script>
 <br><a href=""></a><noscript><a href="https://www.freecounterstat.com" title="counter widget"><img src="https://counter6.optistats.ovh/private/freecounterstat.php?c=su66r8mh1lg2e79pgbxsqa2e2ubwdaqt" border="0" title="counter widget" alt="counter widget"></a></noscript>
@@ -268,6 +266,17 @@
 
 <!-- Code table for Steam game codes -->
 <div class="centered">
+    <!-- New buttons at the top-right -->
+    <div class="top-buttons">
+        <button class="donate-btn">
+            Donate a code <input type="text" class="code-input" placeholder="Enter code">
+        </button>
+        <button class="refresh-btn">
+            <span class="refresh-icon">&#x21bb;</span> Refresh Page
+        </button>
+        <button class="extra-btn" placeholder="Text here"></button>
+    </div>
+
     <table class="code-table">
         <tr>
             <th>Game</th>
@@ -316,20 +325,16 @@
 
 <script>
     function showCode(button) {
-        // Find the parent row (tr) and the code (span) element
         var row = button.closest('tr');
         var codeCell = row.querySelector('.code-cell span');
 
-        // Toggle the blur effect and opacity
         if (codeCell.style.filter === 'blur(5px)') {
-            // Remove the blur and transition to clear text
             codeCell.style.filter = 'blur(0px)';
-            button.textContent = 'Hide Code'; // Change button text to "Hide Code"
-            button.classList.add('hide'); // Optionally change button color
+            button.textContent = 'Hide Code';
+            button.classList.add('hide');
         } else {
-            // Reapply the blur effect and transition to blur text
             codeCell.style.filter = 'blur(5px)';
-            button.textContent = 'Show Code'; // Revert button text to "Show Code"
+            button.textContent = 'Show Code';
             button.classList.remove('hide');
         }
     }
@@ -340,9 +345,73 @@
     .code-table {
         width: 100%;
         border-collapse: collapse;
-        border: 2px solid #39FF14; /* Neon green border */
+        border: 2px solid #39FF14;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+        animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+        0% { box-shadow: 0 0 5px rgba(57, 255, 20, 0.7); }
+        100% { box-shadow: 0 0 15px rgba(57, 255, 20, 1); }
+    }
+
+    /* Position the new buttons in the top-right corner */
+    .top-buttons {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        gap: 15px;
+        z-index: 100;
+    }
+
+    .top-buttons button {
+        padding: 10px 15px;
+        font-size: 14px;
+        font-family: 'Roboto', sans-serif;
+        background-color: #222;
+        color: #39FF14;
+        border: 2px solid #39FF14;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .top-buttons button:hover {
+        background-color: #39FF14;
+        color: #111;
+    }
+
+    .donate-btn input {
+        padding: 5px;
+        margin-left: 5px;
+        font-size: 14px;
+        width: 120px; /* 18 characters width */
+        border: 1px solid #39FF14;
+        border-radius: 3px;
+        background-color: #111;
+        color: #eee;
+    }
+
+    .refresh-icon {
+        font-size: 16px;
+        animation: spin 1.2s infinite linear;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .extra-btn {
+        background-color: #222;
+        color: #39FF14;
+        border: 2px solid #39FF14;
+        padding: 10px 15px;
+        cursor: pointer;
     }
 
     /* Table headers */
@@ -351,14 +420,14 @@
         background-color: #222;
         color: #39FF14;
         font-weight: bold;
-        text-align: center; /* Changed to 'center' to align header text */
+        text-align: center;
         font-family: 'Roboto', sans-serif;
     }
 
     /* Table cells */
     .code-table td {
         padding: 10px;
-        text-align: center; /* This keeps the text centered in the cells */
+        text-align: center;
         font-family: 'Roboto', sans-serif;
         color: #eee;
     }
@@ -408,6 +477,7 @@
         margin-top: 20px;
     }
 </style>
+
 
 
 
