@@ -270,8 +270,9 @@
     <div class="top-buttons">
         <button class="donate-btn">
             Donate a code <input type="text" class="code-input" placeholder="Enter code">
+            <button class="submit-btn">Submit</button>
         </button>
-        <button class="refresh-btn">
+        <button class="refresh-btn" onclick="refreshPage()">
             <span class="refresh-icon">&#x21bb;</span> Refresh Page
         </button>
         <button class="extra-btn" placeholder="Text here"></button>
@@ -324,6 +325,7 @@
 </div>
 
 <script>
+    // Function to toggle code visibility
     function showCode(button) {
         var row = button.closest('tr');
         var codeCell = row.querySelector('.code-cell span');
@@ -337,6 +339,11 @@
             button.textContent = 'Show Code';
             button.classList.remove('hide');
         }
+    }
+
+    // Function to refresh the page
+    function refreshPage() {
+        location.reload();
     }
 </script>
 
@@ -356,10 +363,10 @@
         100% { box-shadow: 0 0 15px rgba(57, 255, 20, 1); }
     }
 
-    /* Position the new buttons in the top-right corner */
+    /* Position the new buttons just above the code table */
     .top-buttons {
         position: absolute;
-        top: 20px;
+        top: 10px;
         right: 20px;
         display: flex;
         gap: 15px;
@@ -385,6 +392,12 @@
         color: #111;
     }
 
+    /* Donate a code button input and submit button */
+    .donate-btn {
+        display: flex;
+        gap: 5px;
+    }
+
     .donate-btn input {
         padding: 5px;
         margin-left: 5px;
@@ -396,6 +409,16 @@
         color: #eee;
     }
 
+    .submit-btn {
+        padding: 5px 10px;
+        background-color: #39FF14;
+        color: #111;
+        border: 1px solid #39FF14;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Refresh icon */
     .refresh-icon {
         font-size: 16px;
         animation: spin 1.2s infinite linear;
@@ -406,6 +429,7 @@
         100% { transform: rotate(360deg); }
     }
 
+    /* Extra button */
     .extra-btn {
         background-color: #222;
         color: #39FF14;
@@ -479,16 +503,12 @@
 </style>
 
 
-
-
-    </div>
-
 <<!-- Input Form -->
 <div class="input-container">
     <form action="" method="POST">
         <div class="styled-input">
             <input type="text" name="key" required>
-            <label for="key">Get code updates</label>
+            <label for="key">Get fresh code updates</label>
         </div>
 
         <button type="submit" class="submit-btn">Sign up</button>
