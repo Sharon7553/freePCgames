@@ -8,11 +8,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://w0.peakpx.com/wallpaper/241/159/HD-wallpaper-black-stars-black-aesthetic.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #fff;
+            background-color: #000; /* Set the background of the entire body to black */
+            color: #fff; /* White text color for contrast */
             margin: 0;
             padding: 0;
             height: 100vh;
@@ -23,7 +20,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #222;
+            background-color: #222; /* Dark background for the nav bar */
             padding: 15px 20px;
             width: 100%;
             box-sizing: border-box;
@@ -135,10 +132,12 @@
         /* Steam Widgets */
         .steam-widgets {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Makes widgets responsive */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive layout for widgets */
             gap: 20px;
             padding: 20px;
+            background-color: #000; /* Ensure the background is black */
             margin-top: 20px;
+            box-sizing: border-box;
         }
 
         .steam-widgets iframe {
@@ -146,6 +145,7 @@
             height: 400px;
             border: 3px solid #4CAF50; /* Green border for the widgets */
             border-radius: 10px;
+            background-color: #000; /* Black background for each widget */
             box-sizing: border-box;
         }
 
@@ -157,7 +157,7 @@
 
         /* Footer */
         .footer {
-            background-color: #222;
+            background-color: #222; /* Dark background for the footer */
             color: #fff;
             padding: 20px 0;
             text-align: center;
@@ -214,12 +214,24 @@
                 <a href="store.html">Premium games</a>
                 <a href="About-us.html">About</a>
                 <a href="store.html">Store</a>
+                <!-- New Login Button -->
                 <a href="login.html" class="login-btn"><span>👤</span> Login</a>
+                <!-- New Register Button -->
                 <a href="sign-up.html" class="register-btn"><span>📝</span> Register</a>
+                <!-- New Account Button -->
                 <a href="dashboard.html" class="account-btn"><span>🏠</span> Account</a>
             </div>
         </nav>
     </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.menu');
+            const hamburger = document.querySelector('.hamburger');
+            menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+    </script>
 
     <h1>Free To Play On Steam</h1>
     <h3>Best rated free steam games by our members!</h3>
@@ -251,7 +263,10 @@
         <iframe src="https://store.steampowered.com/widget/2051620/" frameborder="0"></iframe>
     </div>
 
-    <div style="height: 50px;"></div>
+    <div style="height: 50px;"></div> <!-- Adds 20px of space -->
+
+    <br>
+    <br>
 
     <!-- Footer -->
     <div class="footer">
@@ -269,15 +284,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function toggleMenu() {
-            const menu = document.querySelector('.menu');
-            const hamburger = document.querySelector('.hamburger');
-            menu.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        }
-    </script>
 
 </body>
 </html>
