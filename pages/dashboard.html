@@ -128,16 +128,15 @@
     </div>
 
     <script>
-        // Supabase setup (replace these with your actual credentials)
-        const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace this with your actual Supabase key
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        // Ensure everything happens after DOM content is fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Supabase client only after the DOM is fully loaded
+            const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace this with your actual Supabase key
+            const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Ensure the code runs after the DOM content is fully loaded
-        document.addEventListener('DOMContentLoaded', async () => {
             // Fetch user info once the page is fully loaded
             const user = supabase.auth.user();
-            console.log("User:", user); // Debugging log
 
             // Check if user is authenticated
             if (user) {
