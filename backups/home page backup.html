@@ -211,7 +211,99 @@
 <br><a href=""></a><noscript><a href="https://www.freecounterstat.com" title="counter widget"><img src="https://counter6.optistats.ovh/private/freecounterstat.php?c=su66r8mh1lg2e79pgbxsqa2e2ubwdaqt" border="0" title="counter widget" alt="counter widget"></a></noscript>
 
 
-   <!DOCTYPE html>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Game Codes</title>
+
+
+    <style>
+        /* Styling for blurred codes */
+        .blurred {
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Optional: Add some basic styling for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .show-code-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .show-code-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+
+
+    <style>
+        /* Styling for blurred codes with a smooth transition */
+        .code-cell span {
+            filter: blur(5px); /* Apply blur effect */
+            opacity: 0; /* Initially hide the code */
+            transition: opacity 0.5s ease, filter 0.5s ease; /* Smooth fade-in and blur effect */
+        }
+
+        /* Optional: Add some basic styling for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .show-code-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .show-code-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Styling for the 'Hide Code' button (optional) */
+        .show-code-btn.hide {
+            background-color: #f44336; /* Red background for Hide button */
+        }
+    </style>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -255,18 +347,24 @@
             background-color: #45a049;
         }
 
-        .padlock {
-            margin-left: 8px;
-        }
-
         /* Styling for the 'Hide Code' button (optional) */
         .show-code-btn.hide {
             background-color: #f44336; /* Red background for Hide button */
         }
     </style>
 
-</head>
-<body>
+<!-- Input ----------------------------------------------------------------------------------------------------------------------------  Form -->
+
+
+
+<section id="hero" style="text-align: center; padding: 30px 20px 20px 20px; background-color: rgba(0, 0, 0, 0.7); color: #fff; margin-top: 4px;">
+    <h1 style="font-size: 4em; font-weight: bold; color: #ff7f00; text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.6); margin-bottom: 10px;">Unleash the Power of Free Gaming</h1>
+    <p style="font-size: 1.5em; color: #ddd; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4); margin-top: 0;"></p>
+</section>
+
+
+<!-- Input ----------------------------------------------------------------------------------------------------------------------------  Form -->
+
 
 <!-- Code table for Steam game codes -->
 <div class="centered">
@@ -279,7 +377,7 @@
         <button class="refresh-btn" onclick="refreshPage()">
             <span class="refresh-icon">&#x21bb;</span> Refresh
         </button>
-        <button class="extra-btn" placeholder="Text here">More codes&gt;</button>
+        <button class="extra-btn" placeholder="Text here">More codes></button>
     </div>
 
     <table class="code-table">
@@ -293,37 +391,37 @@
             <td>Tekken 7</td>
             <td>World wide</td>
             <td class="code-cell"><span>HH0AX-TRHYZ-FMZZW</span></td>
-            <td><button class="show-code-btn" onclick="toggleCodeVisibility(this)">🔓 Show Code <span class="padlock">🔒</span></button></td>
+            <td><button class="show-code-btn" onclick="nul(this)">🔓Show Code</button></td>
         </tr>
         <tr>
             <td>Invasion</td>
             <td>World wide</td>
             <td class="code-cell"><span>JICY7-RIRR5-X273V</span></td>
-            <td><button class="show-code-btn" onclick="toggleCodeVisibility(this)">🔓 Show Code <span class="padlock">🔒</span></button></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">🔒Show Code</button></td>
         </tr>
         <tr>
             <td>7 Days to Die</td>
             <td>World wide</td>
             <td class="code-cell"><span>4N44Y-JPII8-A8N2H</span></td>
-            <td><button class="show-code-btn" onclick="toggleCodeVisibility(this)">🔓 Show Code <span class="padlock">🔒</span></button></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">🔒Show Code</button></td>
         </tr>
         <tr>
             <td>Dying Light definitive edition</td>
             <td>World wide</td>
             <td class="code-cell"><span>LVRT0-2NTNX-GPM9H</span></td>
-            <td><button class="show-code-btn" onclick="toggleCodeVisibility(this)">🔓 Show Code <span class="padlock">🔒</span></button></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">🔒Show Code</button></td>
         </tr>
         <tr>
             <td>Mirrors Edge Comp</td>
             <td>EU Only</td>
             <td class="code-cell"><span>ZYKTZ-DRJAG-I08BM</span></td>
-            <td><button class="show-code-btn" onclick="toggleCodeVisibility(this)">🔓 Show Code <span class="padlock">🔒</span></button></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">🔒Show Code</button></td>
         </tr>
         <tr>
             <td>Two Worlds Epic Edition</td>
             <td>World wide</td>
             <td class="code-cell"><span>8RXGF-2N5GH-NX7BD</span></td>
-            <td><button class="show-code-btn" onclick="toggleCodeVisibility(this)">🔓 Show Code <span class="padlock">🔒</span></button></td>
+            <td><button class="show-code-btn" onclick="showCode(this)">🔓Show Code</button></td>
         </tr>
     </table>
 </div>
@@ -337,21 +435,16 @@
 
 <script>
     // Function to toggle code visibility
-    function toggleCodeVisibility(button) {
+    function showCode(button) {
         var row = button.closest('tr');
         var codeCell = row.querySelector('.code-cell span');
-        var padlockIcon = button.querySelector('.padlock');
-        
+
         if (codeCell.style.filter === 'blur(5px)') {
-            // Reveal code and change padlock to unlocked
             codeCell.style.filter = 'blur(0px)';
-            padlockIcon.textContent = '🔓'; // Unlock padlock
             button.textContent = 'Hide Code';
             button.classList.add('hide');
         } else {
-            // Hide code and revert padlock to locked
             codeCell.style.filter = 'blur(5px)';
-            padlockIcon.textContent = '🔒'; // Lock padlock
             button.textContent = 'Show Code';
             button.classList.remove('hide');
         }
@@ -371,10 +464,6 @@
         }, 2000); // Close after 2 seconds
     }
 </script>
-
-</body>
-</html>
-
 
 <style>
     /* Add neon green border to the table */
