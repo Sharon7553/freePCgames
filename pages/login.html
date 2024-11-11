@@ -1,6 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  <div class="container">
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">free.PC.games</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="menu">
+            <a href="https://www.freepcgames.online/">Home</a>
+            <a href="pages/games.html">Browser games</a>
+            <a href="pages/free-steam-games.html">Steam games</a>
+            <a href="pages/store.html">Premium games</a>
+            <a href="pages/About-us.html">About</a>
+            <a href="pages/store.html">Store</a>
+            
+            <!-- New Login Button -->
+            <a href="pages/login.html" class="login-btn"><span>👤</span> Login</a>
+            
+            <!-- New Register Button -->
+            <a href="pages/sign-up.html" class="register-btn"><span>📝</span> Register</a>
+            
+            <!-- New Account Button -->
+            <a href="pages/dashboard.html" class="account-btn"><span>🏠</span> Account</a>
+        </div>
+    </nav>
+</div>
+
+<style>
+    /* Add this CSS for the buttons styling */
+    nav .menu a {
+        padding: 8px 15px;
+        color: white;
+        font-size: 16px;
+        text-decoration: none;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Style for Login Button */
+    nav .menu a.login-btn {
+        background-color: #4CAF50;
+    }
+
+    nav .menu a.login-btn:hover {
+        background-color: #45a049;
+    }
+
+    nav .menu a.login-btn span {
+        margin-right: 5px;
+    }
+
+    /* Style for Register Button */
+    nav .menu a.register-btn {
+        background-color: #f39c12;
+    }
+
+    nav .menu a.register-btn:hover {
+        background-color: #e67e22;
+    }
+
+    nav .menu a.register-btn span {
+        margin-right: 5px;
+    }
+
+    /* Style for Account Button */
+    nav .menu a.account-btn {
+        background-color: #3498db;
+    }
+
+    nav .menu a.account-btn:hover {
+        background-color: #2980b9;
+    }
+
+    nav .menu a.account-btn span {
+        margin-right: 5px;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+    }
+
+    .hamburger div {
+        height: 3px;
+        background-color: white;
+    }
+
+    /* Menu Toggle */
+    .menu.active {
+        display: block;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+    }
+</style>
+
+<script>
+    function toggleMenu() {
+        const menu = document.querySelector('.menu');
+        menu.classList.toggle('active');
+    }
+</script>
+
+.
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
