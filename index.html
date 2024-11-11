@@ -268,7 +268,7 @@
 
 
 
-    <!-- Code table for Steam game codes -->
+<!-- Code table for Steam game codes -->
 <div class="centered">
     <table class="code-table">
         <tr>
@@ -320,14 +320,15 @@
 <script>
     function showCode(button) {
         var row = button.closest('tr');
-        var codeCell = row.querySelector('.code-cell span');
+        var codeCell = row.querySelector('.code-cell');
 
-        if (codeCell.style.display === 'none') {
-            codeCell.style.display = 'inline';
-            button.textContent = 'Hide Code';
+        // Toggle the display of the code
+        if (codeCell.style.display === 'none' || codeCell.style.display === '') {
+            codeCell.style.display = 'table-cell'; // Show the code cell
+            button.textContent = 'Hide Code'; // Change button text
         } else {
-            codeCell.style.display = 'none';
-            button.textContent = 'Show Code';
+            codeCell.style.display = 'none'; // Hide the code cell
+            button.textContent = 'Show Code'; // Change button text back
         }
     }
 </script>
@@ -411,28 +412,6 @@
         transform: scale(1.05);
     }
 </style>
-
-
-    <script>
-        function showCode(button) {
-            // Find the parent row (tr) and the code (span) element
-            var row = button.closest('tr');
-            var codeCell = row.querySelector('.code-cell span');
-
-            // Toggle the blur effect and opacity
-            if (codeCell.style.filter === 'blur(5px)') {
-                // Remove the blur and transition to clear text
-                codeCell.style.filter = 'blur(0px)';
-                button.textContent = 'Hide Code'; // Change button text to "Hide Code"
-                button.classList.add('hide'); // Optionally change button color
-            } else {
-                // Reapply the blur effect and transition to blur text
-                codeCell.style.filter = 'blur(5px)';
-                button.textContent = 'Show Code'; // Revert button text to "Show Code"
-                button.classList.remove('hide');
-            }
-        }
-    </script>
 
     </div>
 
