@@ -1,317 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <div class="container">
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">free.PC.games</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="menu">
+            <a href="https://www.freepcgames.online/">Home</a>
+            <a href="pages/games.html">Browser games</a>
+            <a href="pages/free-steam-games.html">Steam games</a>
+            <a href="pages/store.html">Premium games</a>
+            <a href="pages/About-us.html">About</a>
+            <a href="pages/store.html">Store</a>
+            
+            <!-- New Login Button -->
+            <a href="pages/login.html" class="login-btn"><span>👤</span> Login</a>
+            
+            <!-- New Register Button -->
+            <a href="pages/sign-up.html" class="register-btn"><span>📝</span> Register</a>
+            
+            <!-- New Account Button -->
+            <a href="pages/dashboard.html" class="account-btn"><span>🏠</span> Account</a>
+        </div>
+    </nav>
+</div>
+
+<style>
+    /* Add this CSS for the buttons styling */
+    nav .menu a {
+        padding: 8px 15px;
+        color: white;
+        font-size: 16px;
+        text-decoration: none;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Style for Login Button */
+    nav .menu a.login-btn {
+        background-color: #4CAF50;
+    }
+
+    nav .menu a.login-btn:hover {
+        background-color: #45a049;
+    }
+
+    nav .menu a.login-btn span {
+        margin-right: 5px;
+    }
+
+    /* Style for Register Button */
+    nav .menu a.register-btn {
+        background-color: #f39c12;
+    }
+
+    nav .menu a.register-btn:hover {
+        background-color: #e67e22;
+    }
+
+    nav .menu a.register-btn span {
+        margin-right: 5px;
+    }
+
+    /* Style for Account Button */
+    nav .menu a.account-btn {
+        background-color: #3498db;
+    }
+
+    nav .menu a.account-btn:hover {
+        background-color: #2980b9;
+    }
+
+    nav .menu a.account-btn span {
+        margin-right: 5px;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+    }
+
+    .hamburger div {
+        height: 3px;
+        background-color: white;
+    }
+
+    /* Menu Toggle */
+    .menu.active {
+        display: block;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+    }
+</style>
+
+<script>
+    function toggleMenu() {
+        const menu = document.querySelector('.menu');
+        menu.classList.toggle('active');
+    }
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Sign Up</title>
+
+
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #181818;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .dashboard-container {
-      max-width: 800px;
+      max-width: 500px;
       margin: 0 auto;
-      background-color: #1f1f1f;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-      display: none;
-    }
-
-    .dashboard-container h1 {
-      font-size: 32px;
-    }
-
-    .task-boxes {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .task-box {
-      background-color: #2c2c2c;
-      padding: 15px;
-      border-radius: 8px;
-      width: 45%;
-      margin: 10px 0;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-
-    .task-box.completed {
-      background-color: #3b9b56;
-    }
-
-    .task-box h3 {
-      margin-top: 0;
-    }
-
-    .task-box button {
-      background-color: #1fd100;
-      color: black;
-      padding: 8px 16px;
-      font-size: 14px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .task-box button:hover {
-      background-color: #0e7d00;
-    }
-
-    .logout-btn {
-      background-color: #e74c3c;
-      padding: 12px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    .logout-btn:hover {
-      background-color: #c0392b;
-    }
-
-    .user-info {
-      margin: 20px 0;
-      font-size: 18px;
-    }
-
-    #loading-message {
-      color: white;
-      font-size: 18px;
-      margin-top: 20px;
-    }
-
-    .coins {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #fff;
-      padding: 10px;
-      border-radius: 5px;
-      background-color: #2c2c2c;
-    }
-
-    .coins.glow-green {
-      animation: glow-green 1s ease-in-out infinite alternate;
-    }
-
-    .coins.glow-red {
-      animation: glow-red 1s ease-in-out infinite alternate;
-    }
-
-    @keyframes glow-green {
-      0% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00; }
-      100% { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00; }
-    }
-
-    @keyframes glow-red {
-      0% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000; }
-      100% { text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000; }
-    }
-
-    .claim-box {
-      background-color: #4CAF50;
-      padding: 15px;
-      border-radius: 8px;
-      width: 300px;
-      margin: 20px auto;
-      display: none;
-      cursor: pointer;
-    }
-
-    .claim-box h3 {
-      margin: 0;
-      color: white;
-    }
-
-    .affiliate-section {
-      background-color: #2c2c2c;
       padding: 20px;
-      margin-top: 30px;
-      border-radius: 8px;
     }
-
-    .affiliate-section h3 {
-      color: #ffcc00;
+    h2 {
+      text-align: center;
     }
-
-    .bullet-points {
-      text-align: left;
-      margin-top: 20px;
-    }
-
-    .bullet-points ul {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    .bullet-points ul li {
-      font-size: 18px;
+    .form-group {
       margin: 10px 0;
     }
-
-    .bullet-points ul li::before {
-      content: "🔹"; /* Bullet emoji */
-      margin-right: 10px;
+    .form-group label {
+      display: block;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .form-group button:hover {
+      background-color: #45a049;
+    }
+    .error-message {
+      color: red;
+      font-size: 14px;
+      display: none;
+    }
+    .success-message {
+      color: green;
+      font-size: 14px;
+      display: none;
     }
   </style>
 </head>
 <body>
 
-  <div id="loading-message">Loading dashboard, please wait...</div>
+  <h2>Sign Up</h2>
 
-  <div id="dashboard" class="dashboard-container">
-    <h1 id="greeting"></h1>
-    <div class="user-info">
-      <p>Welcome back, <span id="username"></span>! Here's your dashboard.</p>
+  <div id="error-message" class="error-message">Error: Could not create account. Please try again.</div>
+  <div id="success-message" class="success-message">Success! Please check your email to confirm your account.</div>
+
+  <form id="sign-up-form">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="Enter your email">
     </div>
-
-    <!-- Task Boxes -->
-    <div class="task-boxes">
-      <div class="task-box" id="task1">
-        <h3>Complete Tutorial</h3>
-        <p>Finish the onboarding tutorial.</p>
-        <button onclick="toggleTask('task1')">Mark as Complete</button>
-      </div>
-      <div class="task-box" id="task2">
-        <h3>Finish Project</h3>
-        <p>Work on the final project and submit.</p>
-        <button onclick="toggleTask('task2')">Mark as Complete</button>
-      </div>
-      <div class="task-box" id="task3">
-        <h3>Update Profile</h3>
-        <p>Update your profile with the latest information.</p>
-        <button onclick="toggleTask('task3')">Mark as Complete</button>
-      </div>
-      <div class="task-box" id="task4">
-        <h3>Complete Survey</h3>
-        <p>Answer a few questions to help us improve.</p>
-        <button onclick="toggleTask('task4')">Mark as Complete</button>
-      </div>
-      <div class="task-box" id="task5">
-        <h3>Submit Feedback</h3>
-        <p>Give us your thoughts on the platform.</p>
-        <button onclick="toggleTask('task5')">Mark as Complete</button>
-      </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required placeholder="Enter your password">
     </div>
-
-    <!-- Claim Daily Prize Box -->
-    <div id="claim-box" class="claim-box">
-      <h3>Claim Your 50 Coins for Signing In Today!</h3>
+    <div class="form-group">
+      <button type="submit">Sign Up</button>
     </div>
-
-    <button class="logout-btn" id="logoutButton">Log Out</button>
-
-    <!-- Bullet Points Section -->
-    <div class="bullet-points">
-      <h3>Key Features</h3>
-      <ul>
-        <li>👨‍💻 Easy to Use Dashboard</li>
-        <li>💸 Daily Sign-In Rewards</li>
-        <li>🚀 Progress Tracking</li>
-        <li>📈 Project Management Tools</li>
-        <li>🔒 Secure User Authentication</li>
-      </ul>
-    </div>
-
-    <!-- Affiliate Section -->
-    <div class="affiliate-section">
-      <h3>Affiliate Program</h3>
-      <p>Earn $10 for each friend you refer! Share your referral code today!</p>
-      <a href="#">Sign Up Now</a>
-    </div>
-  </div>
-
-  <div class="coins" id="coins">$COINS: 0</div>
+  </form>
 
   <!-- Include Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
+    // Function to initialize Supabase client
     function initializeSupabase() {
-      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-      const supabaseKey = 'your-supabase-key'; // Replace with your Supabase key
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
       return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
-    async function checkAuth() {
-      const supabase = initializeSupabase();
-      const { data: { user }, error } = await supabase.auth.getUser();
+    // Handle form submission
+    function handleSignUp(supabase) {
+      const form = document.getElementById('sign-up-form');
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
 
-      if (user) {
-        document.getElementById('username').textContent = user.email;
-        document.getElementById('greeting').textContent = getGreeting();
-        document.getElementById('dashboard').style.display = 'block';
-        document.getElementById('loading-message').style.display = 'none';
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent the default form submission
 
-        // Check if user has claimed the daily prize
-        checkDailyPrize();
-      } else {
-        window.location.href = '/login.html';
-      }
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Hide any previous messages
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+
+        try {
+          // Call Supabase signUp method
+          const { user, error } = await supabase.auth.signUp({
+            email: email,
+            password: password
+          });
+
+          if (error) {
+            // If an error occurs
+            errorMessage.style.display = 'block';
+            console.error('Error signing up:', error.message);
+          } else {
+            // If sign-up is successful
+            successMessage.style.display = 'block';
+            console.log('User signed up:', user);
+          }
+        } catch (error) {
+          // Handle other errors
+          errorMessage.style.display = 'block';
+          console.error('Error signing up:', error);
+        }
+      });
     }
 
-    function getGreeting() {
-      const hour = new Date().getHours();
-      if (hour < 12) return "Good Morning!";
-      if (hour < 18) return "Good Afternoon!";
-      return "Good Evening!";
-    }
-
-    async function checkDailyPrize() {
-      const lastClaimed = localStorage.getItem('lastClaimed');
-      const currentTime = new Date().getTime();
-
-      // If 24 hours have passed since last claim
-      if (!lastClaimed || currentTime - lastClaimed >= 86400000) {
-        document.getElementById('claim-box').style.display = 'block';
-      }
-    }
-
-    document.getElementById('claim-box').addEventListener('click', async () => {
-      const coinsElement = document.getElementById('coins');
-      let currentCoins = parseInt(coinsElement.textContent.replace('$COINS: ', ''));
-
-      currentCoins += 50; // Add 50 coins to the total
-      coinsElement.textContent = `$COINS: ${currentCoins}`;
-      coinsElement.classList.add('glow-green');
-
-      setTimeout(() => {
-        coinsElement.classList.remove('glow-green');
-      }, 1000);
-
-      // Save the claim time
-      localStorage.setItem('lastClaimed', new Date().getTime());
-      document.getElementById('claim-box').style.display = 'none';
-    });
-
-    function toggleTask(taskId) {
-      const taskElement = document.getElementById(taskId);
-      taskElement.classList.toggle("completed");
-    }
-
-    document.getElementById("logoutButton").addEventListener('click', async () => {
-      const supabase = initializeSupabase();
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error('Error logging out:', error.message);
-      } else {
-        window.location.href = '/login.html';
-      }
-    });
-
-    window.onload = checkAuth;
+    // Wait for the window to load, then initialize Supabase and set up the form
+    window.onload = function() {
+      const supabase = initializeSupabase();  // Initialize Supabase
+      handleSignUp(supabase);  // Handle the sign-up process
+    };
   </script>
 
 </body>
