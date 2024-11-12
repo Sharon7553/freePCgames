@@ -190,9 +190,9 @@
       <a href="store.html">Premium games</a>
       <a href="About-us.html">About</a>
       <a href="store.html">Store</a>
-      <a href="login.html" class="login-btn"><span>👤</span> Login</a>
-      <a href="sign-up.html" class="register-btn"><span>📝</span> Register</a>
-      <a href="dashboard.html" class="account-btn"><span>🏠</span> Account</a>
+      <a href="pages/login.html" class="login-btn"><span>👤</span> Login</a>
+      <a href="pages/sign-up.html" class="register-btn"><span>📝</span> Register</a>
+      <a href="pages/dashboard.html" class="account-btn"><span>🏠</span> Account</a>
     </div>
   </nav>
 
@@ -385,21 +385,92 @@
 </head>
 <body>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Game Codes</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #111;
+            color: #eee;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #39FF14;
+            margin-top: 20px;
+        }
+
+        /* Game Codes Grid Layout */
+        .code-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+            border: 2px solid #39FF14;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        .code-table div {
+            background-color: #222;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .code-table .game-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .code-table .code-cell span {
+            filter: blur(5px); /* By default, blur the code */
+        }
+
+        .show-code-btn {
+            background-color: #39FF14;
+            color: #111;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .show-code-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.9);
+        }
+
+        .padlock {
+            margin-left: 8px;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(57, 255, 20, 0.7); }
+            100% { box-shadow: 0 0 15px rgba(57, 255, 20, 1); }
+        }
+
+    </style>
+</head>
+<body>
+
     <h1>Welcome, fellow gamer!</h1>
 
     <div class="centered">
-        <!-- Buttons above the table -->
-        <div class="top-buttons">
-            <button class="donate-btn">
-                Donate game code <input type="text" class="code-input" placeholder="Enter code">
-                <button class="submit-btn" onclick="showPopup()">Submit</button>
-            </button>
-            <button class="refresh-btn" onclick="refreshPage()">
-                <span class="refresh-icon">&#x21bb;</span> Refresh
-            </button>
-            <a href="pages/store.html">Store</a>
-            <button class="extra-btn" href="pages/sign-up.html">More codes &gt;</button>
-        </div>
 
         <!-- Game Codes Grid -->
         <div class="code-table">
@@ -407,86 +478,80 @@
                 <div class="game-name">Tekken 7</div>
                 <div class="availability">Worldwide</div>
                 <div class="code-cell"><span>HH0AX-TRHYZ-FMZZW</span></div>
-                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code <span class="padlock">🔒</span></button>
+                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">
+                    Show Code <span class="padlock">🔒</span>
+                </button>
             </div>
             <div>
                 <div class="game-name">Invasion</div>
                 <div class="availability">Worldwide</div>
                 <div class="code-cell"><span>JICY7-RIRR5-X273V</span></div>
-                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code <span class="padlock">🔒</span></button>
+                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">
+                    Show Code <span class="padlock">🔒</span>
+                </button>
             </div>
             <div>
                 <div class="game-name">7 Days to Die</div>
                 <div class="availability">Worldwide</div>
                 <div class="code-cell"><span>4N44Y-JPII8-A8N2H</span></div>
-                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code <span class="padlock">🔒</span></button>
+                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">
+                    Show Code <span class="padlock">🔒</span>
+                </button>
             </div>
             <div>
                 <div class="game-name">Dying Light Definitive Edition</div>
                 <div class="availability">Worldwide</div>
                 <div class="code-cell"><span>LVRT0-2NTNX-GPM9H</span></div>
-                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code <span class="padlock">🔒</span></button>
+                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">
+                    Show Code <span class="padlock">🔒</span>
+                </button>
             </div>
             <div>
                 <div class="game-name">Mirrors Edge Comp</div>
                 <div class="availability">EU Only</div>
                 <div class="code-cell"><span>ZYKTZ-DRJAG-I08BM</span></div>
-                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code <span class="padlock">🔒</span></button>
+                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">
+                    Show Code <span class="padlock">🔒</span>
+                </button>
             </div>
             <div>
                 <div class="game-name">Two Worlds Epic Edition</div>
                 <div class="availability">Worldwide</div>
                 <div class="code-cell"><span>8RXGF-2N5GH-NX7BD</span></div>
-                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code <span class="padlock">🔒</span></button>
+                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">
+                    Show Code <span class="padlock">🔒</span>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Popup for thanks -->
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <span class="popup-message">Thanks! Code received!</span>
-        </div>
-    </div>
-
     <script>
-        // Function to toggle code visibility
+        // Function to toggle code visibility and padlock state
         function toggleCodeVisibility(button) {
             var row = button.closest('div');
             var codeCell = row.querySelector('.code-cell span');
             var padlockIcon = button.querySelector('.padlock');
-            
+
+            // If the code is blurred, unblur it, and unlock the padlock
             if (codeCell.style.filter === 'blur(5px)' || !codeCell.style.filter) {
-                // Unblur the code and change padlock to unlocked
-                codeCell.style.filter = 'blur(0px)';
+                codeCell.style.filter = 'blur(0px)';  // Unblur the code
                 padlockIcon.textContent = '🔓'; // Unlock padlock
-                button.textContent = 'Hide Code';
-                button.style.backgroundColor = '#FF5C5C'; // Turn button red
-            } else {
-                // Blur the code and change padlock to locked
-                codeCell.style.filter = 'blur(5px)';
+                button.textContent = 'Hide Code'; // Change button text
+                button.style.backgroundColor = '#FF5C5C'; // Change button color
+            }
+            // If the code is already visible, keep it visible and change back the padlock
+            else {
+                codeCell.style.filter = 'blur(5px)'; // Reblur the code
                 padlockIcon.textContent = '🔒'; // Lock padlock
-                button.textContent = 'Show Code';
+                button.textContent = 'Show Code'; // Change button text back
                 button.style.backgroundColor = '#39FF14'; // Reset button color
             }
         }
-
-        // Function to refresh the page
-        function refreshPage() {
-            location.reload();
-        }
-
-        // Show popup on submit
-        function showPopup() {
-            var popup = document.getElementById("popup");
-            popup.style.display = "block";
-            setTimeout(function () {
-                popup.style.display = "none";
-            }, 2000); // Close after 2 seconds
-        }
     </script>
+
 </body>
 </html>
+
 
 
 
