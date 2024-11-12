@@ -1,115 +1,223 @@
-// Initialize Supabase client
-function initializeSupabase() {
-  const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
-  const supabaseKey = 'your-supabase-anon-key'; // Replace with your Supabase Anon key
-  return supabase.createClient(supabaseUrl, supabaseKey);
-}
-
-// Check if user is authenticated
-async function checkAuth() {
-  const supabase = initializeSupabase();
-  const { data: { user }, error } = await supabase.auth.getUser();
-
-  const loadingMessage = document.getElementById('loading-message');
-  const dashboardContainer = document.getElementById('dashboard');
-  const usernameSpan = document.getElementById('username');
-
-  if (user) {
-    usernameSpan.textContent = user.email;
-    dashboardContainer.style.display = 'block';
-    loadingMessage.style.display = 'none';
-    await fetchCoinBalance(user.id); // Use user.id (UUID) here
-  } else {
-    console.log("User not authenticated, redirecting to login.");
-    window.location.href = '/pages/login.html';
-  }
-}
-
-// Fetch coin balance from Supabase using user_id
-async function fetchCoinBalance(userId) {
-  const supabase = initializeSupabase();
-  const { data, error } = await supabase
-    .from('user_rewards')
-    .select('coins')
-    .eq('user_id', userId) // Use user_id (UUID) here
-    .single();
-
-  if (error) {
-    console.error('Error fetching coin balance:', error.message);
-  } else {
-    document.getElementById('coinBalance').textContent = data.coins;
-  }
-}
-
-// Reward coins after watching the video
-let videoTimer;
-let timeLeft = 30; // 30 seconds timer
-
-function startVideo() {
-  const video = document.getElementById('videoPlayer');
-  const timerDisplay = document.getElementById('timer');
-  const startButton = document.getElementById('startVideoButton');
-  
-  // Disable the button while watching the video
-  startButton.disabled = true;
-
-  // Start the timer countdown
-  video.play();
-  videoTimer = setInterval(function() {
-    timeLeft--;
-    timerDisplay.textContent = `Time left: ${timeLeft}s`;
-
-    if (timeLeft <= 0) {
-      clearInterval(videoTimer); // Stop the timer
-      rewardCoins(); // Reward coins after 30 seconds
-      startButton.disabled = false; // Re-enable the button
-      timeLeft = 30; // Reset the timer
-      timerDisplay.textContent = ''; // Clear timer display
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #181818;
+      color: white;
+      text-align: center;
+      padding: 20px;
     }
-  }, 1000);
-}
 
-// Update the user's coin balance after watching the video
-async function rewardCoins() {
-  const supabase = initializeSupabase();
-  const userId = (await supabase.auth.getUser()).data.user.id; // Get user.id (UUID)
-  const coinsToAdd = 5; // Reward 5 coins for watching the video
+    .dashboard-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #1f1f1f;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      display: none;
+    }
 
-  // Update the coins in the database
-  const { data, error } = await supabase
-    .from('user_rewards')
-    .select('coins')
-    .eq('user_id', userId) // Use user_id (UUID) here
-    .single();
+    .coin-section {
+      margin-top: 30px;
+      font-size: 18px;
+    }
 
-  if (error) {
-    console.error('Error fetching coin balance:', error.message);
-    return;
-  }
+    .coin-section button {
+      background-color: #3498db;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
 
-  const newBalance = data.coins + coinsToAdd;
-  const { updateError } = await supabase
-    .from('user_rewards')
-    .update({ coins: newBalance })
-    .eq('user_id', userId); // Use user_id (UUID) here
+    .coin-section button:hover {
+      background-color: #2980b9;
+    }
 
-  if (updateError) {
-    console.error('Error updating coin balance:', updateError.message);
-  } else {
-    document.getElementById('coinBalance').textContent = newBalance;
-  }
-}
+    /* Video section styles */
+    .video-section {
+      margin-top: 30px;
+    }
 
-// Log out user
-document.getElementById("logoutButton").addEventListener('click', async () => {
-  const supabase = initializeSupabase();
-  const { error } = await supabase.auth.signOut();
-  if (error) {
-    console.error('Error logging out:', error.message);
-  } else {
-    window.location.href = 'login.html'; // Redirect after logout
-  }
-});
+    .video-section button {
+      background-color: #2ecc71;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
 
-// Check authentication when the page loads
-window.onload = checkAuth;
+    .video-section button:hover {
+      background-color: #27ae60;
+    }
+
+    /* Timer section */
+    .timer-section {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #f39c12;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading-message">Loading dashboard, please wait...</div>
+
+  <div id="dashboard" class="dashboard-container">
+    <h1>Welcome, <span id="username"></span></h1>
+    <div class="user-info">
+      <p>Here are your tasks. Keep track of your progress!</p>
+    </div>
+
+    <!-- Coin Section -->
+    <div class="coin-section">
+      <h2>Coins: <span id="coinBalance">0</span></h2>
+      <button onclick="updateCoins('add')">Add Coins</button>
+    </div>
+
+    <!-- Video Section -->
+    <div class="video-section">
+      <video id="videoPlayer" width="320" height="240" controls>
+        <source src="path-to-your-video.mp4" type="video/mp4">
+      </video>
+      <button id="startVideoButton" onclick="startVideo()">Watch Video for Coins</button>
+      <div id="timer" class="timer-section"></div>
+    </div>
+
+    <button class="logout-btn" id="logoutButton">Log Out</button>
+  </div>
+
+  <!-- Include Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <script>
+    // Initialize Supabase client
+    function initializeSupabase() {
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
+      const supabaseKey = 'your-supabase-anon-key'; // Replace with your Supabase Anon key
+      return supabase.createClient(supabaseUrl, supabaseKey);
+    }
+
+    // Check if user is authenticated
+    async function checkAuth() {
+      const supabase = initializeSupabase();
+      const { data: { user }, error } = await supabase.auth.getUser();
+
+      const loadingMessage = document.getElementById('loading-message');
+      const dashboardContainer = document.getElementById('dashboard');
+      const usernameSpan = document.getElementById('username');
+
+      if (user) {
+        usernameSpan.textContent = user.email;
+        dashboardContainer.style.display = 'block';
+        loadingMessage.style.display = 'none';
+        await fetchCoinBalance(user.id); // Use user.id (UUID) here
+      } else {
+        console.log("User not authenticated, redirecting to login.");
+        window.location.href = '/pages/login.html';
+      }
+    }
+
+    // Fetch coin balance from Supabase using user_id
+    async function fetchCoinBalance(userId) {
+      const supabase = initializeSupabase();
+      const { data, error } = await supabase
+        .from('user_rewards')
+        .select('coins')
+        .eq('user_id', userId) // Use user_id (UUID) here
+        .single();
+
+      if (error) {
+        console.error('Error fetching coin balance:', error.message);
+      } else {
+        document.getElementById('coinBalance').textContent = data.coins;
+      }
+    }
+
+    // Reward coins after watching the video
+    let videoTimer;
+    let timeLeft = 30; // 30 seconds timer
+
+    function startVideo() {
+      const video = document.getElementById('videoPlayer');
+      const timerDisplay = document.getElementById('timer');
+      const startButton = document.getElementById('startVideoButton');
+      
+      // Disable the button while watching the video
+      startButton.disabled = true;
+
+      // Start the timer countdown
+      video.play();
+      videoTimer = setInterval(function() {
+        timeLeft--;
+        timerDisplay.textContent = `Time left: ${timeLeft}s`;
+
+        if (timeLeft <= 0) {
+          clearInterval(videoTimer); // Stop the timer
+          rewardCoins(); // Reward coins after 30 seconds
+          startButton.disabled = false; // Re-enable the button
+          timeLeft = 30; // Reset the timer
+          timerDisplay.textContent = ''; // Clear timer display
+        }
+      }, 1000);
+    }
+
+    // Update the user's coin balance after watching the video
+    async function rewardCoins() {
+      const supabase = initializeSupabase();
+      const userId = (await supabase.auth.getUser()).data.user.id; // Get user.id (UUID)
+      const coinsToAdd = 5; // Reward 5 coins for watching the video
+
+      // Update the coins in the database
+      const { data, error } = await supabase
+        .from('user_rewards')
+        .select('coins')
+        .eq('user_id', userId) // Use user_id (UUID) here
+        .single();
+
+      if (error) {
+        console.error('Error fetching coin balance:', error.message);
+        return;
+      }
+
+      const newBalance = data.coins + coinsToAdd;
+      const { updateError } = await supabase
+        .from('user_rewards')
+        .update({ coins: newBalance })
+        .eq('user_id', userId); // Use user_id (UUID) here
+
+      if (updateError) {
+        console.error('Error updating coin balance:', updateError.message);
+      } else {
+        document.getElementById('coinBalance').textContent = newBalance;
+      }
+    }
+
+    // Log out user
+    document.getElementById("logoutButton").addEventListener('click', async () => {
+      const supabase = initializeSupabase();
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Error logging out:', error.message);
+      } else {
+        window.location.href = 'login.html'; // Redirect after logout
+      }
+    });
+
+    // Check authentication when the page loads
+    window.onload = checkAuth;
+  </script>
+</body>
+</html>
