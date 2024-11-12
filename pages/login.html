@@ -4,14 +4,99 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  
+
   <style>
-    /* Your styles here */
+    /* Navbar Styles */
+    nav {
+      background-color: #333;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    .logo {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .menu {
+      display: flex;
+      list-style-type: none;
+      margin: 0;
+    }
+    .menu a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-left: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .menu a:hover {
+      background-color: #575757;
+    }
+
+    /* Buttons */
+    .login-btn {
+      background-color: #4CAF50;
+    }
+    .register-btn {
+      background-color: #f39c12;
+    }
+    .account-btn {
+      background-color: #3498db;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+      cursor: pointer;
+    }
+    .hamburger div {
+      height: 3px;
+      background-color: white;
+    }
+
+    /* Mobile Responsiveness */
+    @media screen and (max-width: 768px) {
+      .menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        background-color: #333;
+        width: 100%;
+      }
+      .menu.active {
+        display: flex;
+      }
+      .menu a {
+        text-align: center;
+        padding: 15px;
+        margin-left: 0;
+        border-top: 1px solid #575757;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* Body and Form Styles */
     body {
       font-family: Arial, sans-serif;
-      max-width: 500px;
-      margin: 0 auto;
-      padding: 20px;
+      margin: 0;
+      padding: 80px 20px 20px; /* Space for the fixed navbar */
     }
     h2 {
       text-align: center;
@@ -56,11 +141,15 @@
   <!-- Navigation Bar -->
   <nav>
     <div class="logo">free.PC.games</div>
+    
+    <!-- Hamburger for Mobile -->
     <div class="hamburger" onclick="toggleMenu()">
       <div></div>
       <div></div>
       <div></div>
     </div>
+
+    <!-- Menu Links -->
     <div class="menu">
       <a href="https://www.freepcgames.online/">Home</a>
       <a href="games.html">Browser games</a>
@@ -74,7 +163,6 @@
     </div>
   </nav>
 
-  <!-- Login Form -->
   <h2>Login</h2>
 
   <div id="error-message" class="error-message">Error: Could not log in. Please check your credentials and try again.</div>
@@ -96,25 +184,37 @@
 
   <!-- Include Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
   <script>
-    let supabase;  // Declare supabase globally
-    
     // Function to initialize Supabase client
     function initializeSupabase() {
       const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
       const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
-      supabase = window.supabase.createClient(supabaseUrl, supabaseKey); // Create supabase client
+      return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
+    // Rate-limiting logic
+    let lastLoginAttempt = 0;
+    const loginCooldown = 5000; // 5 seconds cooldown
+
     // Handle form submission
-    function handleLogin() {
+    function handleLogin(supabase) {
       const form = document.getElementById('login-form');
       const errorMessage = document.getElementById('error-message');
       const successMessage = document.getElementById('success-message');
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault(); // Prevent the default form submission
+
+        // Check if the user is rate-limited
+        const currentTime = Date.now();
+        if (currentTime - lastLoginAttempt < loginCooldown) {
+          errorMessage.textContent = 'Please wait before trying again.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+
+        // Update last login attempt time
+        lastLoginAttempt = currentTime;
 
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
@@ -154,9 +254,21 @@
 
     // Wait for the window to load, then initialize Supabase and set up the form
     window.onload = function() {
-      initializeSupabase();  // Initialize Supabase
-      handleLogin();  // Handle the login process
+      const supabase = initializeSupabase();  // Initialize Supabase
+      handleLogin(supabase);  // Handle the login process
     };
+  </script>
+
+  <script>
+    // After login or signup logic
+    async function afterLogin() {
+      const user = supabase.auth.user(); // Get current logged-in user
+
+      if (user) {
+        console.log('User logged in:', user.email);
+        await addUserToRewards(user.email);  // Add them to user_rewards table
+      }
+    }
   </script>
 
 </body>
