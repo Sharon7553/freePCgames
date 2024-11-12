@@ -218,6 +218,40 @@
 
     window.onload = checkAuth;
 
+    // Function to reward coins after 30 seconds of watching a video
+async function rewardCoins(email) {
+  const supabase = initializeSupabase();
+
+  // Fetch the current coins for the user
+  const { data, error } = await supabase
+    .from('user_rewards')  // The table you created to store user rewards
+    .select('coins')
+    .eq('email', email)  // Make sure you match the user's email
+    .single();  // We only expect one row
+
+  if (error) {
+    console.error('Error fetching coins:', error);
+    return;
+  }
+
+  // Add coins (e.g., 10 coins after video)
+  const newCoins = data.coins + 10;  // Adding 10 coins
+
+  // Update the coins in the table
+  const { error: updateError } = await supabase
+    .from('user_rewards')
+    .update({ coins: newCoins, rewarded_at: new Date() })  // Set the new coin count and timestamp
+    .eq('email', email);  // Make sure we update the right user
+
+  if (updateError) {
+    console.error('Error updating coins:', updateError);
+  } else {
+    console.log('Coins updated successfully!');
+  }
+}
+
+
+
   </script>
 
 </body>
