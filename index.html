@@ -1,6 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+
+  <style>
+    /* General styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    /* Navigation bar styling */
+    nav {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .hamburger {
+      cursor: pointer;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+    }
+
+    .hamburger div {
+      height: 3px;
+      background-color: white;
+    }
+
+    .menu {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    nav .menu a {
+      padding: 8px 15px;
+      color: white;
+      font-size: 16px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav .menu a:hover {
+      background-color: #555;
+    }
+
+    /* Mobile View */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .menu.active {
+        display: flex;
+      }
+
+      .menu a {
+        padding: 10px;
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+    /* Form Styling */
+    .form-container {
+      margin-top: 80px; /* to avoid overlap with fixed navbar */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+
+    .form-box {
+      width: 50%; /* Form takes up half of the screen */
+      max-width: 500px;
+      background-color: white;
+      padding: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-group button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-group button:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      display: none;
+    }
+
+    .success-message {
+      color: green;
+      font-size: 14px;
+      display: none;
+    }
+
+    /* Image styling */
+    .form-box img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    /* Mobile Responsive Form and Image */
+    @media (max-width: 768px) {
+      .form-box {
+        width: 80%; /* form takes up 80% of the screen width */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="logo">free.PC.games</div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="menu">
+      <a href="https://www.freepcgames.online/">Home</a>
+      <a href="games.html">Browser games</a>
+      <a href="free-steam-games.html">Steam games</a>
+      <a href="store.html">Premium games</a>
+      <a href="About-us.html">About</a>
+      <a href="store.html">Store</a>
+      <a href="login.html" class="login-btn"><span>👤</span> Login</a>
+      <a href="sign-up.html" class="register-btn"><span>📝</span> Register</a>
+      <a href="dashboard.html" class="account-btn"><span>🏠</span> Account</a>
+    </div>
+  </nav>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steam Game Codes</title>
@@ -257,18 +456,16 @@
             var codeCell = row.querySelector('.code-cell span');
             var padlockIcon = button.querySelector('.padlock');
             
-            if (codeCell.style.filter === 'blur(5px)' || !codeCell.style.filter) {
-                // Unblur the code and change padlock to unlocked
+            if (codeCell.style.filter === 'blur(5px)') {
                 codeCell.style.filter = 'blur(0px)';
                 padlockIcon.textContent = '🔓'; // Unlock padlock
                 button.textContent = 'Hide Code';
-                button.style.backgroundColor = '#FF5C5C'; // Turn button red
+                button.classList.add('hide');
             } else {
-                // Blur the code and change padlock to locked
                 codeCell.style.filter = 'blur(5px)';
                 padlockIcon.textContent = '🔒'; // Lock padlock
                 button.textContent = 'Show Code';
-                button.style.backgroundColor = '#39FF14'; // Reset button color
+                button.classList.remove('hide');
             }
         }
 
@@ -287,4 +484,132 @@
         }
     </script>
 </body>
+</html>
+
+
+
+<h1>Premium Titles</h1>
+    <h3>Your activation code will be sent instantly!</h3>
+
+    <!-- Ecwid Store and Widgets -->
+    <div class="store-section">
+       
+        <div id="my-store-109248026"></div>
+        <script data-cfasync="false" type="text/javascript" src="https://app.ecwid.com/script.js?109248026&data_platform=code&data_date=2024-10-24" charset="utf-8"></script>
+        <script type="text/javascript">
+            xProductBrowser("categoriesPerRow=3", "views=grid(20,3) list(60) table(60)", "categoryView=grid", "searchView=list", "id=my-store-109248026");
+        </script>
+    </div>
+
+
+<!-- Link to your main.js file -->
+ <script src="js/main.js"></script>
+
+ <script>
+    function toggleMenu() {
+        const menu = document.querySelector('.menu');
+        const hamburger = document.querySelector('.hamburger');
+        
+        menu.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    }
+</script>
+
+
+</body>
+
+<!-- footer -->
+<div class="footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <p>&copy; 2025 <span>freePCgames</span></p>
+        </div>
+        <div class="footer-right">
+            <ul>
+                <li><a href="pages/about-us">About Us</a></li>
+                <li><a href="pages/privacy-policy">Privacy Policy</a></li>
+                <li><a href="pages/terms-of-service">Terms of Service</a></li>
+                <li><a href="pages/partners">Partners</a></li>
+                <li><a href="pages/contact-us.html">Contact-us</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="js/main/js.js"></script>
+
+<style>
+    /* Basic styles for the footer */
+    .footer {
+        background: #1f1f1f; /* Dark background for contrast */
+        color: #fff;
+        font-family: 'Roboto', sans-serif;
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    .footer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .footer-left p {
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .footer-left span {
+        font-weight: bold;
+        color: #ff7f00; /* Accent color */
+    }
+
+    .footer-right ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 20px;
+    }
+
+    .footer-right ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+    }
+
+    .footer-right ul li a:hover {
+        color: #ff7f00; /* Hover effect */
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .social-icon {
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        font-size: 24px;
+        color: #fff;
+        transition: color 0.3s ease;
+    }
+
+    .social-icon:hover {
+        color: #ff7f00;
+    }
+
+    .facebook { content: '\f09a'; }
+    .twitter { content: '\f099'; }
+    .instagram { content: '\f16d'; }
+    .youtube { content: '\f167'; }
+</style>
+ 
+
 </html>
