@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <div class="container">
-
     <!-- Navigation Bar -->
     <nav>
         <div class="logo">free.PC.games</div>
@@ -11,7 +10,7 @@
             <div></div>
             <div></div>
         </div>
-                </div>
+        </div>
         <div class="menu">
             <a href="https://www.freepcgames.online/">Home</a>
             <a href="games.html">Browser games</a>
@@ -119,10 +118,10 @@
         menu.classList.toggle('active');
     }
 </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
-
 
   <style>
     body {
@@ -176,6 +175,11 @@
   <div id="success-message" class="success-message">Success! Please check your email to confirm your account.</div>
 
   <form id="sign-up-form">
+    <!-- Added Username Field -->
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required placeholder="Enter your username">
+    </div>
     <div class="form-group">
       <label for="email">Email</label>
       <input type="email" id="email" name="email" required placeholder="Enter your email">
@@ -195,7 +199,7 @@
     // Function to initialize Supabase client
     function initializeSupabase() {
       const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
+      const supabaseKey = 'your-supabase-anon-key'; // Replace with your Supabase anon key
       return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
@@ -208,6 +212,7 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault(); // Prevent the default form submission
 
+        const username = document.getElementById('username').value;
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
@@ -227,9 +232,24 @@
             errorMessage.style.display = 'block';
             console.error('Error signing up:', error.message);
           } else {
-            // If sign-up is successful
-            successMessage.style.display = 'block';
-            console.log('User signed up:', user);
+            // If sign-up is successful, insert the username into a custom users table
+            const { data, error: insertError } = await supabase
+              .from('users') // Assuming you have a 'users' table
+              .insert([
+                {
+                  email: email,
+                  username: username.toLowerCase(), // Ensure username is stored in lowercase
+                }
+              ]);
+
+            if (insertError) {
+              errorMessage.style.display = 'block';
+              console.error('Error saving username:', insertError.message);
+            } else {
+              // If username is inserted successfully
+              successMessage.style.display = 'block';
+              console.log('User signed up and username saved:', user);
+            }
           }
         } catch (error) {
           // Handle other errors
