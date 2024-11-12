@@ -121,12 +121,16 @@
     }
 </script>
 
+
+
+
 .
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <style>
+
     body {
       font-family: Arial, sans-serif;
       max-width: 500px;
@@ -168,7 +172,10 @@
       font-size: 14px;
       display: none;
     }
+
   </style>
+
+
 </head>
 <body>
 
@@ -268,5 +275,18 @@
     };
   </script>
 
+
+<script>
+  // After login or signup logic
+async function afterLogin() {
+  const user = supabase.auth.user(); // Get current logged-in user
+
+  if (user) {
+    console.log('User logged in:', user.email);
+    await addUserToRewards(user.email);  // Add them to user_rewards table
+  }
+}
+
+<script>
 </body>
 </html>

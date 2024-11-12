@@ -251,6 +251,74 @@ async function rewardCoins(email) {
 }
 
 
+<script>
+// Initialize Supabase client
+function initializeSupabase() {
+  const supabaseUrl = 'https://your-supabase-url'; // Replace with your Supabase URL
+  const supabaseKey = 'your-anon-key'; // Replace with your Supabase Anon key
+  return supabase.createClient(supabaseUrl, supabaseKey);
+}
+
+// Function to check if the user exists in user_rewards and add them if not
+async function addUserToRewards(email) {
+  const supabase = initializeSupabase();  // Use your initialized supabase client
+
+  // Check if the user already exists in the user_rewards table
+  const { data, error } = await supabase
+    .from('user_rewards')
+    .select('id')
+    .eq('email', email)  // Match by user email
+    .single();
+
+  if (error && error.code !== 'PGRST116') {  // Error other than "no rows found"
+    console.error('Error checking user in rewards table:', error.message);
+    return;
+  }
+
+  // If no data was returned, this means the user does not exist in the table
+  if (!data) {
+    // Add the user to the table with 0 coins initially
+    const { data: insertData, error: insertError } = await supabase
+      .from('user_rewards')
+      .insert([
+        {
+          email: email,
+          coins: 0,  // Starting with 0 coins
+          rewarded_at: new Date(),
+        },
+      ]);
+
+    if (insertError) {
+      console.error('Error adding user to rewards table:', insertError.message);
+    } else {
+      console.log('User added to rewards table:', insertData);
+    }
+  } else {
+    console.log('User already exists in rewards table');
+  }
+}
+
+// Check if the user is logged in
+async function checkAuth() {
+  const supabase = initializeSupabase();  // Initialize Supabase client
+  const { data: { user }, error } = await supabase.auth.getUser();
+
+  if (user) {
+    // User is authenticated
+    console.log('Logged in as:', user.email);
+    await addUserToRewards(user.email);  // Add user to rewards if not already in the table
+  } else {
+    // User is not authenticated, redirect to login page
+    console.log('User not authenticated');
+  }
+}
+
+// Check authentication when the page loads
+window.onload = checkAuth;
+</script>
+
+
+
 
   </script>
 
