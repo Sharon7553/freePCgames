@@ -23,75 +23,6 @@
       display: none;
     }
 
-    .dashboard-container h1 {
-      font-size: 32px;
-    }
-
-    .task-boxes {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .task-box {
-      background-color: #2c2c2c;
-      padding: 15px;
-      border-radius: 8px;
-      width: 45%;
-      margin: 10px 0;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-
-    .task-box.completed {
-      background-color: #3b9b56;
-    }
-
-    .task-box h3 {
-      margin-top: 0;
-    }
-
-    .task-box button {
-      background-color: #1fd100;
-      color: black;
-      padding: 8px 16px;
-      font-size: 14px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .task-box button:hover {
-      background-color: #0e7d00;
-    }
-
-    .logout-btn {
-      background-color: #e74c3c;
-      padding: 12px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    .logout-btn:hover {
-      background-color: #c0392b;
-    }
-
-    .user-info {
-      margin: 20px 0;
-      font-size: 18px;
-    }
-
-    #loading-message {
-      color: white;
-      font-size: 18px;
-      margin-top: 20px;
-    }
-
-    /* Coin section styles */
     .coin-section {
       margin-top: 30px;
       font-size: 18px;
@@ -111,6 +42,33 @@
     .coin-section button:hover {
       background-color: #2980b9;
     }
+
+    /* Video section styles */
+    .video-section {
+      margin-top: 30px;
+    }
+
+    .video-section button {
+      background-color: #2ecc71;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .video-section button:hover {
+      background-color: #27ae60;
+    }
+
+    /* Timer section */
+    .timer-section {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #f39c12;
+    }
   </style>
 </head>
 <body>
@@ -123,73 +81,60 @@
       <p>Here are your tasks. Keep track of your progress!</p>
     </div>
 
-    <!-- Task Boxes -->
-    <div class="task-boxes">
-      <div class="task-box" id="task1">
-        <h3>Complete Tutorial</h3>
-        <p>Finish the onboarding tutorial.</p>
-        <button onclick="toggleTask('task1')">Mark as Complete</button>
-      </div>
-      <div class="task-box" id="task2">
-        <h3>Finish Project</h3>
-        <p>Work on the final project and submit.</p>
-        <button onclick="toggleTask('task2')">Mark as Complete</button>
-      </div>
-      <div class="task-box" id="task3">
-        <h3>Update Profile</h3>
-        <p>Update your profile with the latest information.</p>
-        <button onclick="toggleTask('task3')">Mark as Complete</button>
-      </div>
-    </div>
-
-    <button class="logout-btn" id="logoutButton">Log Out</button>
-
     <!-- Coin Section -->
     <div class="coin-section">
       <h2>Coins: <span id="coinBalance">0</span></h2>
       <button onclick="updateCoins('add')">Add Coins</button>
-      <button onclick="updateCoins('remove')">Remove Coins</button>
     </div>
+
+    <!-- Video Section -->
+    <div class="video-section">
+      <video id="videoPlayer" width="320" height="240" controls>
+        <source src="path-to-your-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <button id="startVideoButton" onclick="startVideo()">Watch Video for Coins</button>
+      <div id="timer" class="timer-section"></div>
+    </div>
+
+    <button class="logout-btn" id="logoutButton">Log Out</button>
   </div>
 
   <!-- Include Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    // Function to initialize Supabase client
+    // Initialize Supabase client
     function initializeSupabase() {
-      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
       return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
-    // Handle auth check and dashboard rendering
+    // Check if user is authenticated
     async function checkAuth() {
-      const supabase = initializeSupabase();  // Initialize Supabase
-      const { data: { user }, error } = await supabase.auth.getUser(); // Correct method to get current user
+      const supabase = initializeSupabase();
+      const { data: { user }, error } = await supabase.auth.getUser();
 
-      // Handle loading and dashboard display
       const loadingMessage = document.getElementById('loading-message');
       const dashboardContainer = document.getElementById('dashboard');
       const usernameSpan = document.getElementById('username');
 
       if (user) {
-        // User is authenticated, show dashboard
-        usernameSpan.textContent = user.email; // Display username (email in this case)
+        usernameSpan.textContent = user.email;
         dashboardContainer.style.display = 'block';
-        loadingMessage.style.display = 'none'; // Hide loading message
-        await fetchCoinBalance(); // Fetch the coin balance on load
+        loadingMessage.style.display = 'none';
+        await fetchCoinBalance(); // Fetch user's coin balance on load
       } else {
-        // User is not authenticated, redirect to login page
         console.log("User not authenticated, redirecting to login.");
-        window.location.href = '/pages/login.html'; // Redirect to login page
+        window.location.href = '/pages/login.html';
       }
     }
 
-    // Fetch the coin balance from Supabase
+    // Fetch coin balance from Supabase
     async function fetchCoinBalance() {
       const supabase = initializeSupabase();
       const { data, error } = await supabase
-        .from('users') // Adjust table name if necessary
+        .from('user_rewards')
         .select('coins')
         .eq('email', document.getElementById('username').textContent)
         .single();
@@ -197,20 +142,47 @@
       if (error) {
         console.error('Error fetching coin balance:', error.message);
       } else {
-        const coinBalance = data ? data.coins : 0;
-        document.getElementById('coinBalance').textContent = coinBalance;
+        document.getElementById('coinBalance').textContent = data.coins;
       }
     }
 
-    // Update the coin balance (add or remove)
-    async function updateCoins(action) {
+    // Reward coins after watching the video
+    let videoTimer;
+    let timeLeft = 30; // 30 seconds timer
+
+    function startVideo() {
+      const video = document.getElementById('videoPlayer');
+      const timerDisplay = document.getElementById('timer');
+      const startButton = document.getElementById('startVideoButton');
+      
+      // Disable the button while watching the video
+      startButton.disabled = true;
+
+      // Start the timer countdown
+      video.play();
+      videoTimer = setInterval(function() {
+        timeLeft--;
+        timerDisplay.textContent = `Time left: ${timeLeft}s`;
+
+        if (timeLeft <= 0) {
+          clearInterval(videoTimer); // Stop the timer
+          rewardCoins(); // Reward coins after 30 seconds
+          startButton.disabled = false; // Re-enable the button
+          timeLeft = 30; // Reset the timer
+          timerDisplay.textContent = ''; // Clear timer display
+        }
+      }, 1000);
+    }
+
+    // Update the user's coin balance after watching the video
+    async function rewardCoins() {
       const supabase = initializeSupabase();
       const email = document.getElementById('username').textContent;
-      const amount = action === 'add' ? 1 : -1;
+      const coinsToAdd = 5; // Reward 5 coins for watching the video
 
-      // Fetch current coin balance
+      // Update the coins in the database
       const { data, error } = await supabase
-        .from('users')
+        .from('user_rewards')
         .select('coins')
         .eq('email', email)
         .single();
@@ -220,16 +192,9 @@
         return;
       }
 
-      let newBalance = data.coins + amount;
-
-      // Prevent negative coins
-      if (newBalance < 0) {
-        newBalance = 0;
-      }
-
-      // Update the coin balance in the database
+      const newBalance = data.coins + coinsToAdd;
       const { updateError } = await supabase
-        .from('users')
+        .from('user_rewards')
         .update({ coins: newBalance })
         .eq('email', email);
 
@@ -240,20 +205,19 @@
       }
     }
 
-    // Wait for the window to load, then initialize Supabase and check auth
-    window.onload = checkAuth;
-
-    // Handle logout action
+    // Log out user
     document.getElementById("logoutButton").addEventListener('click', async () => {
       const supabase = initializeSupabase();
       const { error } = await supabase.auth.signOut();
       if (error) {
         console.error('Error logging out:', error.message);
       } else {
-        // Redirect to login page after logout
-        window.location.href = '/pages/login.html';  // Correct login path after logout
+        window.location.href = 'login.html'; // Redirect after logout
       }
     });
+
+    window.onload = checkAuth;
+
   </script>
 
 </body>
