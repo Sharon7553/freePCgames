@@ -1,207 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <div class="container">
-
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="logo">free.PC.games</div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-                </div>
-        <div class="menu">
-            <a href="https://www.freepcgames.online/">Home</a>
-            <a href="games.html">Browser games</a>
-            <a href="free-steam-games.html">Steam games</a>
-            <a href="store.html">Premium games</a>
-            <a href="About-us.html">About</a>
-            <a href="store.html">Store</a>
-            
-            <!-- New Login Button -->
-            <a href="login.html" class="login-btn"><span>👤</span> Login</a>
-            
-            <!-- New Register Button -->
-            <a href="sign-up.html" class="register-btn"><span>📝</span> Register</a>
-            
-            <!-- New Account Button -->
-            <a href="dashboard.html" class="account-btn"><span>🏠</span> Account</a>
-        </div>
-    </nav>
-</div>
-
-<style>
-    /* Add this CSS for the buttons styling */
-    nav .menu a {
-        padding: 8px 15px;
-        color: white;
-        font-size: 16px;
-        text-decoration: none;
-        border-radius: 5px;
-        display: flex;
-        align-items: center;
-        margin-left: 10px;
-        transition: background-color 0.3s ease;
-    }
-
-    /* Style for Login Button */
-    nav .menu a.login-btn {
-        background-color: #4CAF50;
-    }
-
-    nav .menu a.login-btn:hover {
-        background-color: #45a049;
-    }
-
-    nav .menu a.login-btn span {
-        margin-right: 5px;
-    }
-
-    /* Style for Register Button */
-    nav .menu a.register-btn {
-        background-color: #f39c12;
-    }
-
-    nav .menu a.register-btn:hover {
-        background-color: #e67e22;
-    }
-
-    nav .menu a.register-btn span {
-        margin-right: 5px;
-    }
-
-    /* Style for Account Button */
-    nav .menu a.account-btn {
-        background-color: #3498db;
-    }
-
-    nav .menu a.account-btn:hover {
-        background-color: #2980b9;
-    }
-
-    nav .menu a.account-btn span {
-        margin-right: 5px;
-    }
-
-    /* Hamburger Menu */
-    .hamburger {
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 30px;
-        height: 21px;
-    }
-
-    .hamburger div {
-        height: 3px;
-        background-color: white;
-    }
-
-    /* Menu Toggle */
-    .menu.active {
-        display: block;
-    }
-
-    .menu {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        width: 100%;
-    }
-</style>
-
-<script>
-    function toggleMenu() {
-        const menu = document.querySelector('.menu');
-        menu.classList.toggle('active');
-    }
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
 
-
   <style>
+    /* General styles */
     body {
       font-family: Arial, sans-serif;
-      max-width: 500px;
-      margin: 0 auto;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    /* Navigation bar styling */
+    nav {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .hamburger {
+      cursor: pointer;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+    }
+
+    .hamburger div {
+      height: 3px;
+      background-color: white;
+    }
+
+    .menu {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    nav .menu a {
+      padding: 8px 15px;
+      color: white;
+      font-size: 16px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav .menu a:hover {
+      background-color: #555;
+    }
+
+    /* Mobile View */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .menu.active {
+        display: flex;
+      }
+
+      .menu a {
+        padding: 10px;
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+    /* Form Styling */
+    .form-container {
+      margin-top: 80px; /* to avoid overlap with fixed navbar */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
       padding: 20px;
     }
+
+    .form-box {
+      width: 50%; /* Form takes up half of the screen */
+      max-width: 500px;
+      background-color: white;
+      padding: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
     h2 {
       text-align: center;
+      margin-bottom: 20px;
     }
+
     .form-group {
-      margin: 10px 0;
+      margin-bottom: 15px;
     }
+
     .form-group label {
       display: block;
+      font-weight: bold;
     }
+
     .form-group input {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
+
     .form-group button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       background-color: #4CAF50;
       color: white;
       border: none;
+      border-radius: 5px;
       cursor: pointer;
     }
+
     .form-group button:hover {
       background-color: #45a049;
     }
+
     .error-message {
       color: red;
       font-size: 14px;
       display: none;
     }
+
     .success-message {
       color: green;
       font-size: 14px;
       display: none;
     }
+
+    /* Image styling */
+    .form-box img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    /* Mobile Responsive Form and Image */
+    @media (max-width: 768px) {
+      .form-box {
+        width: 80%; /* form takes up 80% of the screen width */
+      }
+    }
   </style>
 </head>
 <body>
 
-  <h2>Sign Up</h2>
-
-  <div id="error-message" class="error-message">Error: Could not create account. Please try again.</div>
-  <div id="success-message" class="success-message">Success! Please check your email to confirm your account.</div>
-
-  <form id="sign-up-form">
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required placeholder="Enter your email">
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="logo">free.PC.games</div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required placeholder="Enter your password">
+    <div class="menu">
+      <a href="https://www.freepcgames.online/">Home</a>
+      <a href="games.html">Browser games</a>
+      <a href="free-steam-games.html">Steam games</a>
+      <a href="store.html">Premium games</a>
+      <a href="About-us.html">About</a>
+      <a href="store.html">Store</a>
+      <a href="login.html" class="login-btn"><span>👤</span> Login</a>
+      <a href="sign-up.html" class="register-btn"><span>📝</span> Register</a>
+      <a href="dashboard.html" class="account-btn"><span>🏠</span> Account</a>
     </div>
-    <div class="form-group">
-      <button type="submit">Sign Up</button>
-    </div>
-  </form>
+  </nav>
 
-  <!-- Include Supabase JS SDK -->
+  <!-- Sign Up Form Section -->
+  <div class="form-container">
+    <div class="form-box">
+      <h2>Sign Up</h2>
+
+      <div id="error-message" class="error-message">Error: Could not sign up. Please check your information and try again.</div>
+      <div id="success-message" class="success-message">Success! You are now signed up. Redirecting...</div>
+
+      <form id="signup-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Enter your password">
+        </div>
+        <div class="form-group">
+          <button type="submit">Sign Up</button>
+        </div>
+      </form>
+
+      <!-- Optional Image to the right -->
+      <img src="your-image.jpg" alt="Sign Up Image">
+    </div>
+  </div>
+
+  <!-- Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
   <script>
-    // Function to initialize Supabase client
+    // Initialize Supabase client
     function initializeSupabase() {
-      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Your Supabase Anon Key
       return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
-    // Handle form submission
+    // Handle sign-up process
     function handleSignUp(supabase) {
-      const form = document.getElementById('sign-up-form');
+      const form = document.getElementById('signup-form');
       const errorMessage = document.getElementById('error-message');
       const successMessage = document.getElementById('success-message');
 
@@ -216,34 +251,41 @@
         successMessage.style.display = 'none';
 
         try {
-          // Call Supabase signUp method
           const { user, error } = await supabase.auth.signUp({
             email: email,
             password: password
           });
 
           if (error) {
-            // If an error occurs
             errorMessage.style.display = 'block';
             console.error('Error signing up:', error.message);
           } else {
-            // If sign-up is successful
             successMessage.style.display = 'block';
             console.log('User signed up:', user);
+
+            // Redirect to the dashboard or login page after 2 seconds
+            setTimeout(() => {
+              window.location.href = '/pages/login';  // Redirect to login page
+            }, 2000); // Wait 2 seconds before redirecting
           }
         } catch (error) {
-          // Handle other errors
           errorMessage.style.display = 'block';
           console.error('Error signing up:', error);
         }
       });
     }
 
-    // Wait for the window to load, then initialize Supabase and set up the form
+    // Run the sign-up function when the page loads
     window.onload = function() {
-      const supabase = initializeSupabase();  // Initialize Supabase
-      handleSignUp(supabase);  // Handle the sign-up process
+      const supabase = initializeSupabase();
+      handleSignUp(supabase);
     };
+
+    // Hamburger menu toggle
+    function toggleMenu() {
+      const menu = document.querySelector('.menu');
+      menu.classList.toggle('active');
+    }
   </script>
 
 </body>
