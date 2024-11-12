@@ -106,7 +106,7 @@
     // Initialize Supabase client
     function initializeSupabase() {
       const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
-      const supabaseKey = 'your-supabase-anon-key'; // Replace with your Supabase Anon key
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase Anon key
       return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
@@ -123,20 +123,20 @@
         usernameSpan.textContent = user.email;
         dashboardContainer.style.display = 'block';
         loadingMessage.style.display = 'none';
-        await fetchCoinBalance(user.id); // Use user.id (UUID) here
+        await fetchCoinBalance(user.email); // Fetch user's coin balance on load
       } else {
         console.log("User not authenticated, redirecting to login.");
         window.location.href = '/pages/login.html';
       }
     }
 
-    // Fetch coin balance from Supabase using user_id
-    async function fetchCoinBalance(userId) {
+    // Fetch coin balance from Supabase
+    async function fetchCoinBalance(email) {
       const supabase = initializeSupabase();
       const { data, error } = await supabase
         .from('user_rewards')
         .select('coins')
-        .eq('user_id', userId) // Use user_id (UUID) here
+        .eq('email', email)
         .single();
 
       if (error) {
@@ -177,14 +177,14 @@
     // Update the user's coin balance after watching the video
     async function rewardCoins() {
       const supabase = initializeSupabase();
-      const userId = (await supabase.auth.getUser()).data.user.id; // Get user.id (UUID)
+      const email = document.getElementById('username').textContent;
       const coinsToAdd = 5; // Reward 5 coins for watching the video
 
       // Update the coins in the database
       const { data, error } = await supabase
         .from('user_rewards')
         .select('coins')
-        .eq('user_id', userId) // Use user_id (UUID) here
+        .eq('email', email)
         .single();
 
       if (error) {
@@ -196,7 +196,7 @@
       const { updateError } = await supabase
         .from('user_rewards')
         .update({ coins: newBalance })
-        .eq('user_id', userId); // Use user_id (UUID) here
+        .eq('email', email);
 
       if (updateError) {
         console.error('Error updating coin balance:', updateError.message);
