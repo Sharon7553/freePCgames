@@ -1,183 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <div class="container">
-
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="logo">free.PC.games</div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-                </div>
-        <div class="menu">
-            <a href="https://www.freepcgames.online/">Home</a>
-            <a href="games.html">Browser games</a>
-            <a href="free-steam-games.html">Steam games</a>
-            <a href="store.html">Premium games</a>
-            <a href="About-us.html">About</a>
-            <a href="store.html">Store</a>
-            
-            <!-- New Login Button -->
-            <a href="login.html" class="login-btn"><span>👤</span> Login</a>
-            
-            <!-- New Register Button -->
-            <a href="sign-up.html" class="register-btn"><span>📝</span> Register</a>
-            
-            <!-- New Account Button -->
-            <a href="dashboard.html" class="account-btn"><span>🏠</span> Account</a>
-        </div>
-    </nav>
-</div>
-
-<style>
-    /* Add this CSS for the buttons styling */
-    nav .menu a {
-        padding: 8px 15px;
-        color: white;
-        font-size: 16px;
-        text-decoration: none;
-        border-radius: 5px;
-        display: flex;
-        align-items: center;
-        margin-left: 10px;
-        transition: background-color 0.3s ease;
-    }
-
-    /* Style for Login Button */
-    nav .menu a.login-btn {
-        background-color: #4CAF50;
-    }
-
-    nav .menu a.login-btn:hover {
-        background-color: #45a049;
-    }
-
-    nav .menu a.login-btn span {
-        margin-right: 5px;
-    }
-
-    /* Style for Register Button */
-    nav .menu a.register-btn {
-        background-color: #f39c12;
-    }
-
-    nav .menu a.register-btn:hover {
-        background-color: #e67e22;
-    }
-
-    nav .menu a.register-btn span {
-        margin-right: 5px;
-    }
-
-    /* Style for Account Button */
-    nav .menu a.account-btn {
-        background-color: #3498db;
-    }
-
-    nav .menu a.account-btn:hover {
-        background-color: #2980b9;
-    }
-
-    nav .menu a.account-btn span {
-        margin-right: 5px;
-    }
-
-    /* Hamburger Menu */
-    .hamburger {
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 30px;
-        height: 21px;
-    }
-
-    .hamburger div {
-        height: 3px;
-        background-color: white;
-    }
-
-    /* Menu Toggle */
-    .menu.active {
-        display: block;
-    }
-
-    .menu {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        width: 100%;
-    }
-</style>
-
-<script>
-    function toggleMenu() {
-        const menu = document.querySelector('.menu');
-        menu.classList.toggle('active');
-    }
-</script>
-
-
-
-
-.
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <style>
 
+  <!-- Include Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <style>
+    /* Navigation Bar Styles */
+    nav {
+      background-color: #333;
+      color: white;
+      padding: 15px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .hamburger {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+    }
+
+    .hamburger div {
+      height: 3px;
+      background-color: white;
+    }
+
+    .menu {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    nav .menu a {
+      padding: 8px 15px;
+      color: white;
+      font-size: 16px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-left: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav .menu a:hover {
+      background-color: #444;
+    }
+
+    /* Login Form Styles */
     body {
       font-family: Arial, sans-serif;
+      margin-top: 80px;  /* Space for the navbar */
       max-width: 500px;
       margin: 0 auto;
       padding: 20px;
+      background-color: #f4f4f4;
     }
+
     h2 {
       text-align: center;
+      color: #333;
     }
+
     .form-group {
-      margin: 10px 0;
+      margin: 15px 0;
     }
+
     .form-group label {
       display: block;
+      color: #333;
+      font-weight: bold;
     }
+
     .form-group input {
       width: 100%;
-      padding: 8px;
+      padding: 12px;
       margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 14px;
     }
+
     .form-group button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       background-color: #4CAF50;
       color: white;
       border: none;
       cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
     }
+
     .form-group button:hover {
       background-color: #45a049;
     }
+
     .error-message {
       color: red;
       font-size: 14px;
       display: none;
+      text-align: center;
     }
+
     .success-message {
       color: green;
       font-size: 14px;
       display: none;
+      text-align: center;
     }
-
   </style>
-
-
 </head>
+
 <body>
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="logo">free.PC.games</div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="menu">
+      <a href="https://www.freepcgames.online/">Home</a>
+      <a href="games.html">Browser games</a>
+      <a href="free-steam-games.html">Steam games</a>
+      <a href="store.html">Premium games</a>
+      <a href="About-us.html">About</a>
+      <a href="store.html">Store</a>
+      <a href="login.html" class="login-btn"><span>👤</span> Login</a>
+      <a href="sign-up.html" class="register-btn"><span>📝</span> Register</a>
+      <a href="dashboard.html" class="account-btn"><span>🏠</span> Account</a>
+    </div>
+  </nav>
 
   <h2>Login</h2>
 
@@ -198,30 +166,28 @@
     </div>
   </form>
 
-  <!-- Include Supabase JS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    // Function to initialize Supabase client
-    function initializeSupabase() {
-      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
-      return supabase.createClient(supabaseUrl, supabaseKey);
+    function toggleMenu() {
+      const menu = document.querySelector('.menu');
+      menu.classList.toggle('active');
     }
 
-    // Rate-limiting logic
+    // Initialize Supabase
+    const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; 
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; 
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
     let lastLoginAttempt = 0;
     const loginCooldown = 5000; // 5 seconds cooldown
 
-    // Handle form submission
-    function handleLogin(supabase) {
+    function handleLogin() {
       const form = document.getElementById('login-form');
       const errorMessage = document.getElementById('error-message');
       const successMessage = document.getElementById('success-message');
 
       form.addEventListener('submit', async (e) => {
-        e.preventDefault(); // Prevent the default form submission
+        e.preventDefault();
 
-        // Check if the user is rate-limited
         const currentTime = Date.now();
         if (currentTime - lastLoginAttempt < loginCooldown) {
           errorMessage.textContent = 'Please wait before trying again.';
@@ -229,65 +195,41 @@
           return;
         }
 
-        // Update last login attempt time
         lastLoginAttempt = currentTime;
 
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        // Hide any previous messages
         errorMessage.style.display = 'none';
         successMessage.style.display = 'none';
 
         try {
-          // Call Supabase signIn method
           const { user, error } = await supabase.auth.signInWithPassword({
             email: email,
             password: password
           });
 
           if (error) {
-            // If an error occurs
             errorMessage.style.display = 'block';
             console.error('Error logging in:', error.message);
           } else {
-            // If login is successful
             successMessage.style.display = 'block';
             console.log('User logged in:', user);
 
-            // Redirect to the dashboard after 2 seconds
             setTimeout(() => {
-              window.location.href = '/pages/dashboard';  // Redirect to the dashboard page
-            }, 2000); // Wait 2 seconds to show the success message before redirect
+              window.location.href = '/pages/dashboard';
+            }, 2000);
           }
         } catch (error) {
-          // Handle other errors
           errorMessage.style.display = 'block';
           console.error('Error logging in:', error);
         }
       });
     }
 
-    // Wait for the window to load, then initialize Supabase and set up the form
     window.onload = function() {
-      const supabase = initializeSupabase();  // Initialize Supabase
-      handleLogin(supabase);  // Handle the login process
+      handleLogin();
     };
   </script>
-
-
-<script>
-  // After login or signup logic
-async function afterLogin() {
-  const user = supabase.auth.user(); // Get current logged-in user
-
-  if (user) {
-    console.log('User logged in:', user.email);
-    await addUserToRewards(user.email);  // Add them to user_rewards table
-  }
-}
-
-</script>script>
-
 </body>
 </html>
