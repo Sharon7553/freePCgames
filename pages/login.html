@@ -4,115 +4,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-
-  <!-- Include Supabase JS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
+  
   <style>
-    /* General Body Styling */
+    /* Your styles here */
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Navigation Bar Styling */
-    nav {
-      background-color: #333;
-      padding: 10px;
-    }
-
-    .logo {
-      color: white;
-      font-size: 24px;
-      display: inline-block;
-    }
-
-    .menu {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-    }
-
-    .menu a {
-      color: white;
-      margin-left: 20px;
-      text-decoration: none;
-      padding: 8px 15px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-    .menu a:hover {
-      background-color: #555;
-    }
-
-    /* Login Form Styling */
-    .container {
       max-width: 500px;
       margin: 0 auto;
       padding: 20px;
-      margin-top: 50px; /* Added space between navbar and form */
     }
-
+    h2 {
+      text-align: center;
+    }
     .form-group {
-      margin-bottom: 15px;
+      margin: 10px 0;
     }
-
     .form-group label {
       display: block;
-      margin-bottom: 5px;
     }
-
     .form-group input {
       width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
+      padding: 8px;
+      margin-top: 5px;
     }
-
     .form-group button {
       width: 100%;
       padding: 10px;
       background-color: #4CAF50;
       color: white;
-      font-size: 16px;
       border: none;
       cursor: pointer;
-      border-radius: 5px;
     }
-
     .form-group button:hover {
       background-color: #45a049;
     }
-
-    /* Error and Success Messages */
-    .error-message, .success-message {
-      font-size: 14px;
-      display: none;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 5px;
-    }
-
     .error-message {
       color: red;
-      background-color: #f8d7da;
+      font-size: 14px;
+      display: none;
     }
-
     .success-message {
       color: green;
-      background-color: #d4edda;
+      font-size: 14px;
+      display: none;
     }
-
   </style>
 </head>
+
 <body>
 
   <!-- Navigation Bar -->
   <nav>
     <div class="logo">free.PC.games</div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
     <div class="menu">
       <a href="https://www.freepcgames.online/">Home</a>
       <a href="games.html">Browser games</a>
@@ -127,76 +75,88 @@
   </nav>
 
   <!-- Login Form -->
-  <div class="container">
-    <h2>Login</h2>
+  <h2>Login</h2>
 
-    <div id="error-message" class="error-message">Error: Could not log in. Please check your credentials and try again.</div>
-    <div id="success-message" class="success-message">Success! You are now logged in. Redirecting...</div>
+  <div id="error-message" class="error-message">Error: Could not log in. Please check your credentials and try again.</div>
+  <div id="success-message" class="success-message">Success! You are now logged in. Redirecting...</div>
 
-    <form id="login-form">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required placeholder="Enter your email">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required placeholder="Enter your password">
-      </div>
-      <div class="form-group">
-        <button type="submit">Login</button>
-      </div>
-    </form>
-  </div>
+  <form id="login-form">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="Enter your email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required placeholder="Enter your password">
+    </div>
+    <div class="form-group">
+      <button type="submit">Login</button>
+    </div>
+  </form>
+
+  <!-- Include Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
   <script>
-    // Initialize Supabase client
-    const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';  // Your Supabase URL
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';  // Your Supabase key
-
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    let supabase;  // Declare supabase globally
+    
+    // Function to initialize Supabase client
+    function initializeSupabase() {
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
+      supabase = window.supabase.createClient(supabaseUrl, supabaseKey); // Create supabase client
+    }
 
     // Handle form submission
-    const form = document.getElementById('login-form');
-    const errorMessage = document.getElementById('error-message');
-    const successMessage = document.getElementById('success-message');
+    function handleLogin() {
+      const form = document.getElementById('login-form');
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault(); // Prevent the default form submission
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent the default form submission
 
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-      // Hide any previous messages
-      errorMessage.style.display = 'none';
-      successMessage.style.display = 'none';
+        // Hide any previous messages
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
 
-      try {
-        // Call Supabase login method
-        const { user, error } = await supabase.auth.signInWithPassword({
-          email: email,
-          password: password
-        });
+        try {
+          // Call Supabase signIn method
+          const { user, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+          });
 
-        if (error) {
-          // If an error occurs
+          if (error) {
+            // If an error occurs
+            errorMessage.style.display = 'block';
+            console.error('Error logging in:', error.message);
+          } else {
+            // If login is successful
+            successMessage.style.display = 'block';
+            console.log('User logged in:', user);
+
+            // Redirect to the dashboard after 2 seconds
+            setTimeout(() => {
+              window.location.href = '/pages/dashboard';  // Redirect to the dashboard page
+            }, 2000); // Wait 2 seconds to show the success message before redirect
+          }
+        } catch (error) {
+          // Handle other errors
           errorMessage.style.display = 'block';
-          console.error('Error logging in:', error.message);
-        } else {
-          // If login is successful
-          successMessage.style.display = 'block';
-          console.log('User logged in:', user);
-
-          // Redirect to the dashboard after 2 seconds
-          setTimeout(() => {
-            window.location.href = '/pages/dashboard';  // Redirect to the dashboard page
-          }, 2000); // Wait 2 seconds to show the success message before redirect
+          console.error('Error logging in:', error);
         }
-      } catch (error) {
-        // Handle other errors
-        errorMessage.style.display = 'block';
-        console.error('Error logging in:', error);
-      }
-    });
+      });
+    }
+
+    // Wait for the window to load, then initialize Supabase and set up the form
+    window.onload = function() {
+      initializeSupabase();  // Initialize Supabase
+      handleLogin();  // Handle the login process
+    };
   </script>
 
 </body>
