@@ -12,25 +12,24 @@
             <div></div>
             <div></div>
         </div>
-                </div>
-        <div class="menu">
-            <a href="https://www.freepcgames.online/">Home</a>
-            <a href="games.html">Browser games</a>
-            <a href="free-steam-games.html">Steam games</a>
-            <a href="store.html">Premium games</a>
-            <a href="About-us.html">About</a>
-            <a href="store.html">Store</a>
-            
-            <!-- New Login Button -->
-            <a href="login.html" class="login-btn"><span>👤</span> Login</a>
-            
-            <!-- New Register Button -->
-            <a href="sign-up.html" class="register-btn"><span>📝</span> Register</a>
-            
-            <!-- New Account Button -->
-            <a href="dashboard.html" class="account-btn"><span>🏠</span> Account</a>
-        </div>
     </nav>
+    <div class="menu">
+        <a href="https://www.freepcgames.online/">Home</a>
+        <a href="games.html">Browser games</a>
+        <a href="free-steam-games.html">Steam games</a>
+        <a href="store.html">Premium games</a>
+        <a href="About-us.html">About</a>
+        <a href="store.html">Store</a>
+        
+        <!-- New Login Button -->
+        <a href="login.html" class="login-btn"><span>👤</span> Login</a>
+        
+        <!-- New Register Button -->
+        <a href="sign-up.html" class="register-btn"><span>📝</span> Register</a>
+        
+        <!-- New Account Button -->
+        <a href="dashboard.html" class="account-btn"><span>🏠</span> Account</a>
+    </div>
 </div>
 
 <style>
@@ -121,16 +120,10 @@
     }
 </script>
 
-
-
-
-.
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <style>
-
     body {
       font-family: Arial, sans-serif;
       max-width: 500px;
@@ -174,8 +167,6 @@
     }
 
   </style>
-
-
 </head>
 <body>
 
@@ -255,6 +246,9 @@
             successMessage.style.display = 'block';
             console.log('User logged in:', user);
 
+            // Add user to the user_rewards table
+            await addUserToRewards(user);
+
             // Redirect to the dashboard after 2 seconds
             setTimeout(() => {
               window.location.href = '/pages/dashboard';  // Redirect to the dashboard page
@@ -268,26 +262,30 @@
       });
     }
 
+    // Function to add user to user_rewards table
+    async function addUserToRewards(user) {
+      const supabase = initializeSupabase();
+
+      const { data, error } = await supabase
+        .from('user_rewards')
+        .upsert({
+          email: user.email,
+          user_id: user.id,  // user.id is the UUID of the logged-in user
+          coins: 100,  // You can adjust this value or calculate based on your logic
+        });
+
+      if (error) {
+        console.error('Error adding user to rewards:', error);
+      } else {
+        console.log('User added to rewards:', data);
+      }
+    }
+
     // Wait for the window to load, then initialize Supabase and set up the form
     window.onload = function() {
       const supabase = initializeSupabase();  // Initialize Supabase
       handleLogin(supabase);  // Handle the login process
     };
   </script>
-
-
-<script>
-  // After login or signup logic
-async function afterLogin() {
-  const user = supabase.auth.user(); // Get current logged-in user
-
-  if (user) {
-    console.log('User logged in:', user.email);
-    await addUserToRewards(user.email);  // Add them to user_rewards table
-  }
-}
-
-</script>script>
-
 </body>
 </html>
