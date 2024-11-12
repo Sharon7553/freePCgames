@@ -197,170 +197,360 @@
   </nav>
 
 
-<script>
-    // Function to toggle code visibility
-    function toggleCodeVisibility(button) {
-        var row = button.closest('div');
-        var codeCell = row.querySelector('.code-cell span');
-        
-        // Set default blur style
-        if (!codeCell.style.filter) {
-            codeCell.style.filter = 'blur(5px)';
-        }
-
-        // Toggle the code visibility
-        if (codeCell.style.filter === 'blur(5px)') {
-            // Unblur the code and change padlock to unlocked
-            codeCell.style.filter = 'blur(0px)';
-            button.innerHTML = 'Hide Code 🔓';  // Change button text to show unlocked padlock
-            button.style.backgroundColor = '#FF5C5C'; // Change button color to red when showing code
-        } else {
-            // Blur the code and change padlock to locked
-            codeCell.style.filter = 'blur(5px)';
-            button.innerHTML = 'Show Code 🔒';  // Change button text to show locked padlock
-            button.style.backgroundColor = '#39FF14'; // Reset button color
-        }
-    }
-
-    // Function to refresh the page
-    function refreshPage() {
-        location.reload();
-    }
-
-    // Show popup on submit
-    function showPopup() {
-        var popup = document.getElementById("popup");
-        popup.style.display = "block";
-        setTimeout(function () {
-            popup.style.display = "none";
-        }, 2000); // Close after 2 seconds
-    }
-</script>
-
-<style>
-    /* Game Codes Grid Layout */
-    .code-table {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-gap: 20px;
-        padding: 10px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
-        border: 2px solid #39FF14;
-        animation: glow 1.5s infinite alternate;
-    }
-
-    .code-table div {
-        background-color: #222;
-        padding: 10px;
-        border-radius: 5px;
-        text-align: center;
-    }
-
-    .code-table .game-name {
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .show-code-btn {
-        background-color: #39FF14;
-        color: #111;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-        text-transform: uppercase;
-        transition: transform 0.2s ease, box-shadow 0.3s ease;
-    }
-
-    .show-code-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 10px rgba(57, 255, 20, 0.9);
-    }
-
-    .padlock {
-        margin-left: 8px;
-    }
-
-    @keyframes glow {
-        0% { box-shadow: 0 0 5px rgba(57, 255, 20, 0.7); }
-        100% { box-shadow: 0 0 15px rgba(57, 255, 20, 1); }
-    }
-
-    /* Media queries for responsiveness */
-    @media (max-width: 768px) {
-        .code-table {
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .code-table {
-            grid-template-columns: 1fr;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Game Codes</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #111;
+            color: #eee;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
 
         h1 {
-            font-size: 1.5rem;
+            font-size: 2rem;
+            color: #39FF14;
+            margin-top: 20px;
         }
 
+        /* Container for centered content */
+        .centered {
+            max-width: 90%;
+            width: 100%;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        /* Button container with flex layout */
         .top-buttons {
-            flex-direction: column;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .top-buttons button, .top-buttons a {
+            padding: 10px 15px;
+            font-size: 14px;
+            background-color: #222;
+            color: #39FF14;
+            border: 2px solid #39FF14;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .top-buttons button:hover, .top-buttons a:hover {
+            background-color: #39FF14;
+            color: #111;
+        }
+
+        .donate-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .donate-btn input {
-            width: 80px; /* Adjust for smaller screens */
+            padding: 5px;
+            margin-left: 5px;
+            font-size: 14px;
+            width: 100px; /* 18 characters width */
+            border: 1px solid #39FF14;
+            border-radius: 3px;
+            background-color: #111;
+            color: #eee;
         }
 
         .submit-btn {
-            width: 100%;
+            padding: 5px 10px;
+            background-color: #39FF14;
+            color: #111;
+            border: 1px solid #39FF14;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Game Codes Grid Layout */
+        .code-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+            border: 2px solid #39FF14;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        .code-table div {
+            background-color: #222;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .code-table .game-name {
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
         .show-code-btn {
-            width: 100%;
+            background-color: #39FF14;
+            color: #111;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
         }
-    }
-</style>
 
-<!-- Table of Game Codes -->
-<div class="code-table">
-    <div>
-        <div class="game-name">Tekken 7</div>
-        <div class="availability">Worldwide</div>
-        <div class="code-cell"><span>HH0AX-TRHYZ-FMZZW</span></div>
-        <button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code 🔒</button>
-    </div>
-    <div>
-        <div class="game-name">Invasion</div>
-        <div class="availability">Worldwide</div>
-        <div class="code-cell"><span>JICY7-RIRR5-X273V</span></div>
-        <button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code 🔒</button>
-    </div>
-    <div>
-        <div class="game-name">7 Days to Die</div>
-        <div class="availability">Worldwide</div>
-        <div class="code-cell"><span>4N44Y-JPII8-A8N2H</span></div>
-        <button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code 🔒</button>
-    </div>
-    <div>
-        <div class="game-name">Dying Light Definitive Edition</div>
-        <div class="availability">Worldwide</div>
-        <div class="code-cell"><span>LVRT0-2NTNX-GPM9H</span></div>
-        <button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code 🔒</button>
-    </div>
-    <div>
-        <div class="game-name">Mirrors Edge Comp</div>
-        <div class="availability">EU Only</div>
-        <div class="code-cell"><span>ZYKTZ-DRJAG-I08BM</span></div>
-        <button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code 🔒</button>
-    </div>
-    <div>
-        <div class="game-name">Two Worlds Epic Edition</div>
-        <div class="availability">Worldwide</div>
-        <div class="code-cell"><span>8RXGF-2N5GH-NX7BD</span></div>
-        <button class="show-code-btn" onclick="toggleCodeVisibility(this)">Show Code 🔒</button>
-    </div>
-</div>
+        .show-code-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.9);
+        }
 
+        .padlock {
+            margin-left: 8px;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(57, 255, 20, 0.7); }
+            100% { box-shadow: 0 0 15px rgba(57, 255, 20, 1); }
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            .code-table {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .code-table {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .top-buttons {
+                flex-direction: column;
+            }
+
+            .donate-btn input {
+                width: 80px; /* Adjust for smaller screens */
+            }
+
+            .submit-btn {
+                width: 100%;
+            }
+
+            .show-code-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Game Codes</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #111;
+            color: #eee;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #39FF14;
+            margin-top: 20px;
+        }
+
+        /* Game Codes Grid Layout */
+        .code-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+            border: 2px solid #39FF14;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        .code-table div {
+            background-color: #222;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .code-table .game-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .code-table .code-cell span {
+            filter: blur(5px); /* By default, blur the code */
+        }
+
+        .show-code-btn {
+            background-color: #39FF14;
+            color: #111;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .show-code-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.9);
+        }
+
+        .padlock {
+            margin-left: 8px;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(57, 255, 20, 0.7); }
+            100% { box-shadow: 0 0 15px rgba(57, 255, 20, 1); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Welcome, fellow gamer!</h1>
+
+    <div class="centered">
+
+        <!-- Game Codes Grid -->
+        <div class="code-table">
+            <div>
+                <div class="game-name">Tekken 7</div>
+                <div class="availability">Worldwide</div>
+                <div class="code-cell"><span>HH0AX-TRHYZ-FMZZW</span></div>
+                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">
+                    Show Code <span class="padlock">🔒</span>
+                </button>
+            </div>
+            <div>
+                <div class="game-name">Invasion</div>
+                <div class="availability">Worldwide</div>
+                <div class="code-cell"><span>JICY7-RIRR5-X273V</span></div>
+                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">
+                    Show Code <span class="padlock">🔒</span>
+                </button>
+            </div>
+            <div>
+                <div class="game-name">7 Days to Die</div>
+                <div class="availability">Worldwide</div>
+                <div class="code-cell"><span>4N44Y-JPII8-A8N2H</span></div>
+                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">
+                    Show Code <span class="padlock">🔒</span>
+                </button>
+            </div>
+            <div>
+                <div class="game-name">Dying Light Definitive Edition</div>
+                <div class="availability">Worldwide</div>
+                <div class="code-cell"><span>LVRT0-2NTNX-GPM9H</span></div>
+                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">
+                    Show Code <span class="padlock">🔒</span>
+                </button>
+            </div>
+            <div>
+                <div class="game-name">Mirrors Edge Comp</div>
+                <div class="availability">EU Only</div>
+                <div class="code-cell"><span>ZYKTZ-DRJAG-I08BM</span></div>
+                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">
+                    Show Code <span class="padlock">🔒</span>
+                </button>
+            </div>
+            <div>
+                <div class="game-name">Two Worlds Epic Edition</div>
+                <div class="availability">Worldwide</div>
+                <div class="code-cell"><span>8RXGF-2N5GH-NX7BD</span></div>
+                <button class="show-code-btn" onclick="toggleCodeVisibility(this)">
+                    Show Code <span class="padlock">🔒</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle code visibility and padlock state
+        function toggleCodeVisibility(button) {
+            var row = button.closest('div');
+            var codeCell = row.querySelector('.code-cell span');
+            var padlockIcon = button.querySelector('.padlock');
+
+            // If the code is blurred, unblur it, and unlock the padlock
+            if (codeCell.style.filter === 'blur(5px)' || !codeCell.style.filter) {
+                codeCell.style.filter = 'blur(0px)';  // Unblur the code
+                padlockIcon.textContent = '🔓'; // Unlock padlock
+                button.textContent = 'Hide Code'; // Change button text
+                button.style.backgroundColor = '#FF5C5C'; // Change button color
+            }
+            // If the code is already visible, keep it visible and change back the padlock
+            else {
+                codeCell.style.filter = 'blur(5px)'; // Reblur the code
+                padlockIcon.textContent = '🔒'; // Lock padlock
+                button.textContent = 'Show Code'; // Change button text back
+                button.style.backgroundColor = '#39FF14'; // Reset button color
+            }
+        }
+    </script>
+
+</body>
+</html>
 
 
 
