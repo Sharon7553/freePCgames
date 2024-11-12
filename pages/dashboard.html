@@ -91,7 +91,6 @@
     <div class="video-section">
       <video id="videoPlayer" width="320" height="240" controls>
         <source src="path-to-your-video.mp4" type="video/mp4">
-
       </video>
       <button id="startVideoButton" onclick="startVideo()">Watch Video for Coins</button>
       <div id="timer" class="timer-section"></div>
@@ -102,11 +101,12 @@
 
   <!-- Include Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
   <script>
     // Initialize Supabase client
     function initializeSupabase() {
-      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs';
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase Anon key
       return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
@@ -123,7 +123,7 @@
         usernameSpan.textContent = user.email;
         dashboardContainer.style.display = 'block';
         loadingMessage.style.display = 'none';
-        await fetchCoinBalance(); // Fetch user's coin balance on load
+        await fetchCoinBalance(user.email); // Fetch user's coin balance on load
       } else {
         console.log("User not authenticated, redirecting to login.");
         window.location.href = '/pages/login.html';
@@ -131,12 +131,12 @@
     }
 
     // Fetch coin balance from Supabase
-    async function fetchCoinBalance() {
+    async function fetchCoinBalance(email) {
       const supabase = initializeSupabase();
       const { data, error } = await supabase
         .from('user_rewards')
         .select('coins')
-        .eq('email', document.getElementById('username').textContent)
+        .eq('email', email)
         .single();
 
       if (error) {
@@ -216,111 +216,8 @@
       }
     });
 
+    // Check authentication when the page loads
     window.onload = checkAuth;
-
-    // Function to reward coins after 30 seconds of watching a video
-async function rewardCoins(email) {
-  const supabase = initializeSupabase();
-
-  // Fetch the current coins for the user
-  const { data, error } = await supabase
-    .from('user_rewards')  // The table you created to store user rewards
-    .select('coins')
-    .eq('email', email)  // Make sure you match the user's email
-    .single();  // We only expect one row
-
-  if (error) {
-    console.error('Error fetching coins:', error);
-    return;
-  }
-
-  // Add coins (e.g., 10 coins after video)
-  const newCoins = data.coins + 10;  // Adding 10 coins
-
-  // Update the coins in the table
-  const { error: updateError } = await supabase
-    .from('user_rewards')
-    .update({ coins: newCoins, rewarded_at: new Date() })  // Set the new coin count and timestamp
-    .eq('email', email);  // Make sure we update the right user
-
-  if (updateError) {
-    console.error('Error updating coins:', updateError);
-  } else {
-    console.log('Coins updated successfully!');
-  }
-}
-
-
-<script>
-// Initialize Supabase client
-function initializeSupabase() {
-  const supabaseUrl = 'https://your-supabase-url'; // Replace with your Supabase URL
-  const supabaseKey = 'your-anon-key'; // Replace with your Supabase Anon key
-  return supabase.createClient(supabaseUrl, supabaseKey);
-}
-
-// Function to check if the user exists in user_rewards and add them if not
-async function addUserToRewards(email) {
-  const supabase = initializeSupabase();  // Use your initialized supabase client
-
-  // Check if the user already exists in the user_rewards table
-  const { data, error } = await supabase
-    .from('user_rewards')
-    .select('id')
-    .eq('email', email)  // Match by user email
-    .single();
-
-  if (error && error.code !== 'PGRST116') {  // Error other than "no rows found"
-    console.error('Error checking user in rewards table:', error.message);
-    return;
-  }
-
-  // If no data was returned, this means the user does not exist in the table
-  if (!data) {
-    // Add the user to the table with 0 coins initially
-    const { data: insertData, error: insertError } = await supabase
-      .from('user_rewards')
-      .insert([
-        {
-          email: email,
-          coins: 0,  // Starting with 0 coins
-          rewarded_at: new Date(),
-        },
-      ]);
-
-    if (insertError) {
-      console.error('Error adding user to rewards table:', insertError.message);
-    } else {
-      console.log('User added to rewards table:', insertData);
-    }
-  } else {
-    console.log('User already exists in rewards table');
-  }
-}
-
-// Check if the user is logged in
-async function checkAuth() {
-  const supabase = initializeSupabase();  // Initialize Supabase client
-  const { data: { user }, error } = await supabase.auth.getUser();
-
-  if (user) {
-    // User is authenticated
-    console.log('Logged in as:', user.email);
-    await addUserToRewards(user.email);  // Add user to rewards if not already in the table
-  } else {
-    // User is not authenticated, redirect to login page
-    console.log('User not authenticated');
-  }
-}
-
-// Check authentication when the page loads
-window.onload = checkAuth;
-</script>
-
-
-
-
   </script>
-
 </body>
 </html>
