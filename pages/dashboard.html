@@ -90,6 +90,27 @@
       font-size: 18px;
       margin-top: 20px;
     }
+
+    /* Coin section styles */
+    .coin-section {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+
+    .coin-section button {
+      background-color: #3498db;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .coin-section button:hover {
+      background-color: #2980b9;
+    }
   </style>
 </head>
 <body>
@@ -122,6 +143,13 @@
     </div>
 
     <button class="logout-btn" id="logoutButton">Log Out</button>
+
+    <!-- Coin Section -->
+    <div class="coin-section">
+      <h2>Coins: <span id="coinBalance">0</span></h2>
+      <button onclick="updateCoins('add')">Add Coins</button>
+      <button onclick="updateCoins('remove')">Remove Coins</button>
+    </div>
   </div>
 
   <!-- Include Supabase JS SDK -->
@@ -149,6 +177,7 @@
         usernameSpan.textContent = user.email; // Display username (email in this case)
         dashboardContainer.style.display = 'block';
         loadingMessage.style.display = 'none'; // Hide loading message
+        await fetchCoinBalance(); // Fetch the coin balance on load
       } else {
         // User is not authenticated, redirect to login page
         console.log("User not authenticated, redirecting to login.");
@@ -156,13 +185,59 @@
       }
     }
 
-    // Task toggle function to mark tasks as complete/incomplete
-    function toggleTask(taskId) {
-      const taskElement = document.getElementById(taskId);
-      taskElement.classList.toggle("completed");
+    // Fetch the coin balance from Supabase
+    async function fetchCoinBalance() {
+      const supabase = initializeSupabase();
+      const { data, error } = await supabase
+        .from('users') // Adjust table name if necessary
+        .select('coins')
+        .eq('email', document.getElementById('username').textContent)
+        .single();
 
-      // Optionally, you can update the task status in Supabase (to persist across sessions).
-      // For now, this is just toggling the class for visual effect.
+      if (error) {
+        console.error('Error fetching coin balance:', error.message);
+      } else {
+        const coinBalance = data ? data.coins : 0;
+        document.getElementById('coinBalance').textContent = coinBalance;
+      }
+    }
+
+    // Update the coin balance (add or remove)
+    async function updateCoins(action) {
+      const supabase = initializeSupabase();
+      const email = document.getElementById('username').textContent;
+      const amount = action === 'add' ? 1 : -1;
+
+      // Fetch current coin balance
+      const { data, error } = await supabase
+        .from('users')
+        .select('coins')
+        .eq('email', email)
+        .single();
+
+      if (error) {
+        console.error('Error fetching coin balance:', error.message);
+        return;
+      }
+
+      let newBalance = data.coins + amount;
+
+      // Prevent negative coins
+      if (newBalance < 0) {
+        newBalance = 0;
+      }
+
+      // Update the coin balance in the database
+      const { updateError } = await supabase
+        .from('users')
+        .update({ coins: newBalance })
+        .eq('email', email);
+
+      if (updateError) {
+        console.error('Error updating coin balance:', updateError.message);
+      } else {
+        document.getElementById('coinBalance').textContent = newBalance;
+      }
     }
 
     // Wait for the window to load, then initialize Supabase and check auth
