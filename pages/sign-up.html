@@ -268,4 +268,24 @@
           }
         } catch (error) {
           errorMessage.style.display = 'block';
-          console.error('Error
+          console.error('Error signing up:', error);
+        }
+      });
+    }
+
+    // Run the sign-up function when the page loads
+    window.onload = function() {
+      const supabase = initializeSupabase();
+      handleSignUp(supabase);
+    };
+    
+    // Hamburger menu toggle
+    function toggleMenu() {
+      const menu = document.querySelector('.menu');
+      menu.classList.toggle('active');
+    }
+  </script>
+
+</body>
+</html>
+``
