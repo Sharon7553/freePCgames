@@ -456,16 +456,18 @@
             var codeCell = row.querySelector('.code-cell span');
             var padlockIcon = button.querySelector('.padlock');
             
-            if (codeCell.style.filter === 'blur(5px)') {
+            if (codeCell.style.filter === 'blur(5px)' || !codeCell.style.filter) {
+                // Unblur the code and change padlock to unlocked
                 codeCell.style.filter = 'blur(0px)';
                 padlockIcon.textContent = '🔓'; // Unlock padlock
                 button.textContent = 'Hide Code';
-                button.classList.add('hide');
+                button.style.backgroundColor = '#FF5C5C'; // Turn button red
             } else {
+                // Blur the code and change padlock to locked
                 codeCell.style.filter = 'blur(5px)';
                 padlockIcon.textContent = '🔒'; // Lock padlock
                 button.textContent = 'Show Code';
-                button.classList.remove('hide');
+                button.style.backgroundColor = '#39FF14'; // Reset button color
             }
         }
 
@@ -485,6 +487,7 @@
     </script>
 </body>
 </html>
+
 
 
 
