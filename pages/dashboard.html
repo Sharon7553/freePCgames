@@ -3,219 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Member Dashboard</title>
-
-  <link rel="stylesheet" href="css/styles.css">
-  
+  <title>Dashboard</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       background-color: #181818;
-      color: #ffffff;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
+      color: white;
       text-align: center;
+      padding: 20px;
     }
 
     .dashboard-container {
-      width: 100%;
-      max-width: 900px;
-      background-color: #2a2a2a;
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #1f1f1f;
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
       display: none;
-      animation: fadeIn 1s ease-out;
     }
 
     .dashboard-container h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-      color: #ffffff;
-    }
-
-    .user-info p {
-      font-size: 18px;
-      color: #a7a7a7;
-    }
-
-    .coin-info {
-      font-size: 24px;
-      font-weight: bold;
-      margin: 20px 0;
-      color: #f1c40f;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .coin-info img {
-      width: 30px;
-      margin-right: 10px;
+      font-size: 32px;
     }
 
     .task-boxes {
       display: flex;
+      justify-content: space-around;
       flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
+      gap: 15px;
     }
 
     .task-box {
-      background-color: #333;
-      padding: 20px;
-      width: 200px;
+      background-color: #2c2c2c;
+      padding: 15px;
       border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .task-box h3 {
-      color: #f1f1f1;
-      margin: 0 0 10px;
-    }
-
-    .task-box p {
-      color: #aaa;
-      font-size: 14px;
-    }
-
-    .task-box button {
-      background-color: #1fd100;
-      color: #000;
-      padding: 10px 20px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s, transform 0.2s ease;
-    }
-
-    .task-box button:hover {
-      background-color: #0e7d00;
-      transform: translateY(-3px);
+      width: 45%;
+      margin: 10px 0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
 
     .task-box.completed {
       background-color: #3b9b56;
     }
 
-    .task-box.completed button {
-      background-color: #27ae60;
+    .task-box h3 {
+      margin-top: 0;
+    }
+
+    .task-box button {
+      background-color: #1fd100;
+      color: black;
+      padding: 8px 16px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .task-box button:hover {
+      background-color: #0e7d00;
     }
 
     .logout-btn {
       background-color: #e74c3c;
-      color: #fff;
-      padding: 12px 25px;
-      font-size: 18px;
+      padding: 12px 20px;
+      font-size: 16px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       margin-top: 20px;
-      width: 100%;
-      max-width: 200px;
-      transition: background-color 0.3s ease;
     }
 
     .logout-btn:hover {
       background-color: #c0392b;
     }
 
-    .prize-list {
-      background-color: #333;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-      margin-top: 30px;
-    }
-
-    .prize-list h3 {
-      color: #fff;
-      font-size: 28px;
-      margin-bottom: 15px;
-    }
-
-    .prize-list ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      color: #fff;
-    }
-
-    .prize-list ul li {
+    .user-info {
+      margin: 20px 0;
       font-size: 18px;
-      margin: 10px 0;
-    }
-
-    .reward-button, .ticket-button {
-      background-color: #1fd100;
-      color: #fff;
-      font-size: 16px;
-      padding: 10px 20px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .reward-button:hover, .ticket-button:hover {
-      background-color: #0e7d00;
-      transform: translateY(-3px);
     }
 
     #loading-message {
       color: white;
       font-size: 18px;
       margin-top: 20px;
-    }
-
-    /* Social Media Dropdown */
-    .social-media-dropdown {
-      margin-top: 20px;
-      background-color: #444;
-      padding: 10px;
-      border-radius: 6px;
-    }
-
-    .social-media-dropdown select {
-      background-color: #555;
-      color: #fff;
-      border: 1px solid #444;
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 16px;
-      width: 200px;
-    }
-
-    .social-media-dropdown button {
-      background-color: #3498db;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin-top: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .social-media-dropdown button:hover {
-      background-color: #2980b9;
-    }
-
-    /* FadeIn Animation */
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
     }
   </style>
 </head>
@@ -226,13 +99,7 @@
   <div id="dashboard" class="dashboard-container">
     <h1>Welcome, <span id="username"></span></h1>
     <div class="user-info">
-      <p>Your tasks and coins are below.</p>
-    </div>
-
-    <!-- Coins Info -->
-    <div class="coin-info">
-      <img src="coin-icon.png" alt="Coins Icon" />
-      Coins: <span id="coins-value">Loading...</span>
+      <p>Here are your tasks. Keep track of your progress!</p>
     </div>
 
     <!-- Task Boxes -->
@@ -254,121 +121,65 @@
       </div>
     </div>
 
-    <!-- Reward and Ticket Buttons -->
-    <button class="reward-button" onclick="receiveReward()">Click to Receive 50 Coins</button>
-    <button class="ticket-button" onclick="purchaseTicket()">Purchase Ticket for 50 Coins</button>
-
-    <!-- Prize List -->
-    <div class="prize-list">
-      <h3>Prize List</h3>
-      <ul>
-        <li>100 Coins - Custom Profile Theme</li>
-        <li>200 Coins - Premium Account Features</li>
-        <li>500 Coins - VIP Badge</li>
-        <li>1000 Coins - Exclusive Content Access</li>
-        <li>5000 Coins - Special Event Tickets</li>
-      </ul>
-    </div>
-
-    <!-- Social Media Share Dropdown -->
-    <div class="social-media-dropdown">
-      <h3>Share on Social Media</h3>
-      <select id="social-media-select">
-        <option value="facebook">Facebook</option>
-        <option value="twitter">Twitter</option>
-        <option value="instagram">Instagram</option>
-        <option value="linkedin">LinkedIn</option>
-      </select>
-      <button onclick="shareOnSocialMedia()">Share</button>
-    </div>
-
     <button class="logout-btn" id="logoutButton">Log Out</button>
   </div>
 
   <!-- Include Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    // Initialize Supabase client
+    // Function to initialize Supabase client
     function initializeSupabase() {
-      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; 
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; 
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
       return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
+    // Handle auth check and dashboard rendering
     async function checkAuth() {
-      const supabase = initializeSupabase();
-      const { data: { user }, error } = await supabase.auth.getUser();
+      const supabase = initializeSupabase();  // Initialize Supabase
+      const { data: { user }, error } = await supabase.auth.getUser(); // Correct method to get current user
 
+      // Handle loading and dashboard display
       const loadingMessage = document.getElementById('loading-message');
       const dashboardContainer = document.getElementById('dashboard');
       const usernameSpan = document.getElementById('username');
 
       if (user) {
-        usernameSpan.textContent = user.email;
+        // User is authenticated, show dashboard
+        usernameSpan.textContent = user.email; // Display username (email in this case)
         dashboardContainer.style.display = 'block';
-        loadingMessage.style.display = 'none';
-        await displayCoins(user.id);
+        loadingMessage.style.display = 'none'; // Hide loading message
       } else {
-        window.location.href = 'login.html';
+        // User is not authenticated, redirect to login page
+        console.log("User not authenticated, redirecting to login.");
+        window.location.href = '/pages/login.html'; // Redirect to login page
       }
     }
 
-    async function getCoins(uuid) {
-      const supabase = initializeSupabase();
-      const { data, error } = await supabase
-        .from('memberstats')
-        .select('coins')
-        .eq('uuid', uuid)
-        .single();
-      if (error) {
-        console.error('Error fetching coins:', error);
-        return 0;
-      }
-      return data.coins;
-    }
-
-    async function displayCoins(uuid) {
-      const coins = await getCoins(uuid);
-      document.getElementById('coins-value').textContent = coins;
-    }
-
+    // Task toggle function to mark tasks as complete/incomplete
     function toggleTask(taskId) {
       const taskElement = document.getElementById(taskId);
       taskElement.classList.toggle("completed");
+
+      // Optionally, you can update the task status in Supabase (to persist across sessions).
+      // For now, this is just toggling the class for visual effect.
     }
 
-    function receiveReward() {
-      alert("You have received 50 coins!");
-    }
-
-    function purchaseTicket() {
-      alert("You have purchased a ticket for 50 coins!");
-    }
-
-    function shareOnSocialMedia() {
-      const socialMedia = document.getElementById("social-media-select").value;
-      alert("Shared on " + socialMedia);
-    }
-
+    // Wait for the window to load, then initialize Supabase and check auth
     window.onload = checkAuth;
 
+    // Handle logout action
     document.getElementById("logoutButton").addEventListener('click', async () => {
       const supabase = initializeSupabase();
       const { error } = await supabase.auth.signOut();
       if (error) {
         console.error('Error logging out:', error.message);
       } else {
-        window.location.href = 'login.html';
+        // Redirect to login page after logout
+        window.location.href = '/pages/login.html';  // Correct login path after logout
       }
     });
   </script>
-
-
-<!-- Link to your main.js file -->
- <script src="js/main.js"></script>
-
-
-
 
 </body>
 </html>
