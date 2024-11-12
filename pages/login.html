@@ -1,48 +1,298 @@
-async function handleLogin(supabase) {
-  const form = document.getElementById('login-form');
-  const errorMessage = document.getElementById('error-message');
-  const successMessage = document.getElementById('success-message');
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Prevent the default form submission
+  <div class="container">
 
-    // Get username, email, and password
-    const username = document.getElementById('username').value.toLowerCase(); // Ensure lowercase username
-    const email = document.getElementById('email').value;  // Not necessary if you're using username for login
-    const password = document.getElementById('password').value;
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">free.PC.games</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+                </div>
+        <div class="menu">
+            <a href="https://www.freepcgames.online/">Home</a>
+            <a href="games.html">Browser games</a>
+            <a href="free-steam-games.html">Steam games</a>
+            <a href="store.html">Premium games</a>
+            <a href="About-us.html">About</a>
+            <a href="store.html">Store</a>
+            
+            <!-- New Login Button -->
+            <a href="login.html" class="login-btn"><span>👤</span> Login</a>
+            
+            <!-- New Register Button -->
+            <a href="sign-up.html" class="register-btn"><span>📝</span> Register</a>
+            
+            <!-- New Account Button -->
+            <a href="dashboard.html" class="account-btn"><span>🏠</span> Account</a>
+        </div>
+    </nav>
+</div>
 
-    // Hide any previous messages
-    errorMessage.style.display = 'none';
-    successMessage.style.display = 'none';
-
-    try {
-      // Call your backend API to authenticate user using the username
-      const response = await fetch('/api/login', { // Assuming you have an API endpoint '/api/login'
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username, password: password })
-      });
-
-      const result = await response.json();
-
-      if (result.error) {
-        // If an error occurs (e.g., invalid credentials)
-        errorMessage.style.display = 'block';
-        errorMessage.textContent = 'Invalid credentials';
-      } else {
-        // If login is successful
-        successMessage.style.display = 'block';
-        console.log('User logged in:', result.user);
-
-        // Redirect to the dashboard after 2 seconds
-        setTimeout(() => {
-          window.location.href = '/pages/dashboard';  // Redirect to the dashboard page
-        }, 2000); // Wait 2 seconds to show the success message before redirect
-      }
-    } catch (error) {
-      // Handle any other errors
-      errorMessage.style.display = 'block';
-      console.error('Error logging in:', error);
+<style>
+    /* Add this CSS for the buttons styling */
+    nav .menu a {
+        padding: 8px 15px;
+        color: white;
+        font-size: 16px;
+        text-decoration: none;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        transition: background-color 0.3s ease;
     }
-  });
+
+    /* Style for Login Button */
+    nav .menu a.login-btn {
+        background-color: #4CAF50;
+    }
+
+    nav .menu a.login-btn:hover {
+        background-color: #45a049;
+    }
+
+    nav .menu a.login-btn span {
+        margin-right: 5px;
+    }
+
+    /* Style for Register Button */
+    nav .menu a.register-btn {
+        background-color: #f39c12;
+    }
+
+    nav .menu a.register-btn:hover {
+        background-color: #e67e22;
+    }
+
+    nav .menu a.register-btn span {
+        margin-right: 5px;
+    }
+
+    /* Style for Account Button */
+    nav .menu a.account-btn {
+        background-color: #3498db;
+    }
+
+    nav .menu a.account-btn:hover {
+        background-color: #2980b9;
+    }
+
+    nav .menu a.account-btn span {
+        margin-right: 5px;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+    }
+
+    .hamburger div {
+        height: 3px;
+        background-color: white;
+    }
+
+    /* Menu Toggle */
+    .menu.active {
+        display: block;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+    }
+</style>
+
+<script>
+    function toggleMenu() {
+        const menu = document.querySelector('.menu');
+        menu.classList.toggle('active');
+    }
+</script>
+
+
+
+
+.
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+    }
+    .form-group {
+      margin: 10px 0;
+    }
+    .form-group label {
+      display: block;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .form-group button:hover {
+      background-color: #45a049;
+    }
+    .error-message {
+      color: red;
+      font-size: 14px;
+      display: none;
+    }
+    .success-message {
+      color: green;
+      font-size: 14px;
+      display: none;
+    }
+
+  </style>
+
+
+</head>
+<body>
+
+  <h2>Login</h2>
+
+  <div id="error-message" class="error-message">Error: Could not log in. Please check your credentials and try again.</div>
+  <div id="success-message" class="success-message">Success! You are now logged in. Redirecting...</div>
+
+  <form id="login-form">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required placeholder="Enter your username" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="Enter your email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required placeholder="Enter your password">
+    </div>
+    <div class="form-group">
+      <button type="submit">Login</button>
+    </div>
+  </form>
+
+  <!-- Include Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    // Function to initialize Supabase client
+    function initializeSupabase() {
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
+      return supabase.createClient(supabaseUrl, supabaseKey);
+    }
+
+    // Rate-limiting logic
+    let lastLoginAttempt = 0;
+    const loginCooldown = 5000; // 5 seconds cooldown
+
+    // Handle form submission
+    function handleLogin(supabase) {
+      const form = document.getElementById('login-form');
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent the default form submission
+
+        // Check if the user is rate-limited
+        const currentTime = Date.now();
+        if (currentTime - lastLoginAttempt < loginCooldown) {
+          errorMessage.textContent = 'Please wait before trying again.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+
+        // Update last login attempt time
+        lastLoginAttempt = currentTime;
+
+        const username = document.getElementById('username').value.toLowerCase(); // Convert username to lowercase
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Hide any previous messages
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+
+        try {
+          // Call Supabase signIn method
+          const { user, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+          });
+
+          if (error) {
+            // If an error occurs
+            errorMessage.style.display = 'block';
+            console.error('Error logging in:', error.message);
+          } else {
+            // If login is successful
+            successMessage.style.display = 'block';
+            console.log('User logged in:', user);
+
+            // Redirect to the dashboard after 2 seconds
+            setTimeout(() => {
+              window.location.href = '/pages/dashboard';  // Redirect to the dashboard page
+            }, 2000); // Wait 2 seconds to show the success message before redirect
+          }
+        } catch (error) {
+          // Handle other errors
+          errorMessage.style.display = 'block';
+          console.error('Error logging in:', error);
+        }
+      });
+    }
+
+    // Wait for the window to load, then initialize Supabase and set up the form
+    window.onload = function() {
+      const supabase = initializeSupabase();  // Initialize Supabase
+      handleLogin(supabase);  // Handle the login process
+    };
+  </script>
+
+
+<script>
+  // After login or signup logic
+async function afterLogin() {
+  const user = supabase.auth.user(); // Get current logged-in user
+
+  if (user) {
+    console.log('User logged in:', user.email);
+    await addUserToRewards(user.email);  // Add them to user_rewards table
+  }
 }
+
+</script>
+
+</body>
+</html>
