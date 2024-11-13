@@ -17,35 +17,35 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <script>
-  // Initialize Supabase client
-  const supabase = supabase.createClient('https://knlovzpoxlozjgkgttou.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs');
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Supabase client once the DOM is loaded
+    const supabase = supabase.createClient('https://knlovzpoxlozjgkgttou.supabase.co', 'your-anon-key-here');
 
-  // Handle Sign-Up
-  const signUpForm = document.getElementById('sign-up-form');
-  const errorMessage = document.getElementById('error-message');
-  const successMessage = document.getElementById('success-message');
+    // Handle Sign-Up
+    const signUpForm = document.getElementById('sign-up-form');
+    const errorMessage = document.getElementById('error-message');
+    const successMessage = document.getElementById('success-message');
 
-  signUpForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
+    signUpForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-    try {
-      const { user, error } = await supabase.auth.signUp({ email, password });
+      try {
+        const { user, error } = await supabase.auth.signUp({ email, password });
 
-      if (error) {
+        if (error) {
+          errorMessage.style.display = 'block';
+          console.error('Sign-up error:', error.message);
+        } else {
+          successMessage.style.display = 'block';
+          console.log('Sign-up successful:', user);
+        }
+      } catch (error) {
         errorMessage.style.display = 'block';
-        console.error('Sign-up error:', error.message);
-      } else {
-        successMessage.style.display = 'block';
-        console.log('Sign-up successful:', user);
+        console.error('Unexpected error:', error);
       }
-    } catch (error) {
-      errorMessage.style.display = 'block';
-      console.error('Unexpected error:', error);
-    }
+    });
   });
-
-  
 </script>
