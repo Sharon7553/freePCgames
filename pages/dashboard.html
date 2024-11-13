@@ -293,7 +293,10 @@
     <div class="task-column">
       <div class="task-boxes">
         <div class="task-box">
-          
+
+          <h4>Welcome, <span id="username"></span></h4>
+          <div class="user-info">
+
           <h3>Watch videos</h3>
           <p>Earn 50 coins per video</p>
           <button>Start Earning</button>
@@ -310,6 +313,38 @@
         </div>
       </div>
     </div>
+
+    <!-- Include Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    // Function to initialize Supabase client
+    function initializeSupabase() {
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Replace with your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your Supabase anon key
+      return supabase.createClient(supabaseUrl, supabaseKey);
+    }
+
+    // Handle auth check and dashboard rendering
+    async function checkAuth() {
+      const supabase = initializeSupabase();
+      const { data: { user }, error } = await supabase.auth.getUser();
+
+      // Handle loading and dashboard display
+      const loadingMessage = document.getElementById('loading-message');
+      const dashboardContainer = document.getElementById('dashboard');
+      const usernameSpan = document.getElementById('username');
+
+      if (user) {
+        // User is authenticated, show dashboard
+        usernameSpan.textContent = user.email;
+        dashboardContainer.style.display = 'block';
+        loadingMessage.style.display = 'none';
+        await displayCoins(user.id); // Display user coins
+      } else {
+        // User is not authenticated, redirect to login page
+        window.location.href = '/pages/login.html';
+      }
+    }
 
     <!-- Right Column: Video Player and Coin Area -->
     <div class="video-column">
