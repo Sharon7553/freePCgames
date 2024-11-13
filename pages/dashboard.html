@@ -7,30 +7,31 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
       background-color: #181818;
       color: white;
       text-align: center;
+    }
+
+    /* Main Dashboard Container */
+    .dashboard-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
       padding: 20px;
     }
 
-    .dashboard-container {
-      max-width: 8500px;
-      margin: 0 auto;
-      background-color: #1f1f1f;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-      display: none;
-    }
-
-    .dashboard-container h1 {
-      font-size: 26px;
+    /* Left Column (Task Boxes) */
+    .task-column {
+      width: 100%;
+      max-width: 300px;
+      margin-right: 20px;
     }
 
     .task-boxes {
       display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 15px;
     }
 
@@ -38,13 +39,7 @@
       background-color: #2c2c2c;
       padding: 15px;
       border-radius: 8px;
-      width: 45%;
-      margin: 10px 0;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-
-    .task-box.completed {
-      background-color: #3b9b56;
     }
 
     .task-box h3 {
@@ -54,7 +49,7 @@
     .task-box button {
       background-color: #1fd100;
       color: black;
-      padding: 8px 16px;
+      padding: 10px;
       font-size: 14px;
       border: none;
       border-radius: 6px;
@@ -66,119 +61,201 @@
       background-color: #0e7d00;
     }
 
-    .logout-btn {
-      background-color: #e74c3c;
-      padding: 12px 20px;
+    /* Right Column (Video and Coin Area) */
+    .video-column {
+      width: 100%;
+      max-width: 700px;
+      position: relative;
+      padding: 20px;
+      background-color: #2c2c2c;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Video Player Container */
+    .video-container {
+      background-color: #1c1c1c;
+      position: relative;
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px #00ff00;
+    }
+
+    video {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    /* Coins Section */
+    .coins {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #2c9e27;
+      color: white;
+      font-size: 18px;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Timer Section */
+    .timer {
       font-size: 16px;
+      color: #ff9900;
+      margin-top: 10px;
+    }
+
+    /* Coin Redemption Section */
+    .coin-redemption {
+      margin-top: 30px;
+      background-color: #333;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .coin-redemption h3 {
+      margin-top: 0;
+    }
+
+    .coin-redemption p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    .coin-redemption button {
+      background-color: #ff5733;
+      color: white;
+      padding: 10px 15px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      margin-top: 20px;
+      font-size: 16px;
     }
 
-    .logout-btn:hover {
+    .coin-redemption button:hover {
       background-color: #c0392b;
     }
 
-    .user-info {
-      margin: 20px 0;
-      font-size: 18px;
+    /* Responsive Layout */
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .task-column, .video-column {
+        width: 100%;
+        margin-bottom: 20px;
+      }
     }
 
-    #loading-message {
-      color: white;
-      font-size: 18px;
-      margin-top: 20px;
-    }
   </style>
 </head>
 <body>
 
-  <div id="loading-message">Loading dashboard, please wait...</div>
-
-  <div id="dashboard" class="dashboard-container">
-    <h1>Welcome, <span id="username"></span></h1>
-    <div class="user-info">
-      <p>T!</p>
-    </div>
-
-    <!-- Task Boxes -->
-    <div class="task-boxes">
-      <div class="task-box" id="task1">
-        <h3>Watch videos</h3>
-        <p>Earn 10 coins per video.</p>
-        <button onclick="toggleTask('task1')">Start earning</button>
-    </div>
-    <div class="task-box" id="task2">
-        <h3>Share Facebook posts</h3>
-        <p>Earn 10 coins per share</p>
-        <button onclick="toggleTask('task2')">Start earning</button>
-      </div>
-      <div class="task-box" id="task3">
-        <h3>Leave reviews</h3>
-        <p>15 coins per review.</p>
-        <button onclick="toggleTask('task3')">Start earning</button>
+  <div class="dashboard-container">
+    <!-- Left Column: Task Boxes -->
+    <div class="task-column">
+      <div class="task-boxes">
+        <div class="task-box">
+          <h3>Watch Videos</h3>
+          <p>Earn 10 coins per video.</p>
+          <button onclick="startWatching()">Start Watching</button>
+        </div>
+        <div class="task-box">
+          <h3>Share Facebook Posts</h3>
+          <p>Earn 10 coins per share</p>
+          <button>Start Earning</button>
+        </div>
+        <div class="task-box">
+          <h3>Leave Reviews</h3>
+          <p>Earn 15 coins per review.</p>
+          <button>Start Earning</button>
+        </div>
       </div>
     </div>
 
-    <button class="logout-btn" id="logoutButton">Log Out</button>
+    <!-- Right Column: Video Player and Coins -->
+    <div class="video-column">
+      <div class="video-container">
+        <video id="videoPlayer" controls>
+          <source id="videoSource" src="assets/videos/video1.mp4" type="video/mp4">
+        </video>
+        <div id="coins" class="coins">Coins: 0</div>
+        <div id="timer" class="timer">Next video in: 12s</div>
+      </div>
+
+      <div class="coin-redemption">
+        <h3>🎮 Swap Your Coins for Steam Games or Gift Cards 🎁</h3>
+        <p>Get amazing prizes by exchanging your coins! 🎉</p>
+        <button onclick="redeemCoins()">Redeem Coins</button>
+      </div>
+    </div>
   </div>
 
-  <!-- Include Supabase JS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    // Function to initialize Supabase client
-    function initializeSupabase() {
-      const supabaseUrl = 'https://qvdrfahwyztzpbddoakd.supabase.co'; // Replace with your Supabase URL
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2ZHJmYWh3eXp0enBiZGRvYWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTEwODUsImV4cCI6MjA0NzAyNzA4NX0.R-AqTGj5MsAb-bqE1yP0Ag5ZWMtFIQxgtJ2BM05uJh0'; // Replace with your Supabase anon key
-      return supabase.createClient(supabaseUrl, supabaseKey);
+    // Initialize variables
+    let currentVideoIndex = 0;
+    let coins = 0;
+    let timer;
+    const videoList = ["assets/videos/video1.mp4", "assets/videos/video2.mp4", "assets/videos/video3.mp4", "assets/videos/video4.mp4", "assets/videos/video5.mp4"];
+
+    // Start watching button handler
+    function startWatching() {
+      document.querySelector('.task-box button').disabled = true;  // Disable task box button
+      startTimer();
+      playVideo(currentVideoIndex);  // Start playing the first video
     }
 
-    // Handle auth check and dashboard rendering
-    async function checkAuth() {
-      const supabase = initializeSupabase();  // Initialize Supabase
-      const { data: { user }, error } = await supabase.auth.getUser(); // Correct method to get current user
+    // Start a countdown timer
+    function startTimer() {
+      let countdown = 12;  // Timer in seconds
+      const timerElement = document.getElementById("timer");
+      timer = setInterval(() => {
+        countdown--;
+        timerElement.innerHTML = `Next video in: ${countdown}s`;
 
-      // Handle loading and dashboard display
-      const loadingMessage = document.getElementById('loading-message');
-      const dashboardContainer = document.getElementById('dashboard');
-      const usernameSpan = document.getElementById('username');
-
-      if (user) {
-        // User is authenticated, show dashboard
-        usernameSpan.textContent = user.email; // Display username (email in this case)
-        dashboardContainer.style.display = 'block';
-        loadingMessage.style.display = 'none'; // Hide loading message
-      } else {
-        // User is not authenticated, redirect to login page
-        console.log("User not authenticated, redirecting to login.");
-        window.location.href = '/pages/login.html'; // Redirect to login page
-      }
+        if (countdown <= 0) {
+          clearInterval(timer);
+          addCoins();
+          loadNextVideo();
+        }
+      }, 1000);
     }
 
-    // Task toggle function to mark tasks as complete/incomplete
-    function toggleTask(taskId) {
-      const taskElement = document.getElementById(taskId);
-      taskElement.classList.toggle("completed");
-
-      // Optionally, you can update the task status in Supabase (to persist across sessions).
-      // For now, this is just toggling the class for visual effect.
+    // Add coins when timer expires
+    function addCoins() {
+      coins += 50;
+      document.getElementById("coins").innerHTML = `Coins: ${coins}`;
     }
 
-    // Wait for the window to load, then initialize Supabase and check auth
-    window.onload = checkAuth;
+    // Load the next video
+    function loadNextVideo() {
+      currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
+      playVideo(currentVideoIndex);
+      startTimer();
+    }
 
-    // Handle logout action
-    document.getElementById("logoutButton").addEventListener('click', async () => {
-      const supabase = initializeSupabase();
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error('Error logging out:', error.message);
-      } else {
-        // Redirect to login page after logout
-        window.location.href = '/pages/login.html';  // Correct login path after logout
-      }
-    });
+    // Play video from the list
+    function playVideo(index) {
+      const videoPlayer = document.getElementById("videoPlayer");
+      const videoSource = document.getElementById("videoSource");
+
+      videoSource.src = videoList[index];
+      videoPlayer.load();
+      videoPlayer.play();
+    }
+
+    // Redeem coins button
+    function redeemCoins() {
+      alert(`You redeemed ${coins} coins for a Steam game!`);
+      coins = 0;
+      document.getElementById("coins").innerHTML = `Coins: ${coins}`;
+    }
   </script>
 
 </body>
