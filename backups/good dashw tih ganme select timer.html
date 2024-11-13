@@ -1,0 +1,181 @@
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Selection</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      text-align: center;
+    }
+
+    /* Fancy Bullets for Game Titles */
+    .game-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .game-item {
+      font-size: 14px;
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      width: 100px;
+      text-align: center;
+    }
+
+    .game-item:hover {
+      background-color: #4CAF50;
+      transform: scale(1.1);
+    }
+
+    /* Locked Game Style */
+    .game-item.locked {
+      background-color: #bbb;
+      cursor: not-allowed;
+    }
+
+    .locked-message {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #444;
+      font-weight: bold;
+      display: none;
+    }
+
+    .lock-icon {
+      margin-left: 10px;
+      color: #F44336;
+    }
+
+    .cooldown-text {
+      font-size: 12px;
+      color: #888;
+      display: none;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    /* Timer */
+    .timer {
+      font-size: 14px;
+      color: #F44336;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
+    /* Center Display for Selected Game */
+    .selected-game {
+      font-size: 18px;
+      margin-top: 20px;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .selected-game span {
+      font-size: 22px;
+      margin-top: 10px;
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Game Titles Row -->
+    <div class="game-row" id="gameRow">
+      <div class="game-item" onclick="selectGame('Epic Adventure')">Epic Adventure</div>
+      <div class="game-item" onclick="selectGame('Space Conflict')">Space Conflict</div>
+      <div class="game-item" onclick="selectGame('Dragon Hunt')">Dragon Hunt</div>
+      <div class="game-item" onclick="selectGame('Mystic World')">Mystic World</div>
+      <div class="game-item" onclick="selectGame('Super Racer X')">Super Racer X</div>
+      <div class="game-item" onclick="selectGame('Zombie Apoc')">Zombie Apoc</div>
+      <div class="game-item" onclick="selectGame('Warrior Arena')">Warrior Arena</div>
+      <div class="game-item" onclick="selectGame('Battle Nexus')">Battle Nexus</div>
+      <div class="game-item" onclick="selectGame('Underwater Quest')">Underwater Quest</div>
+      <div class="game-item" onclick="selectGame('Fantasy Saga')">Fantasy Saga</div>
+    </div>
+
+    <!-- Selected Game Display -->
+    <div class="selected-game" id="selectedGame" style="display: none;">
+      <div id="gameTitle"></div>
+      <div class="locked-message" id="lockedMessage">
+        Game Locked In <span class="lock-icon">🔒</span>
+      </div>
+      <div class="cooldown-text" id="cooldownText">Please wait for the cool-down period...</div>
+      <div class="timer" id="timer"></div>
+    </div>
+  </div>
+
+  <script>
+    let gameSelected = false;
+    let countdownInterval;
+
+    function selectGame(gameTitle) {
+      if (gameSelected) return;
+
+      // Disable further selection
+      gameSelected = true;
+
+      // Lock all game items
+      const gameItems = document.querySelectorAll('.game-item');
+      gameItems.forEach(item => {
+        item.classList.add('locked');
+        item.style.pointerEvents = 'none'; // Disable click
+      });
+
+      // Show the selected game in the center
+      document.getElementById('selectedGame').style.display = 'block';
+      document.getElementById('gameTitle').innerText = gameTitle;
+
+      // Show locked message and cooldown text
+      document.getElementById('lockedMessage').style.display = 'block';
+      document.getElementById('cooldownText').style.display = 'block';
+
+      // Set up the 48-hour cooldown (172,800 seconds)
+      let cooldownTime = 172800; // 48 hours in seconds
+
+      // Start the countdown
+      countdownInterval = setInterval(function() {
+        const hours = Math.floor(cooldownTime / 3600);
+        const minutes = Math.floor((cooldownTime % 3600) / 60);
+        const seconds = cooldownTime % 60;
+
+        // Format the timer to show as hh:mm:ss
+        const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        document.getElementById('timer').innerText = formattedTime;
+
+        // Decrease the countdown time
+        if (cooldownTime > 0) {
+          cooldownTime--;
+        } else {
+          clearInterval(countdownInterval); // Stop the timer when it reaches 0
+          document.getElementById('cooldownText').innerText = 'Cooldown complete! You can now claim your reward.';
+        }
+      }, 1000); // Update every second
+    }
+  </script>
