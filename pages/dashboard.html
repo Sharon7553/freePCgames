@@ -11,7 +11,35 @@
       padding: 0;
       background-color: #181818;
       color: white;
-      text-align: center;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #000;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .navbar .coins {
+      font-size: 18px;
+      background-color: #2c9e27;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .navbar .convert-text {
+      font-size: 12px;
+      color: #ccc;
+      margin-top: 5px;
     }
 
     /* Main Dashboard Container */
@@ -19,7 +47,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      padding: 20px;
+      padding: 100px 20px 20px; /* Added padding-top to account for navbar */
     }
 
     /* Left Column (Task Boxes) */
@@ -27,6 +55,7 @@
       width: 100%;
       max-width: 300px;
       margin-right: 20px;
+      margin-bottom: 20px;
     }
 
     .task-boxes {
@@ -80,6 +109,7 @@
       border-radius: 10px;
       margin-bottom: 20px;
       box-shadow: 0 0 10px #00ff00;
+      text-align: center;
     }
 
     video {
@@ -99,6 +129,7 @@
       padding: 10px;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
     }
 
     /* Timer Section */
@@ -152,19 +183,28 @@
         margin-bottom: 20px;
       }
     }
-
   </style>
 </head>
 <body>
 
+  <!-- Navbar -->
+  <div class="navbar">
+    <div>Dashboard</div>
+    <div>
+      <div id="coins" class="coins">Coins: 0</div>
+      <div class="convert-text">Convert coins > </div>
+    </div>
+  </div>
+
+  <!-- Main Dashboard Container -->
   <div class="dashboard-container">
     <!-- Left Column: Task Boxes -->
     <div class="task-column">
       <div class="task-boxes">
         <div class="task-box">
           <h3>Watch Videos</h3>
-          <p>Earn 10 coins per video.</p>
-          <button onclick="startWatching()">Start Watching</button>
+          <p>Earn 50 coins per video.</p>
+          <button id="startBtn" onclick="startEarning()">Start Earning</button>
         </div>
         <div class="task-box">
           <h3>Share Facebook Posts</h3>
@@ -176,85 +216,106 @@
           <p>Earn 15 coins per review.</p>
           <button>Start Earning</button>
         </div>
+        <div class="task-box">
+          <h3>Refer Friends</h3>
+          <p>Earn 20 coins per referral</p>
+          <button>Start Earning</button>
+        </div>
       </div>
     </div>
 
-    <!-- Right Column: Video Player and Coins -->
+    <!-- Right Column: Video Player and Coin Area -->
     <div class="video-column">
       <div class="video-container">
         <video id="videoPlayer" controls>
           <source id="videoSource" src="assets/videos/video1.mp4" type="video/mp4">
         </video>
-        <div id="coins" class="coins">Coins: 0</div>
         <div id="timer" class="timer">Next video in: 12s</div>
       </div>
 
       <div class="coin-redemption">
-        <h3>🎮 Swap Your Coins for Steam Games or Gift Cards 🎁</h3>
-        <p>Get amazing prizes by exchanging your coins! 🎉</p>
-        <button onclick="redeemCoins()">Redeem Coins</button>
+        <h3>🎮 Start Earning Now!</h3>
+        <p>Start earning coins by watching videos! 🎉</p>
+        <button id="earnBtn" onclick="startEarning()">Start Watching</button>
       </div>
     </div>
   </div>
 
+  <audio id="coinSound" src="assets/chiching.mp3"></audio>
+
   <script>
     // Initialize variables
     let currentVideoIndex = 0;
-    let coins = 0;
+    let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 0;
     let timer;
     const videoList = ["assets/videos/video1.mp4", "assets/videos/video2.mp4", "assets/videos/video3.mp4", "assets/videos/video4.mp4", "assets/videos/video5.mp4"];
 
-    // Start watching button handler
-    function startWatching() {
-      document.querySelector('.task-box button').disabled = true;  // Disable task box button
+    // Display initial coin value
+    updateCoins();
+
+    // Start earning function
+    function startEarning() {
+      // Disable the button once clicked
+      document.getElementById("earnBtn").disabled = true;
+
+      // Start the timer and play the first video
       startTimer();
-      playVideo(currentVideoIndex);  // Start playing the first video
+      playVideo(currentVideoIndex);
     }
 
-    // Start a countdown timer
+    // Start countdown timer
     function startTimer() {
       let countdown = 12;  // Timer in seconds
       const timerElement = document.getElementById("timer");
-      timer = setInterval(() => {
-        countdown--;
-        timerElement.innerHTML = `Next video in: ${countdown}s`;
 
-        if (countdown <= 0) {
+      timer = setInterval(function () {
+        timerElement.innerHTML = `Next video in: ${countdown}s`;
+        countdown--;
+
+        if (countdown < 0) {
           clearInterval(timer);
-          addCoins();
-          loadNextVideo();
+          // Add coins when timer runs out
+          coins += 50;
+          localStorage.setItem("coins", coins);
+          updateCoins();
+          playNextVideo();
         }
       }, 1000);
     }
 
-    // Add coins when timer expires
-    function addCoins() {
-      coins += 50;
-      document.getElementById("coins").innerHTML = `Coins: ${coins}`;
-    }
-
-    // Load the next video
-    function loadNextVideo() {
-      currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-      playVideo(currentVideoIndex);
-      startTimer();
-    }
-
-    // Play video from the list
+    // Play video based on current index
     function playVideo(index) {
       const videoPlayer = document.getElementById("videoPlayer");
       const videoSource = document.getElementById("videoSource");
-
       videoSource.src = videoList[index];
       videoPlayer.load();
       videoPlayer.play();
     }
 
-    // Redeem coins button
-    function redeemCoins() {
-      alert(`You redeemed ${coins} coins for a Steam game!`);
-      coins = 0;
-      document.getElementById("coins").innerHTML = `Coins: ${coins}`;
+    // Play the next video
+    function playNextVideo() {
+      currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
+      playVideo(currentVideoIndex);
+      startTimer();
+    }
+
+    // Update coins display
+    function updateCoins() {
+      document.getElementById("coins").innerText = `Coins: ${coins}`;
+      animateCoins();
+    }
+
+    // Animate coins display
+    function animateCoins() {
+      const coinsElement = document.getElementById("coins");
+      coinsElement.classList.add("animate-coins");
+      setTimeout(() => {
+        coinsElement.classList.remove("animate-coins");
+      }, 500);
+      
+      // Play sound effect
+      const chiching = document.getElementById("coinSound");
+      chiching.play();
     }
   </script>
 
