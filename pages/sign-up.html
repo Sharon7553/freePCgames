@@ -259,6 +259,11 @@
           } else {
             successMessage.style.display = 'block';
             console.log('Sign-up successful:', user);
+
+            // Redirect to login page after success
+            setTimeout(function() {
+              window.location.href = 'login.html'; // Redirect to login page
+            }, 2000);  // Delay for 2 seconds
           }
         } catch (error) {
           errorMessage.style.display = 'block';
