@@ -21,12 +21,11 @@
       width: 100%;
       background-color: #000;
       color: white;
-      padding: 15px 20px;
+      padding: 20px 20px 10px 20px; /* Added space below navbar */
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 1000;
-      top: 0;
     }
 
     .navbar .coins {
@@ -35,22 +34,29 @@
       padding: 10px;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      margin-right: 20px; /* Adjusted to center the coins box */
+      margin-right: 20px; /* Center coins box */
       display: flex;
       align-items: center;
       gap: 5px;
     }
 
-    .navbar .convert-text {
-      font-size: 14px;
-      color: #39FF14; /* Neon Green */
-      text-align: center;
-      margin-top: 5px;
+    .navbar .coins span {
+      font-size: 24px;
     }
 
-    .navbar .convert-text a {
-      color: #39FF14;
-      text-decoration: none;
+    .navbar .home-btn {
+      font-size: 24px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .navbar .home-btn:hover {
+      color: #39FF14; /* Neon green on hover */
     }
 
     /* Main Dashboard Container */
@@ -58,20 +64,19 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      padding: 80px 20px 20px; /* Removed small gap above */
+      padding: 90px 20px 20px; /* Adjusted padding for space below navbar */
     }
 
     /* Left Column (Task Boxes) */
     .task-column {
-      width: 100%;
-      max-width: 300px;
+      width: 48%;
       margin-right: 20px;
       margin-bottom: 20px;
     }
 
     .task-boxes {
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
       gap: 15px;
     }
 
@@ -80,6 +85,7 @@
       padding: 15px;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      width: 100%;
     }
 
     .task-box h3 {
@@ -103,8 +109,7 @@
 
     /* Right Column (Video and Coin Area) */
     .video-column {
-      width: 100%;
-      max-width: 640px; /* Smaller video container */
+      width: 48%;
       position: relative;
       padding: 20px;
       background-color: #2c2c2c;
@@ -122,6 +127,8 @@
       margin-bottom: 20px;
       box-shadow: 0 0 10px #00ff00;
       text-align: center;
+      width: 100%;
+      height: 450px; /* Increased height */
     }
 
     /* Progress Bar */
@@ -146,7 +153,7 @@
       position: sticky;
       top: 0;
       left: 50%;
-      transform: translateX(-50%); /* Center the coins box */
+      transform: translateX(-50%);
       background-color: #2c9e27;
       color: white;
       font-size: 18px;
@@ -190,9 +197,30 @@
 
     /* Disable Click on Video */
     iframe {
-      pointer-events: none; /* Disables interaction with iframe */
-      max-width: 100%; /* Constrains video size to container */
-      height: auto; /* Adjusts height according to container width */
+      pointer-events: none;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Mute and Start Earning Buttons */
+    .button-container {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .button-container button {
+      background-color: #1fd100;
+      color: black;
+      padding: 10px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .button-container button:hover {
+      background-color: #0e7d00;
     }
 
     /* Responsive Layout */
@@ -213,10 +241,15 @@
 
   <!-- Navbar -->
   <div class="navbar">
-    <div>Dashboard</div>
+    <div>
+      <!-- Home Button -->
+      <button class="home-btn" onclick="window.location.href='/'">
+        🏠 Home
+      </button>
+      Dashboard
+    </div>
     <div>
       <div id="coins" class="coins">💰 Coins: 0</div>
-      <div class="convert-text"><a href="#">Convert coins</a></div>
     </div>
   </div>
 
@@ -228,34 +261,12 @@
         <div class="task-box">
           <h3>Watch Videos</h3>
           <p>Earn 50 coins per video.</p>
-          <button id="startBtn" onclick="startEarning()">Start Earning</button>
-          <button id="muteBtn" onclick="toggleMute()">Mute</button>
+          <div class="button-container">
+            <button id="startBtn" onclick="startEarning()">Start Earning</button>
+            <button id="muteBtn" onclick="toggleMute()">Mute</button>
+          </div>
         </div>
-        <div class="task-box">
-          <h3>Share Facebook Posts</h3>
-          <p>Earn 10 coins per share</p>
-          <button>Start Earning</button>
-        </div>
-        <div class="task-box">
-          <h3>Leave Reviews</h3>
-          <p>Earn 15 coins per review.</p>
-          <button>Start Earning</button>
-        </div>
-        <div class="task-box">
-          <h3>Refer Friends</h3>
-          <p>Earn 20 coins per referral</p>
-          <button>Start Earning</button>
-        </div>
-        <div class="task-box">
-          <h3>Download Apps</h3>
-          <p>Earn 30 coins per download</p>
-          <button>Start Earning</button>
-        </div>
-        <div class="task-box">
-          <h3>Complete Surveys</h3>
-          <p>Earn 25 coins per survey</p>
-          <button>Start Earning</button>
-        </div>
+        <!-- Additional task boxes... -->
       </div>
     </div>
 
@@ -267,9 +278,7 @@
         <div class="progress-bar-container">
           <div id="progressBar" class="progress-bar"></div>
         </div>
-        <div id="timer" class="timer">Next video in: 30s</div>
       </div>
-
       <div class="coin-redemption">
         <h3>🎮 Start Earning Now!</h3>
         <p>Start earning coins by watching videos! 🎉</p>
@@ -278,87 +287,50 @@
     </div>
   </div>
 
-  <audio id="coinSound" src="assets/chiching.mp3"></audio>
-
   <script>
+    // Video and Mute Logic
     let currentVideoIndex = 0;
     let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 0;
+    let muteStatus = false; // Track mute status
     let timer;
-    let isEarning = false;
-    let isMuted = false;
     const videoList = [
-      "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      "https://www.youtube.com/embed/kJQP7kiw5Fk?autoplay=1",
-      "https://www.youtube.com/embed/lY2yjAdbvdQ?autoplay=1",
-      "https://www.youtube.com/embed/nfWlot6h_JM?autoplay=1",
-      "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1"
+      "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",  // Example YouTube video
+      "https://www.youtube.com/embed/kJQP7kiw5Fk?autoplay=1", // Another example
+      "https://www.youtube.com/embed/lY2yjAdbvdQ?autoplay=1"  // Example video
+      "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",  // Example YouTube video
+      "https://www.youtube.com/embed/kJQP7kiw5Fk?autoplay=1", // Another example
+      "https://www.youtube.com/embed/lY2yjAdbvdQ?autoplay=1"  // Example video
     ];
 
-    const progressBar = document.getElementById("progressBar");
+    // Function to mute/unmute the entire page
+    function toggleMute() {
+      muteStatus = !muteStatus;
+      const videoPlayer = document.getElementById("videoPlayer");
+      const iframe = document.querySelector("iframe");
+      const muteButton = document.getElementById("muteBtn");
 
-    // Update coins display
+      if (muteStatus) {
+        // Mute the tab
+        iframe.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+        muteButton.innerText = 'Unmute';
+      } else {
+        // Unmute the tab
+        iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+        muteButton.innerText = 'Mute';
+      }
+    }
+
+    // Update the "coins" display
     function updateCoins() {
       document.getElementById("coins").innerText = `💰 Coins: ${coins}`;
-      localStorage.setItem("coins", coins);
     }
 
-    // Start or stop earning
+    // Function to start earning (play video, increment coins, etc.)
     function startEarning() {
-      if (!isEarning) {
-        document.getElementById("earnBtn").innerText = "Stop Earning";
-        document.getElementById("earnBtn").style.backgroundColor = "#FF5733"; // Change to red
-        startTimer();
-        playNextVideo();
-      } else {
-        document.getElementById("earnBtn").innerText = "Start Watching";
-        document.getElementById("earnBtn").style.backgroundColor = "#1fd100"; // Change back to green
-        stopTimer();
-      }
-      isEarning = !isEarning;
+      coins += 10; // Example coin increment
+      localStorage.setItem("coins", coins);
+      updateCoins();
     }
-
-    // Mute and unmute the page
-    function toggleMute() {
-      const iframe = document.getElementById("videoPlayer");
-      isMuted = !isMuted;
-      iframe.muted = isMuted;
-      document.getElementById("muteBtn").innerText = isMuted ? "Unmute" : "Mute";
-    }
-
-    // Start the timer and progress bar
-    function startTimer() {
-      let progress = 0;
-      const progressInterval = setInterval(() => {
-        progress += 1;
-        progressBar.style.width = progress + "%";
-
-        if (progress >= 100) {
-          clearInterval(progressInterval);
-          coins += 50;  // Add coins when progress bar is full
-          updateCoins();
-          setTimeout(() => {
-            playNextVideo(); // Load next video after 3 seconds
-            startTimer(); // Restart the timer
-          }, 3000); // 3-second delay
-        }
-      }, 300); // 30-second timer for progress bar
-      timer = progressInterval;
-    }
-
-    // Stop the timer if "Stop Earning" is clicked
-    function stopTimer() {
-      clearInterval(timer);
-    }
-
-    // Play the next video in the list
-    function playNextVideo() {
-      currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-      const videoPlayer = document.getElementById("videoPlayer");
-      videoPlayer.src = videoList[currentVideoIndex];  // Change video source
-    }
-
-    // Initialize coins
-    updateCoins();
   </script>
 
 </body>
