@@ -285,6 +285,7 @@
       <span class="daily-reward-icon">🎁</span>
       <span class="daily-login-text"></span>
     </div>
+    <div id="user-welcome"></div>
   </div>
 
   <!-- Main Dashboard Container -->
@@ -293,134 +294,119 @@
     <div class="task-column">
       <div class="task-boxes">
         <div class="task-box">
-
-          <h3>Watch videos</h3>
-          <p>Earn 50 coins per video</p>
-          <button>Start Earning</button>
+          <h3>Complete Tasks</h3>
+          <button onclick="completeTask()">Task 1</button>
         </div>
         <div class="task-box">
-          <h3>Download Apps</h3>
-          <p>Earn 30 coins per download</p>
-          <button>Start Earning</button>
-        </div>
-        <div class="task-box">
-          <h3>Complete Surveys</h3>
-          <p>Earn 25 coins per survey</p>
-          <button>Start Earning</button>
+          <h3>Complete Tasks</h3>
+          <button onclick="completeTask()">Task 2</button>
         </div>
       </div>
     </div>
 
-
-
-    <!-- Right Column: Video Player and Coin Area -->
+    <!-- Right Column: Video Area and Coins -->
     <div class="video-column">
       <div class="video-container">
-        <!-- Embed YouTube Video -->
-        <iframe id="videoPlayer" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allowfullscreen></iframe>
-        <div class="progress-bar-container">
-          <div id="progressBar" class="progress-bar"></div>
-        </div>
-        <div id="timer" class="timer">Next video in: 30s</div>
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
-
-
-      <div class="coin-redemption">
-        <h3>🎮 Start Earning Now!</h3>
-        <p></p>
-        <button id="earnBtn" onclick="startEarning()">Start Watching</button>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
       </div>
     </div>
   </div>
 
+  <!-- Coin Redemption Section -->
+  <div class="coin-redemption">
+    <h3>Redeem Your Coins</h3>
+    <p>Redeem your coins for exciting rewards!</p>
+    <button onclick="redeemCoins()">Redeem</button>
+  </div>
 
-  <audio id="coinSound" src="assets/chiching.mp3"></audio>
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <p>Congratulations! You've claimed your daily reward.</p>
+    <button onclick="closePopup()">Close</button>
+  </div>
 
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/supabase.min.js"></script>
   <script>
-    let currentVideoIndex = 0;
-    let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 0;
-    let timer;
-    let isEarning = false;
-    let isMuted = false;
-    const videoList = [
-      "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      "https://www.youtube.com/embed/kJQP7kiw5Fk?autoplay=1",
-      "https://www.youtube.com/embed/lY2yjAdbvdQ?autoplay=1",
-      "https://www.youtube.com/embed/nfWlot6h_JM?autoplay=1",
-      "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1"
-    ];
+    const supabaseUrl = 'https://qvdrfahwyztzpbddoakd.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2ZHJmYWh3eXp0enBiZGRvYWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTEwODUsImV4cCI6MjA0NzAyNzA4NX0.R-AqTGj5MsAb-bqE1yP0Ag5ZWMtFIQxgtJ2BM05uJh0';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    const progressBar = document.getElementById("progressBar");
+    const userWelcomeElement = document.getElementById('user-welcome');
+    const coinsElement = document.getElementById('coins');
+    const dailyRewardText = document.querySelector('.daily-login-text');
 
-    // Update coins display
-    function updateCoins() {
-      document.getElementById("coins").innerText = `💰 Coins: ${coins}`;
-      localStorage.setItem("coins", coins);
-    }
+    // Check session on load
+    const checkSession = async () => {
+      const user = supabase.auth.user();
 
-    // Start or stop earning
-    function startEarning() {
-      if (!isEarning) {
-        document.getElementById("earnBtn").innerText = "Stop Earning";
-        document.getElementById("earnBtn").style.backgroundColor = "#FF5733"; // Change to red
-        startTimer();
-        playNextVideo();
+      if (user) {
+        // Logged in user, show welcome message
+        userWelcomeElement.textContent = `Welcome, ${user.email}`;
+        coinsElement.textContent = `💰 Coins: ${user.metadata.coins || 0}`;
+        dailyRewardText.textContent = "Claim your daily reward!";
       } else {
-        document.getElementById("earnBtn").innerText = "Start Watching";
-        document.getElementById("earnBtn").style.backgroundColor = "#1fd100"; // Change back to green
-        stopTimer();
+        // No user logged in, redirect to login page
+        window.location.href = 'login.html';
       }
-      isEarning = !isEarning;
-    }
+    };
 
-    // Mute and unmute the page
-    function toggleMute() {
-      const iframe = document.getElementById("videoPlayer");
-      isMuted = !isMuted;
-      iframe.muted = isMuted;
-      document.getElementById("muteBtn").innerText = isMuted ? "Unmute" : "Mute";
-    }
+    // Call check session on page load
+    window.onload = checkSession;
 
-    // Start the timer and progress bar
-    function startTimer() {
-      let progress = 0;
-      const progressInterval = setInterval(() => {
-        progress += 1;
-        progressBar.style.width = progress + "%";
+    // Function to handle user login
+    const signIn = async (email, password) => {
+      const { user, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) alert(error.message);
+      if (user) {
+        window.location.reload();
+      }
+    };
 
-        if (progress >= 100) {
-          clearInterval(progressInterval);
-          coins += 50;  // Add coins when progress bar is full
-          updateCoins();
-          setTimeout(() => {
-            playNextVideo(); // Load next video after 3 seconds
-            startTimer(); // Restart the timer
-          }, 3000); // 3-second delay
+    // Function to sign out
+    const signOut = async () => {
+      await supabase.auth.signOut();
+      window.location.reload();
+    };
+
+    // Handle daily reward
+    const claimReward = async () => {
+      const user = supabase.auth.user();
+      if (user) {
+        // Add reward coins to user
+        const { data, error } = await supabase
+          .from('users')
+          .update({ coins: user.metadata.coins + 10 }) // Update coins
+          .match({ id: user.id });
+
+        if (error) alert(error.message);
+        if (data) {
+          alert('Reward claimed! 10 Coins added.');
+          checkSession(); // Refresh the session to reflect the change
         }
-      }, 300); // 30-second timer for progress bar
-      timer = progressInterval;
-    }
+      }
+    };
 
-    // Stop the timer if "Stop Earning" is clicked
-    function stopTimer() {
-      clearInterval(timer);
-    }
+    // Helper function to close the popup
+    const closePopup = () => {
+      document.getElementById('popup').style.display = 'none';
+    };
 
-    // Play the next video in the list
-    function playNextVideo() {
-      currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-      const videoPlayer = document.getElementById("videoPlayer");
-      videoPlayer.src = videoList[currentVideoIndex];  // Change video source
-    }
+    // Video Task Completion (Placeholder)
+    const completeTask = () => {
+      alert('Task completed!');
+    };
 
+    const goHome = () => {
+      alert('Redirecting home...');
+    };
 
-    // Go to Home (for now it just refreshes the page)
-    function goHome() {
-      location.reload();  // Placeholder home function
-    }
-
-    // Initialize coins
-    updateCoins();
+    const redeemCoins = () => {
+      alert('Coins redeemed!');
+    };
   </script>
 
 </body>
