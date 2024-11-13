@@ -222,7 +222,7 @@
       cursor: pointer;
       position: absolute;
       top: 10px;
-      right: 10px;
+      right: 20px; /* Adjusted to be not too far right */
       z-index: 10;
     }
 
@@ -283,7 +283,6 @@
     <div class="coins" id="coins">💰 Coins: 0</div>
     <div class="daily-login-box" onclick="claimReward()">
       <span class="daily-reward-icon">🎁</span>
-      <span class="daily-login-text"></span>
     </div>
   </div>
 
@@ -321,9 +320,7 @@
         <div id="timer" class="timer">Next video in: 30s</div>
       </div>
 
-      <!-- Daily Reward Icon -->
-      <div class="daily-reward-text"></div>
-
+      <!-- Coin Redemption Section -->
       <div class="coin-redemption">
         <h3>🎮 Start Earning Now!</h3>
         <p>Start earning coins by watching videos! 🎉</p>
@@ -376,14 +373,6 @@
         stopTimer();
       }
       isEarning = !isEarning;
-    }
-
-    // Mute and unmute the page
-    function toggleMute() {
-      const iframe = document.getElementById("videoPlayer");
-      isMuted = !isMuted;
-      iframe.muted = isMuted;
-      document.getElementById("muteBtn").innerText = isMuted ? "Unmute" : "Mute";
     }
 
     // Start the timer and progress bar
