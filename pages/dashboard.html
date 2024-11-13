@@ -122,6 +122,7 @@
       margin-bottom: 20px;
       box-shadow: 0 0 10px #00ff00;
       text-align: center;
+      height: 500px; /* Made video container taller */
     }
 
     /* Progress Bar */
@@ -195,6 +196,52 @@
       height: auto; /* Adjusts height according to container width */
     }
 
+    /* Daily Reward Icon */
+    .daily-reward-icon {
+      font-size: 40px;
+      color: #f39c12;
+      cursor: pointer;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+    }
+
+    .daily-reward-text {
+      font-size: 12px;
+      color: #39FF14; /* Neon Green */
+      text-align: center;
+    }
+
+    /* Popup Styles */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #00ff00;
+      z-index: 1001;
+    }
+
+    .popup button {
+      background-color: #2c9e27;
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .popup button:hover {
+      background-color: #1fd100;
+    }
+
     /* Responsive Layout */
     @media (max-width: 768px) {
       .dashboard-container {
@@ -231,6 +278,7 @@
           <button id="startBtn" onclick="startEarning()">Start Earning</button>
           <button id="muteBtn" onclick="toggleMute()">Mute</button>
         </div>
+        <!-- Additional task boxes -->
         <div class="task-box">
           <h3>Share Facebook Posts</h3>
           <p>Earn 10 coins per share</p>
@@ -270,12 +318,23 @@
         <div id="timer" class="timer">Next video in: 30s</div>
       </div>
 
+      <!-- Daily Reward Icon -->
+      <div class="daily-reward-icon" onclick="claimReward()">🎁</div>
+      <div class="daily-reward-text">Click to claim daily reward!</div>
+
       <div class="coin-redemption">
         <h3>🎮 Start Earning Now!</h3>
         <p>Start earning coins by watching videos! 🎉</p>
         <button id="earnBtn" onclick="startEarning()">Start Watching</button>
       </div>
     </div>
+  </div>
+
+  <!-- Popup for Reward Claimed -->
+  <div id="popup" class="popup">
+    <h2>Reward Claimed!</h2>
+    <p>You have received 50 coins.</p>
+    <button onclick="closePopup()">Close</button>
   </div>
 
   <audio id="coinSound" src="assets/chiching.mp3"></audio>
@@ -355,6 +414,27 @@
       currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
       const videoPlayer = document.getElementById("videoPlayer");
       videoPlayer.src = videoList[currentVideoIndex];  // Change video source
+    }
+
+    // Claim the daily reward and add coins
+    function claimReward() {
+      document.querySelector(".daily-reward-icon").style.display = "none"; // Hide the icon
+      document.querySelector(".daily-reward-text").style.display = "none"; // Hide text
+      coins += 50;
+      updateCoins();
+      showPopup();
+    }
+
+    // Show the reward claimed popup
+    function showPopup() {
+      const popup = document.getElementById("popup");
+      popup.style.display = "block";
+    }
+
+    // Close the popup
+    function closePopup() {
+      const popup = document.getElementById("popup");
+      popup.style.display = "none";
     }
 
     // Initialize coins
