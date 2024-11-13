@@ -238,58 +238,65 @@
 
   <script>
     // Initialize variables
-    let currentVideoIndex = 0;
-    let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 0;
-    let timer;
-    const videoList = [
-      "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",  // Example YouTube video
-      "https://www.youtube.com/embed/kJQP7kiw5Fk?autoplay=1", // Another example
-      "https://www.youtube.com/embed/lY2yjAdbvdQ?autoplay=1", // Another example
-      "https://www.youtube.com/embed/nfWlot6h_JM?autoplay=1", // Another example
-      "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1"  // Another example
-    ];
+let currentVideoIndex = 0;
+let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 0;
+let timer;
+const videoList = [
+  "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",  // Example YouTube video
+  "https://www.youtube.com/embed/kJQP7kiw5Fk?autoplay=1", // Another example
+  "https://www.youtube.com/embed/lY2yjAdbvdQ?autoplay=1", // Another example
+  "https://www.youtube.com/embed/nfWlot6h_JM?autoplay=1", // Another example
+  "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1"  // Another example
+];
 
-    // Update coins display
-    function updateCoins() {
-      document.getElementById("coins").innerText = `Coins: ${coins}`;
-    }
+// Update coins display
+function updateCoins() {
+  document.getElementById("coins").innerText = `Coins: ${coins}`;
+}
 
-    // Start earning (start video and timer)
-    function startEarning() {
-      document.getElementById("earnBtn").disabled = true;
-      startTimer();
-      playNextVideo();
-    }
+// Start earning (start video and timer)
+function startEarning() {
+  document.getElementById("earnBtn").disabled = true;
+  startTimer();  // Start timer when the button is clicked
+  playNextVideo();  // Start playing the first video
+}
 
-    // Start the timer
-    function startTimer() {
-      let countdown = 12;
-      const timerElement = document.getElementById("timer");
+// Start the timer (reset every time a new video is played)
+function startTimer() {
+  let countdown = 12;
+  const timerElement = document.getElementById("timer");
 
-      timer = setInterval(function () {
-        timerElement.innerHTML = `Next video in: ${countdown}s`;
-        countdown--;
+  // Clear any previous timer to avoid multiple intervals running simultaneously
+  if (timer) {
+    clearInterval(timer);
+  }
 
-        if (countdown < 0) {
-          clearInterval(timer);
-          coins += 50;
-          localStorage.setItem("coins", coins);
-          updateCoins();
-          playNextVideo();
-        }
-      }, 1000);
-    }
+  // Start a fresh countdown
+  timer = setInterval(function () {
+    timerElement.innerHTML = `Next video in: ${countdown}s`;
+    countdown--;
 
-    // Play next video in the list
-    function playNextVideo() {
-      currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-      const videoPlayer = document.getElementById("videoPlayer");
-      videoPlayer.src = videoList[currentVideoIndex];
+    if (countdown < 0) {
+      clearInterval(timer);
+      coins += 50;  // Add coins when timer finishes
+      localStorage.setItem("coins", coins);
       updateCoins();
+      playNextVideo();  // Load the next video when timer ends
     }
+  }, 1000);
+}
 
-    // Initialize coins
-    updateCoins();
+// Play next video in the list
+function playNextVideo() {
+  currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
+  const videoPlayer = document.getElementById("videoPlayer");
+  videoPlayer.src = videoList[currentVideoIndex];  // Change video source
+  updateCoins();  // Update the coin display
+}
+
+// Initialize coins
+updateCoins();
+
   </script>
 </body>
 </html>
