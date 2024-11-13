@@ -1,3 +1,35 @@
+
+<h3 id="username-display">Loading...</h3>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/umd/supabase.min.js"></script>
+<script>
+  // Initialize Supabase client
+  const supabase = supabase.createClient('https://your-project.supabase.co', 'your-anon-key');
+
+  // Function to display the username
+  async function displayUsername() {
+    const user = supabase.auth.user();
+    if (user) {
+      const { data, error } = await supabase
+        .from('users')
+        .select('username')
+        .eq('id', user.id)
+        .single();
+      if (data) {
+        document.getElementById('username-display').textContent = `Hello, ${data.username}`;
+      } else {
+        document.getElementById('username-display').textContent = 'Username not found';
+      }
+    } else {
+      document.getElementById('username-display').textContent = 'No user logged in';
+    }
+  }
+
+  // Call the function to display the username on page load
+  displayUsername();
+</script>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
