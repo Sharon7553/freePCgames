@@ -256,8 +256,8 @@ async function insertUserData(userId) {
   }
 }
 
-// Sign-up function to handle registration
-function handleSignUp(supabase) {
+// Modify sign-up logic to include coins, tickets, and email
+async function handleSignUp(supabase) {
   const form = document.getElementById('sign-up-form');
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
@@ -281,8 +281,8 @@ function handleSignUp(supabase) {
         errorMessage.style.display = 'block';
         console.error('Error signing up:', error.message);
       } else {
-        // Insert the user data into 'userdata' table after successful sign-up
-        await insertUserData(user.id);
+        // Insert user data into 'userdata' table after successful sign-up
+        await insertUserData(user.id, email);  // Pass email here
 
         successMessage.style.display = 'block';
         console.log('User signed up and data inserted:', user);
@@ -296,6 +296,35 @@ function handleSignUp(supabase) {
     }
   });
 }
+
+
+// Add user to the 'userdata' table with coins, tickets, and email
+async function insertUserData(userId, email) {
+  const supabase = initializeSupabase();
+
+  try {
+    const { data, error } = await supabase
+      .from('userdata')
+      .insert([
+        {
+          user_id: userId, // Referencing the user from 'auth.users'
+          coins: 0,         // Default value for coins
+          tickets: 0,       // Default value for tickets
+          email: email      // Add email to the 'userdata' table
+        }
+      ]);
+
+    if (error) {
+      console.error('Error inserting user data:', error.message);
+    } else {
+      console.log('User data inserted:', data);
+    }
+  } catch (error) {
+    console.error('Error inserting user data:', error);
+  }
+}
+
+
 
 // Run the sign-up function when the page loads
 window.onload = function() {
