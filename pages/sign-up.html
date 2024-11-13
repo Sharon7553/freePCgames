@@ -274,16 +274,6 @@
     }
 
 
-const { user, error } = await supabase.auth.signUp({
-  email: 'user@example.com',
-  password: 'password123'
-});
-
-if (error) {
-  console.error('Error signing up:', error.message);
-} else {
-  console.log('User signed up:', user);
-}
 
     // Run the sign-up function when the page loads
     window.onload = function() {
