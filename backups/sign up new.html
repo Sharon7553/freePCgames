@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Sign Up</title>
 
   <style>
     /* General styles */
@@ -196,15 +196,15 @@
     </div>
   </nav>
 
-  <!-- Login Form Section -->
+  <!-- Sign-Up Form Section -->
   <div class="form-container">
     <div class="form-box">
-      <h2>Login</h2>
+      <h2>Sign Up</h2>
 
-      <div id="error-message" class="error-message">Error: Could not log in. Please check your credentials and try again.</div>
-      <div id="success-message" class="success-message">Success! You are now logged in. Redirecting...</div>
+      <div id="error-message" class="error-message">Error: Could not sign up. Please try again.</div>
+      <div id="success-message" class="success-message">Success! Please check your email to confirm your account.</div>
 
-      <form id="login-form">
+      <form id="sign-up-form">
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" id="email" name="email" required placeholder="Enter your email">
@@ -214,10 +214,11 @@
           <input type="password" id="password" name="password" required placeholder="Enter your password">
         </div>
         <div class="form-group">
-          <button type="submit">Login</button>
+          <button type="submit">Sign Up</button>
         </div>
       </form>
-
+    </div>
+  </div>
 
   <!-- Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
@@ -226,13 +227,13 @@
     // Initialize Supabase client
     function initializeSupabase() {
       const supabaseUrl = 'https://qvdrfahwyztzpbddoakd.supabase.co'; // Your Supabase URL
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2ZHJmYWh3eXp0enBiZGRvYWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTEwODUsImV4cCI6MjA0NzAyNzA4NX0.R-AqTGj5MsAb-bqE1yP0Ag5ZWMtFIQxgtJ2BM05uJh0'; // Your Supabase Anon Key
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2ZHJmYWh3eXp0enBiZGRvYWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTEwODUsImV4cCI6MjA0NzAyNzA4NX0.R-AqTGj5MsAb-bqE1yP0Ag5ZWMtFIQxgtJ2BM05uJh0'; // Replace with your Supabase anon key
       return supabase.createClient(supabaseUrl, supabaseKey);
     }
 
-    // Handle login process
-    function handleLogin(supabase) {
-      const form = document.getElementById('login-form');
+    // Handle sign-up process
+    function handleSignUp(supabase) {
+      const form = document.getElementById('sign-up-form');
       const errorMessage = document.getElementById('error-message');
       const successMessage = document.getElementById('success-message');
 
@@ -247,34 +248,29 @@
         successMessage.style.display = 'none';
 
         try {
-          const { user, error } = await supabase.auth.signInWithPassword({
+          const { user, error } = await supabase.auth.signUp({
             email: email,
             password: password
           });
 
           if (error) {
             errorMessage.style.display = 'block';
-            console.error('Error logging in:', error.message);
+            console.error('Error signing up:', error.message);
           } else {
             successMessage.style.display = 'block';
-            console.log('User logged in:', user);
-
-            // Redirect to the dashboard after 2 seconds
-            setTimeout(() => {
-              window.location.href = '/pages/dashboard';  // Redirect to the dashboard page
-            }, 2000); // Wait 2 seconds before redirecting
+            console.log('Sign-up successful:', user);
           }
         } catch (error) {
           errorMessage.style.display = 'block';
-          console.error('Error logging in:', error);
+          console.error('Unexpected error:', error);
         }
       });
     }
 
-    // Run the login function when the page loads
+    // Run the sign-up function when the page loads
     window.onload = function() {
       const supabase = initializeSupabase();
-      handleLogin(supabase);
+      handleSignUp(supabase);
     };
     
     // Hamburger menu toggle
