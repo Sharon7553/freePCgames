@@ -294,9 +294,6 @@
       <div class="task-boxes">
         <div class="task-box">
 
-          <h4>Welcome, <span id="username"></span></h4>
-          <div class="user-info">
-
           <h3>Watch videos</h3>
           <p>Earn 50 coins per video</p>
           <button>Start Earning</button>
@@ -314,7 +311,34 @@
       </div>
     </div>
 
-    <!-- Include Supabase JS SDK -->
+
+
+    <!-- Right Column: Video Player and Coin Area -->
+    <div class="video-column">
+      <div class="video-container">
+        <!-- Embed YouTube Video -->
+        <iframe id="videoPlayer" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allowfullscreen></iframe>
+        <div class="progress-bar-container">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <div id="timer" class="timer">Next video in: 30s</div>
+      </div>
+
+      <!-- Daily Reward Icon -->
+      <div class="daily-reward-text"></div>
+
+      <div class="coin-redemption">
+        <h3>🎮 Start Earning Now!</h3>
+        <p></p>
+        <button id="earnBtn" onclick="startEarning()">Start Watching</button>
+      </div>
+    </div>
+  </div>
+
+<button class="logout-btn" id="logoutButton">Log Out</button>
+  </div>
+
+  <!-- Include Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
     // Function to initialize Supabase client
@@ -345,35 +369,6 @@
         window.location.href = '/pages/login.html';
       }
     }
-
-    <!-- Right Column: Video Player and Coin Area -->
-    <div class="video-column">
-      <div class="video-container">
-        <!-- Embed YouTube Video -->
-        <iframe id="videoPlayer" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allowfullscreen></iframe>
-        <div class="progress-bar-container">
-          <div id="progressBar" class="progress-bar"></div>
-        </div>
-        <div id="timer" class="timer">Next video in: 30s</div>
-      </div>
-
-      <!-- Daily Reward Icon -->
-      <div class="daily-reward-text"></div>
-
-      <div class="coin-redemption">
-        <h3>🎮 Start Earning Now!</h3>
-        <p></p>
-        <button id="earnBtn" onclick="startEarning()">Start Watching</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Popup for Reward Claimed -->
-  <div id="popup" class="popup">
-    <h2>Reward Claimed!</h2>
-    <p>You have received 50 coins.</p>
-    <button onclick="closePopup()">Close</button>
-  </div>
 
   <audio id="coinSound" src="assets/chiching.mp3"></audio>
 
@@ -492,6 +487,9 @@
     // Initialize coins
     updateCoins();
   </script>
+ <h1>Welcome, <span id="username"></span></h1>
+    <div class="user-info">
 
+      
 </body>
 </html>
