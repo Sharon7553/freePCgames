@@ -54,33 +54,25 @@
       background-color: #2980b9;
     }
 
-    .navbar .daily-login-box {
-      font-size: 14px;
-      color: #ffcd00; /* Gold color */
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    /* Daily Reward Icon */
+    .daily-reward-icon {
+      font-size: 40px;
+      color: #f39c12;
       cursor: pointer;
+      position: absolute;
+      top: 10px;
+      right: 30px; /* Adjusted for better placement */
+      z-index: 10;
     }
 
-    .navbar .daily-login-box span {
-      font-size: 14px;
-      color: #fff;
-    }
-
-    .navbar .daily-login-text {
-      color: #ffcd00;
-    }
-
-    /* Main Dashboard Container */
     .dashboard-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      padding: 80px 20px 20px; /* Removed small gap above */
+      padding: 80px 20px 20px;
     }
 
-    /* Left Column (Task Boxes) */
+    /* Left Column */
     .task-column {
       width: 100%;
       max-width: 300px;
@@ -105,22 +97,7 @@
       margin-top: 0;
     }
 
-    .task-box button {
-      background-color: #1fd100;
-      color: black;
-      padding: 10px;
-      font-size: 14px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .task-box button:hover {
-      background-color: #0e7d00;
-    }
-
-    /* Right Column (Video and Coin Area) */
+    /* Video Player Container */
     .video-column {
       width: 100%;
       max-width: 640px;
@@ -132,7 +109,6 @@
       margin-bottom: 20px;
     }
 
-    /* Video Player Container */
     .video-container {
       background-color: #1c1c1c;
       position: relative;
@@ -144,7 +120,12 @@
       height: 100%;
     }
 
-    /* Progress Bar */
+    iframe {
+      pointer-events: none;
+      max-width: 100%;
+      height: 100%;
+    }
+
     .progress-bar-container {
       width: 100%;
       background-color: #444;
@@ -161,31 +142,6 @@
       border-radius: 10px;
     }
 
-    /* Coins Section */
-    .coins {
-      position: sticky;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #2c9e27;
-      color: white;
-      font-size: 18px;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .prize-icon {
-      font-size: 30px;
-      color: #f39c12;
-      cursor: pointer;
-    }
-
-    /* Coin Redemption Section */
     .coin-redemption {
       margin-top: 30px;
       background-color: #333;
@@ -196,11 +152,6 @@
 
     .coin-redemption h3 {
       margin-top: 0;
-    }
-
-    .coin-redemption p {
-      font-size: 16px;
-      margin: 10px 0;
     }
 
     .coin-redemption button {
@@ -215,59 +166,6 @@
 
     .coin-redemption button:hover {
       background-color: #c0392b;
-    }
-
-    /* Disable Click on Video */
-    iframe {
-      pointer-events: none;
-      max-width: 100%;
-      height: 100%;
-    }
-
-    /* Daily Reward Icon */
-    .daily-reward-icon {
-      font-size: 40px;
-      color: #f39c12;
-      cursor: pointer;
-      position: absolute;
-      top: 10px;
-      right: 20px; /* Adjusted to be not too far right */
-      z-index: 10;
-    }
-
-    .daily-reward-text {
-      font-size: 12px;
-      color: #39FF14;
-      text-align: center;
-    }
-
-    /* Popup Styles */
-    .popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0, 0.8);
-      color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 15px #00ff00;
-      z-index: 1001;
-    }
-
-    .popup button {
-      background-color: #2c9e27;
-      color: white;
-      padding: 10px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .popup button:hover {
-      background-color: #1fd100;
     }
 
     /* Responsive Layout */
@@ -289,13 +187,7 @@
   <!-- Navbar -->
   <div class="navbar">
     <div class="home-btn" onclick="goHome()">🏠 Home</div>
-    <div class="coins" id="coins">
-      💰 Coins: 0
-      <span class="prize-icon" onclick="claimReward()">🎁</span>
-    </div>
-    <div class="daily-login-box" onclick="claimReward()">
-      <span class="daily-reward-icon">🎁</span>
-    </div>
+    <div class="coins" id="coins">💰 Coins: 0</div>
   </div>
 
   <!-- Main Dashboard Container -->
@@ -309,25 +201,27 @@
           <button onclick="startEarning()">Start Earning</button>
         </div>
         <div class="task-box">
+          <h3>Download Apps</h3>
+          <p>Earn 30 coins per download</p>
+          <button>Start Earning</button>
+        </div>
+        <div class="task-box">
           <h3>Complete Surveys</h3>
-          <p>Earn 40 coins per survey</p>
+          <p>Earn 25 coins per survey</p>
           <button>Start Earning</button>
         </div>
       </div>
     </div>
 
-    <!-- Right Column: Video and Coin Area -->
+    <!-- Right Column: Video Player and Coin Area -->
     <div class="video-column">
       <div class="video-container">
         <!-- Embed YouTube Video -->
-        <iframe id="videoPlayer" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+        <iframe id="videoPlayer" width="640" height="360" frameborder="0" allow="encrypted-media" src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
         <div class="progress-bar-container">
           <div id="progressBar" class="progress-bar"></div>
         </div>
-        <div id="timer" class="timer">Next video in: 30s</div>
       </div>
-
-      <!-- Coin Redemption Section -->
       <div class="coin-redemption">
         <h3>🎮 Start Earning Now!</h3>
         <p>Start earning coins by watching videos! 🎉</p>
@@ -350,7 +244,6 @@
     let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 0;
     let timer;
     let isEarning = false;
-    let isMuted = false;
     const videoList = [
       "https://www.youtube.com/embed/dQw4w9WgXcQ",
       "https://www.youtube.com/embed/kJQP7kiw5Fk",
@@ -360,7 +253,6 @@
     ];
 
     const progressBar = document.getElementById("progressBar");
-    const videoPlayer = document.getElementById("videoPlayer");
 
     // Update coins display
     function updateCoins() {
@@ -372,12 +264,10 @@
     function startEarning() {
       if (!isEarning) {
         document.getElementById("earnBtn").innerText = "Stop Earning";
-        document.getElementById("earnBtn").style.backgroundColor = "#FF5733"; // Change to red
         startTimer();
         playNextVideo();
       } else {
         document.getElementById("earnBtn").innerText = "Start Watching";
-        document.getElementById("earnBtn").style.backgroundColor = "#1fd100"; // Change back to green
         stopTimer();
       }
       isEarning = !isEarning;
@@ -392,14 +282,14 @@
 
         if (progress >= 100) {
           clearInterval(progressInterval);
-          coins += 50;  // Add coins when progress bar is full
+          coins += 50;
           updateCoins();
           setTimeout(() => {
-            playNextVideo(); // Load next video after 3 seconds
-            startTimer(); // Restart the timer
-          }, 3000); // 3-second delay
+            playNextVideo();
+            startTimer();
+          }, 3000);
         }
-      }, 300); // 30-second timer for progress bar
+      }, 300);
       timer = progressInterval;
     }
 
@@ -408,10 +298,16 @@
       clearInterval(timer);
     }
 
-    // Play the next video in the list
+    // Play the next video
     function playNextVideo() {
       currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-      videoPlayer.src = videoList[currentVideoIndex];  // Change video source
+      const videoPlayer = document.getElementById("videoPlayer");
+      videoPlayer.src = videoList[currentVideoIndex];
+    }
+
+    // Go to Home (for now it just refreshes the page)
+    function goHome() {
+      location.reload();
     }
 
     // Claim the daily reward and add coins
@@ -421,13 +317,11 @@
       const timeDifference = now - lastClaimTime;
 
       if (timeDifference >= 25 * 60 * 60 * 1000) {
-        // Add coins and update the claim time
         coins += 50;
         localStorage.setItem("lastClaimTime", now);
         updateCoins();
         showPopup();
       } else {
-        // Display message for when the reward cannot be claimed yet
         alert("You have already claimed the reward today. Please try again later.");
       }
     }
@@ -442,11 +336,6 @@
     function closePopup() {
       const popup = document.getElementById("popup");
       popup.style.display = "none";
-    }
-
-    // Go to Home (for now it just refreshes the page)
-    function goHome() {
-      location.reload();  // Placeholder home function
     }
 
     // Initialize coins
