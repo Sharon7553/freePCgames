@@ -256,44 +256,52 @@
       }
     }
 
-    // Handle sign-up process
-    function handleSignUp(supabase) {
-      const form = document.getElementById('sign-up-form');
-      const errorMessage = document.getElementById('error-message');
-      const successMessage = document.getElementById('success-message');
+   // Handle sign-up process
+function handleSignUp(supabase) {
+  const form = document.getElementById('sign-up-form');
+  const errorMessage = document.getElementById('error-message');
+  const successMessage = document.getElementById('success-message');
 
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault(); // Prevent the default form submission
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Prevent the default form submission
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-        // Hide any previous messages
-        errorMessage.style.display = 'none';
-        successMessage.style.display = 'none';
+    // Hide any previous messages
+    errorMessage.style.display = 'none';
+    successMessage.style.display = 'none';
 
-        try {
-          const { user, error } = await supabase.auth.signUp({
-            email: email,
-            password: password
-          });
-
-          if (error) {
-            errorMessage.style.display = 'block';
-            console.error('Error signing up:', error.message);
-          } else {
-            // Insert user data into 'userdata' table after successful sign-up
-            await insertUserData(user.id);
-
-            successMessage.style.display = 'block';
-            console.log('Sign-up successful:', user);
-          }
-        } catch (error) {
-          errorMessage.style.display = 'block';
-          console.error('Unexpected error:', error);
-        }
+    try {
+      const { user, error } = await supabase.auth.signUp({
+        email: email,
+        password: password
       });
+
+      // Check if there was an error during sign-up
+      if (error) {
+        errorMessage.textContent = `Error: ${error.message}`;
+        errorMessage.style.display = 'block';
+        console.error('Error signing up:', error.message);
+      } else {
+        if (user) {
+          // Insert user data into 'userdata' table after successful sign-up
+          await insertUserData(user.id);
+          successMessage.style.display = 'block';
+          console.log('Sign-up successful:', user);
+        } else {
+          errorMessage.textContent = 'Error: User object is undefined.';
+          errorMessage.style.display = 'block';
+        }
+      }
+    } catch (error) {
+      errorMessage.textContent = 'Unexpected error during sign-up.';
+      errorMessage.style.display = 'block';
+      console.error('Unexpected error:', error);
     }
+  });
+}
+
 
     // Run the sign-up function when the page loads
     window.onload = function() {
