@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
-  <style>
-    /* Add your CSS styles here */
-  </style>
 </head>
 <body>
 
@@ -14,10 +11,10 @@
   <form id="sign-up-form">
     <label for="email">Email</label>
     <input type="email" id="email" name="email" required>
-    
+
     <label for="password">Password</label>
     <input type="password" id="password" name="password" required>
-    
+
     <button type="submit">Sign Up</button>
   </form>
 
@@ -25,11 +22,12 @@
   <div id="error-message" style="color:red; display:none;">Error: Could not sign up. Please try again.</div>
   <div id="success-message" style="color:green; display:none;">Success! Please check your email to confirm your account.</div>
 
-  <!-- Supabase SDK -->
+  <!-- Load Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  
+
+  <!-- Initialize Supabase and Handle Sign-Up -->
   <script>
-    // Initialize Supabase client (make sure this is placed before any other logic using 'supabase')
+    // Initialize Supabase client (ensure this is declared first)
     const supabase = supabase.createClient('https://qvdrfahwyztzpbddoakd.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2ZHJmYWh3eXp0enBiZGRvYWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTEwODUsImV4cCI6MjA0NzAyNzA4NX0.R-AqTGj5MsAb-bqE1yP0Ag5ZWMtFIQxgtJ2BM05uJh0');
 
     // Handle Sign-Up
@@ -62,6 +60,6 @@
       }
     });
   </script>
-  
+
 </body>
 </html>
