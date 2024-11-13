@@ -47,8 +47,8 @@ document.addEventListener('copy', function(e) {
 
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize Supabase
-    const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtubG92enBveGxvempna2d0dG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMzc0MzcsImV4cCI6MjA0NjgxMzQzN30.xiw4xK4TqOTp-c5VG8GbequxIYJQbfuUIEsPajig7xs'; // Replace with your actual Supabase key
+    const supabaseUrl = 'https://qvdrfahwyztzpbddoakd.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2ZHJmYWh3eXp0enBiZGRvYWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTEwODUsImV4cCI6MjA0NzAyNzA4NX0.R-AqTGj5MsAb-bqE1yP0Ag5ZWMtFIQxgtJ2BM05uJh0'; // Replace with your actual Supabase key
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Sign up function
@@ -93,54 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-
-
-
-
-
-
-
-
-async function receiveReward() {
-  const uuid = 'user-uuid'; // Replace with actual UUID
-  const coins = await getCoins(uuid); // Get current coins
-  const newCoins = coins + 50;
-
-  // Update the coin count in the database
-  await supabase
-    .from('memberstats')
-    .update({ coins: newCoins })
-    .eq('uuid', uuid);
-
-  updateCoins(uuid); // Update the coin display
-  alert('You received 50 coins!');
-}
-
-
-
-
-async function purchaseTicket() {
-  const uuid = 'user-uuid'; // Replace with actual UUID
-  const coins = await getCoins(uuid); // Get current coins
-
-  if (coins >= 50) {
-    const newCoins = coins - 50;
-
-    // Update the coin balance in the database
-    await supabase
-      .from('memberstats')
-      .update({ coins: newCoins })
-      .eq('uuid', uuid);
-
-    updateCoins(uuid); // Update the displayed coin count
-    alert('Ticket purchased successfully!');
-  } else {
-    alert('You do not have enough coins!');
-  }
-}
-
-
-
 
 
 
