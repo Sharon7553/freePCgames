@@ -26,7 +26,6 @@
       justify-content: space-between;
       align-items: center;
       z-index: 1000;
-      top: 0;
     }
 
     .navbar .coins {
@@ -35,22 +34,42 @@
       padding: 10px;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      margin-right: 20px; /* Adjusted to center the coins box */
       display: flex;
       align-items: center;
       gap: 5px;
     }
 
-    .navbar .convert-text {
-      font-size: 14px;
-      color: #39FF14; /* Neon Green */
-      text-align: center;
-      margin-top: 5px;
+    .navbar .home-btn {
+      font-size: 18px;
+      background-color: #3498db;
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.3s;
     }
 
-    .navbar .convert-text a {
-      color: #39FF14;
-      text-decoration: none;
+    .navbar .home-btn:hover {
+      background-color: #2980b9;
+    }
+
+    .navbar .daily-login-box {
+      font-size: 14px;
+      color: #ffcd00; /* Gold color */
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .navbar .daily-login-box span {
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .navbar .daily-login-text {
+      color: #ffcd00;
     }
 
     /* Main Dashboard Container */
@@ -104,7 +123,7 @@
     /* Right Column (Video and Coin Area) */
     .video-column {
       width: 100%;
-      max-width: 640px; /* Smaller video container */
+      max-width: 640px;
       position: relative;
       padding: 20px;
       background-color: #2c2c2c;
@@ -122,7 +141,7 @@
       margin-bottom: 20px;
       box-shadow: 0 0 10px #00ff00;
       text-align: center;
-      height: 500px; /* Made video container taller */
+      height: 100%;
     }
 
     /* Progress Bar */
@@ -147,7 +166,7 @@
       position: sticky;
       top: 0;
       left: 50%;
-      transform: translateX(-50%); /* Center the coins box */
+      transform: translateX(-50%);
       background-color: #2c9e27;
       color: white;
       font-size: 18px;
@@ -191,9 +210,9 @@
 
     /* Disable Click on Video */
     iframe {
-      pointer-events: none; /* Disables interaction with iframe */
-      max-width: 100%; /* Constrains video size to container */
-      height: auto; /* Adjusts height according to container width */
+      pointer-events: none;
+      max-width: 100%;
+      height: 100%;
     }
 
     /* Daily Reward Icon */
@@ -209,7 +228,7 @@
 
     .daily-reward-text {
       font-size: 12px;
-      color: #39FF14; /* Neon Green */
+      color: #39FF14;
       text-align: center;
     }
 
@@ -260,10 +279,11 @@
 
   <!-- Navbar -->
   <div class="navbar">
-    <div>Dashboard</div>
-    <div>
-      <div id="coins" class="coins">💰 Coins: 0</div>
-      <div class="convert-text"><a href="#">Convert coins</a></div>
+    <div class="home-btn" onclick="goHome()">🏠 Home</div>
+    <div class="coins" id="coins">💰 Coins: 0</div>
+    <div class="daily-login-box" onclick="claimReward()">
+      <span class="daily-reward-icon">🎁</span>
+      <span class="daily-login-text">Daily Login Bonus</span>
     </div>
   </div>
 
@@ -272,23 +292,6 @@
     <!-- Left Column: Task Boxes -->
     <div class="task-column">
       <div class="task-boxes">
-        <div class="task-box">
-          <h3>Watch Videos</h3>
-          <p>Earn 50 coins per video.</p>
-          <button id="startBtn" onclick="startEarning()">Start Earning</button>
-          <button id="muteBtn" onclick="toggleMute()">Mute</button>
-        </div>
-        <!-- Additional task boxes -->
-        <div class="task-box">
-          <h3>Share Facebook Posts</h3>
-          <p>Earn 10 coins per share</p>
-          <button>Start Earning</button>
-        </div>
-        <div class="task-box">
-          <h3>Leave Reviews</h3>
-          <p>Earn 15 coins per review.</p>
-          <button>Start Earning</button>
-        </div>
         <div class="task-box">
           <h3>Refer Friends</h3>
           <p>Earn 20 coins per referral</p>
@@ -319,8 +322,7 @@
       </div>
 
       <!-- Daily Reward Icon -->
-      <div class="daily-reward-icon" onclick="claimReward()">🎁</div>
-      <div class="daily-reward-text">Click to claim daily reward!</div>
+      <div class="daily-reward-text">Click to claim daily login bonus!</div>
 
       <div class="coin-redemption">
         <h3>🎮 Start Earning Now!</h3>
@@ -418,11 +420,20 @@
 
     // Claim the daily reward and add coins
     function claimReward() {
-      document.querySelector(".daily-reward-icon").style.display = "none"; // Hide the icon
-      document.querySelector(".daily-reward-text").style.display = "none"; // Hide text
-      coins += 50;
-      updateCoins();
-      showPopup();
+      const now = new Date().getTime();
+      const lastClaimTime = localStorage.getItem("lastClaimTime") || 0;
+      const timeDifference = now - lastClaimTime;
+
+      if (timeDifference >= 25 * 60 * 60 * 1000) {
+        // Add coins and update the claim time
+        coins += 50;
+        localStorage.setItem("lastClaimTime", now);
+        updateCoins();
+        showPopup();
+      } else {
+        // Display message for when the reward cannot be claimed yet
+        alert("You have already claimed the reward today. Please try again later.");
+      }
     }
 
     // Show the reward claimed popup
@@ -435,6 +446,11 @@
     function closePopup() {
       const popup = document.getElementById("popup");
       popup.style.display = "none";
+    }
+
+    // Go to Home (for now it just refreshes the page)
+    function goHome() {
+      location.reload();  // Placeholder home function
     }
 
     // Initialize coins
