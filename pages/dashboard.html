@@ -112,12 +112,6 @@
       text-align: center;
     }
 
-    video {
-      width: 100%;
-      max-width: 100%;
-      border-radius: 10px;
-    }
-
     /* Coins Section */
     .coins {
       position: absolute;
@@ -227,9 +221,8 @@
     <!-- Right Column: Video Player and Coin Area -->
     <div class="video-column">
       <div class="video-container">
-        <video id="videoPlayer" controls>
-          <source id="videoSource" src="assets/videos/video1.mp4" type="video/mp4">
-        </video>
+        <!-- Embed YouTube Video -->
+        <iframe id="videoPlayer" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&start=0"></iframe>
         <div id="timer" class="timer">Next video in: 12s</div>
       </div>
 
@@ -248,24 +241,29 @@
     let currentVideoIndex = 0;
     let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 0;
     let timer;
-    const videoList = ["assets/videos/video1.mp3", "assets/videos/video2.mp4", "assets/videos/video3.mp4", "assets/videos/video4.mp4", "assets/videos/video5.mp4"];
+    const videoList = [
+      "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",  // Example YouTube video
+      "https://www.youtube.com/embed/kJQP7kiw5Fk?autoplay=1", // Another example
+      "https://www.youtube.com/embed/lY2yjAdbvdQ?autoplay=1", // Another example
+      "https://www.youtube.com/embed/nfWlot6h_JM?autoplay=1", // Another example
+      "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1"  // Another example
+    ];
 
-    // Display initial coin value
-    updateCoins();
-
-    // Start earning function
-    function startEarning() {
-      // Disable the button once clicked
-      document.getElementById("earnBtn").disabled = true;
-
-      // Start the timer and play the first video
-      startTimer();
-      playVideo(currentVideoIndex);
+    // Update coins display
+    function updateCoins() {
+      document.getElementById("coins").innerText = `Coins: ${coins}`;
     }
 
-    // Start countdown timer
+    // Start earning (start video and timer)
+    function startEarning() {
+      document.getElementById("earnBtn").disabled = true;
+      startTimer();
+      playNextVideo();
+    }
+
+    // Start the timer
     function startTimer() {
-      let countdown = 12;  // Timer in seconds
+      let countdown = 12;
       const timerElement = document.getElementById("timer");
 
       timer = setInterval(function () {
@@ -274,7 +272,6 @@
 
         if (countdown < 0) {
           clearInterval(timer);
-          // Add coins when timer runs out
           coins += 50;
           localStorage.setItem("coins", coins);
           updateCoins();
@@ -283,41 +280,16 @@
       }, 1000);
     }
 
-    // Play video based on current index
-    function playVideo(index) {
-      const videoPlayer = document.getElementById("videoPlayer");
-      const videoSource = document.getElementById("videoSource");
-      videoSource.src = videoList[index];
-      videoPlayer.load();
-      videoPlayer.play();
-    }
-
-    // Play the next video
+    // Play next video in the list
     function playNextVideo() {
       currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-      playVideo(currentVideoIndex);
-      startTimer();
+      const videoPlayer = document.getElementById("videoPlayer");
+      videoPlayer.src = videoList[currentVideoIndex];
+      updateCoins();
     }
 
-    // Update coins display
-    function updateCoins() {
-      document.getElementById("coins").innerText = `Coins: ${coins}`;
-      animateCoins();
-    }
-
-    // Animate coins display
-    function animateCoins() {
-      const coinsElement = document.getElementById("coins");
-      coinsElement.classList.add("animate-coins");
-      setTimeout(() => {
-        coinsElement.classList.remove("animate-coins");
-      }, 500);
-      
-      // Play sound effect
-      const chiching = document.getElementById("coinSound");
-      chiching.play();
-    }
+    // Initialize coins
+    updateCoins();
   </script>
-
 </body>
 </html>
