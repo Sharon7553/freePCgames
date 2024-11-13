@@ -256,17 +256,16 @@
       }
     }
 
-   // Handle sign-up process
-function handleSignUp(supabase) {
+// Modify sign-up logic to include coins and tickets (50 coins)
+async function handleSignUp(supabase) {
   const form = document.getElementById('sign-up-form');
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
   const errorMessage = document.getElementById('error-message');
   const successMessage = document.getElementById('success-message');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault(); // Prevent the default form submission
-
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
 
     // Hide any previous messages
     errorMessage.style.display = 'none';
@@ -278,24 +277,36 @@ function handleSignUp(supabase) {
         password: password
       });
 
-      // Check if there was an error during sign-up
+      console.log('User object:', user); // Log the user object to check its structure
+
       if (error) {
-        errorMessage.textContent = `Error: ${error.message}`;
         errorMessage.style.display = 'block';
         console.error('Error signing up:', error.message);
       } else {
+        // If user is defined, insert into the 'userdata' table
         if (user) {
-          // Insert user data into 'userdata' table after successful sign-up
-          await insertUserData(user.id);
-          successMessage.style.display = 'block';
-          console.log('Sign-up successful:', user);
+          const { data, error } = await supabase
+            .from('userdata')
+            .insert([
+              {
+                user_id: user.id,   // Use the user id from the Supabase response
+                coins: 50,           // Default value of 50 coins
+                tickets: 0           // Default value for tickets
+              }
+            ]);
+
+          if (error) {
+            console.error('Error inserting user data:', error.message);
+          } else {
+            console.log('User data inserted:', data);
+            successMessage.style.display = 'block'; // Show success message
+          }
         } else {
-          errorMessage.textContent = 'Error: User object is undefined.';
+          console.error('Error: User object is undefined.');
           errorMessage.style.display = 'block';
         }
       }
     } catch (error) {
-      errorMessage.textContent = 'Unexpected error during sign-up.';
       errorMessage.style.display = 'block';
       console.error('Unexpected error:', error);
     }
