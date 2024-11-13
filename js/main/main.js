@@ -1,3 +1,15 @@
+const { user, error } = await supabase.auth.signUp({
+  email: document.getElementById('email').value,
+  password: document.getElementById('password').value,
+});
+
+if (error) {
+  console.error("Sign-Up Error:", error.message);
+  alert("Error: " + error.message);
+} else {
+  console.log("User signed up:", user);
+  alert("Please check your email to confirm your account.");
+}
 
 
 
