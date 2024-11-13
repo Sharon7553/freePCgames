@@ -4,60 +4,281 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
+
+  <style>
+    /* General styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    /* Navigation bar styling */
+    nav {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .hamburger {
+      cursor: pointer;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+    }
+
+    .hamburger div {
+      height: 3px;
+      background-color: white;
+    }
+
+    .menu {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    nav .menu a {
+      padding: 8px 15px;
+      color: white;
+      font-size: 16px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav .menu a:hover {
+      background-color: #555;
+    }
+
+    /* Mobile View */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .menu.active {
+        display: flex;
+      }
+
+      .menu a {
+        padding: 10px;
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+    /* Form Styling */
+    .form-container {
+      margin-top: 80px; /* to avoid overlap with fixed navbar */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+
+    .form-box {
+      width: 50%; /* Form takes up half of the screen */
+      max-width: 500px;
+      background-color: white;
+      padding: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-group button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-group button:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      display: none;
+    }
+
+    .success-message {
+      color: green;
+      font-size: 14px;
+      display: none;
+    }
+
+    /* Image styling */
+    .form-box img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    /* Mobile Responsive Form and Image */
+    @media (max-width: 768px) {
+      .form-box {
+        width: 80%; /* form takes up 80% of the screen width */
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Sign-Up Form -->
-  <form id="sign-up-form">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
-    
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" required>
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="logo">free.PC.games</div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="menu">
+      <a href="https://www.freepcgames.online/">Home</a>
+      <a href="games.html">Browser games</a>
+      <a href="free-steam-games.html">Steam games</a>
+      <a href="store.html">Premium games</a>
+      <a href="About-us.html">About</a>
+      <a href="store.html">Store</a>
+      <a href="login.html" class="login-btn"><span>👤</span> Login</a>
+      <a href="sign-up.html" class="register-btn"><span>📝</span> Register</a>
+      <a href="dashboard.html" class="account-btn"><span>🏠</span> Account</a>
+    </div>
+  </nav>
 
-    <button type="submit">Sign Up</button>
-  </form>
+  <!-- Sign-Up Form Section -->
+  <div class="form-container">
+    <div class="form-box">
+      <h2>Sign Up</h2>
 
-  <div id="error-message" style="color:red; display:none;">Error: Could not sign up. Please try again.</div>
-  <div id="success-message" style="color:green; display:none;">Success! Please check your email to confirm your account.</div>
+      <div id="error-message" class="error-message">Error: Could not sign up. Please try again.</div>
+      <div id="success-message" class="success-message">Success! Please check your email to confirm your account.</div>
+
+      <form id="sign-up-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Enter your password">
+        </div>
+        <div class="form-group">
+          <button type="submit">Sign Up</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
   <script>
     // Initialize Supabase client
-    const supabaseUrl = 'https://qvdrfahwyztzpbddoakd.supabase.co';  // Replace with your Supabase URL
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2ZHJmYWh3eXp0enBiZGRvYWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTEwODUsImV4cCI6MjA0NzAyNzA4NX0.R-AqTGj5MsAb-bqE1yP0Ag5ZWMtFIQxgtJ2BM05uJh0';  // Replace with your Supabase Public Anon Key
+    function initializeSupabase() {
+      const supabaseUrl = 'https://knlovzpoxlozjgkgttou.supabase.co'; // Your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2ZHJmYWh3eXp0enBiZGRvYWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTEwODUsImV4cCI6MjA0NzAyNzA4NX0.R-AqTGj5MsAb-bqE1yP0Ag5ZWMtFIQxgtJ2BM05uJh0'; // Replace with your Supabase anon key
+      return supabase.createClient(supabaseUrl, supabaseKey);
+    }
 
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);  // Correct place for initialization
+    // Handle sign-up process
+    function handleSignUp(supabase) {
+      const form = document.getElementById('sign-up-form');
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
 
-    // Handle Sign-Up
-    const signUpForm = document.getElementById('sign-up-form');
-    const errorMessage = document.getElementById('error-message');
-    const successMessage = document.getElementById('success-message');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent the default form submission
 
-    signUpForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+        // Hide any previous messages
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
 
-      try {
-        const { user, error } = await supabase.auth.signUp({ email, password });
+        try {
+          const { user, error } = await supabase.auth.signUp({
+            email: email,
+            password: password
+          });
 
-        if (error) {
+          if (error) {
+            errorMessage.style.display = 'block';
+            console.error('Error signing up:', error.message);
+          } else {
+            successMessage.style.display = 'block';
+            console.log('Sign-up successful:', user);
+          }
+        } catch (error) {
           errorMessage.style.display = 'block';
-          console.error('Sign-up error:', error.message);
-        } else {
-          successMessage.style.display = 'block';
-          console.log('Sign-up successful:', user);
+          console.error('Unexpected error:', error);
         }
-      } catch (error) {
-        errorMessage.style.display = 'block';
-        console.error('Unexpected error:', error);
-      }
-    });
+      });
+    }
+
+    // Run the sign-up function when the page loads
+    window.onload = function() {
+      const supabase = initializeSupabase();
+      handleSignUp(supabase);
+    };
+    
+    // Hamburger menu toggle
+    function toggleMenu() {
+      const menu = document.querySelector('.menu');
+      menu.classList.toggle('active');
+    }
   </script>
-  
+
 </body>
 </html>
