@@ -260,10 +260,10 @@
             successMessage.style.display = 'block';
             console.log('Sign-up successful:', user);
 
-            // Redirect to login page after success
+            // Redirect after 3 seconds
             setTimeout(function() {
-              window.location.href = 'login.html'; // Redirect to login page
-            }, 2000);  // Delay for 2 seconds
+              window.location.href = 'login.html';  // Redirect to login page after success
+            }, 3000);  // Adjust the delay (3000ms = 3 seconds)
           }
         } catch (error) {
           errorMessage.style.display = 'block';
