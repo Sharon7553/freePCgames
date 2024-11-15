@@ -49,9 +49,9 @@
       border-radius: 8px;
       overflow: hidden;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, opacity 0.5s ease-in-out;
       opacity: 1;
-      transition: opacity 0.5s ease-in-out;
+      z-index: 1;
     }
 
     .game-card img {
@@ -203,6 +203,12 @@
       z-index: 1000;
       display: none;
       overflow-y: auto;
+      transition: all 1s ease;
+    }
+
+    .task-box.show {
+      display: block;
+      transform: translateY(100px) translateX(-20px);
     }
 
     .task-box h3 {
@@ -266,6 +272,26 @@
       }
     }
 
+    /* Game transition to new container */
+    .game-card.selected {
+      transition: transform 1s ease-out, opacity 0.5s ease-out;
+      transform: translateX(-80vw);
+      opacity: 0.5;
+    }
+
+    /* New container for the selected game */
+    .selected-game-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background: #333;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      z-index: 100;
+    }
+
   </style>
 </head>
 <body>
@@ -318,21 +344,10 @@
     </div>
   </div>
 
-  <!-- Confirmation Popup -->
-  <div id="confirmation-popup" class="popup">
-    <div class="popup-content">
-      <p>Are you sure you want to lock in this game?</p>
-      <button id="confirm-yes" class="btn green">Yes</button>
-      <button id="confirm-no" class="btn red">No</button>
-    </div>
+  <div class="selected-game-container" id="selected-game-container" style="display:none;">
+    <p>Selected Game</p>
   </div>
 
-  <!-- Success Notification -->
-  <div id="success-notification" class="success-notification">
-    <p>Game Locked In!</p>
-  </div>
-
-  <!-- Task Box -->
   <div class="task-box" id="task-box">
     <h3>How to Claim Your Game</h3>
     <ul class="task-list">
@@ -364,6 +379,7 @@
     const gameTitleContainer = document.getElementById('game-title-container');
     const timerContainer = document.getElementById('timer-container');
     const taskBox = document.getElementById('task-box');
+    const selectedGameContainer = document.getElementById('selected-game-container');
     let selectedGame = null;
     let countdownTimer = null;
 
@@ -397,6 +413,7 @@
       localStorage.setItem(`claimedGame-${gameId}`, 'true');
       showSuccessNotification(gameTitle);
       updateGameTitle(gameTitle);
+      moveSelectedGame();
       startTimer();
       disableOtherGames();
       showTaskBox();
@@ -441,6 +458,17 @@
       timerContainer.textContent = `Time left: ${days}d ${hours}h ${minutes}m ${secondsLeft}s`;
     }
 
+    // Move the selected game to a new container
+    function moveSelectedGame() {
+      const gameCard = document.querySelector(`.game-card[data-game-id="${selectedGame}"]`);
+      gameCard.classList.add('selected');
+      selectedGameContainer.style.display = 'block';
+      selectedGameContainer.innerHTML = `
+        <h2>Selected Game: ${gameCard.querySelector('.game-title').textContent}</h2>
+        <img src="${gameCard.querySelector('img').src}" alt="${gameCard.querySelector('.game-title').textContent}">
+      `;
+    }
+
     // Disable other games once a game is locked
     function disableOtherGames() {
       document.querySelectorAll('.game-card').forEach(card => {
@@ -449,13 +477,11 @@
           card.querySelector('.claim-btn').disabled = true;
         }
       });
-      const remainingGame = document.querySelector(`.game-card[data-game-id="${selectedGame}"]`);
-      remainingGame.classList.add('highlighted');
     }
 
     // Show the task box
     function showTaskBox() {
-      taskBox.style.display = 'block';
+      taskBox.classList.add('show');
     }
 
     // Initialize the page with locked game info and timer if exists in localStorage
@@ -468,11 +494,13 @@
         updateGameTitle(gameTitle);
         displayTimer(timer);
         disableOtherGames();
+        moveSelectedGame();
+        showTaskBox();
       }
     }
 
     initializePage();
-
   </script>
+
 </body>
 </html>
