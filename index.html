@@ -23,15 +23,14 @@
     }
 
     .cards {
-      width: calc(100% - 2em);
+      width: 90%;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr; /* Default 4 columns */
       grid-gap: 1em;
       grid-template-areas:
         "a a b c"
         "a a d d";
-      width: 80%;
+      padding: 1em;
     }
 
     .card {
@@ -218,6 +217,46 @@
     .card:nth-child(3) .card-label {
       background: #1098ad;
     }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .cards {
+        grid-template-columns: 1fr 1fr; /* 2 columns on tablets and smaller devices */
+        grid-template-areas: 
+          "a a"
+          "b b"
+          "c c"
+          "d d";
+      }
+
+      .form-title {
+        font-size: 10vw; /* Make the form title bigger on mobile */
+      }
+
+      .card-title {
+        font-size: 1em; /* Adjust text size for mobile */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cards {
+        grid-template-columns: 1fr; /* Single column on mobile phones */
+        grid-template-areas: 
+          "a"
+          "b"
+          "c"
+          "d";
+      }
+
+      .form-title {
+        font-size: 12vw; /* Make the form title even larger on very small screens */
+      }
+
+      .card-title {
+        font-size: 1.2em; /* Larger text on smaller screens */
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -265,13 +304,15 @@
       </a>
     </div>
 
- <div class="card form">
-   <div class="form-title">Sign Up For Free</div>
-   <!-- Wrap the entire form card inside the <a> tag -->
-   <a href="pages/sign-up.html" target="_blank">
+    <div class="card form">
       <div class="form-title">Sign Up For Free</div>
-   </a>
-</div>
+      <!-- Wrap the entire form card inside the <a> tag -->
+      <a href="pages/sign-up.html" target="_blank">
+        <div class="form-title">Sign Up For Free</div>
+      </a>
+    </div>
+
+  </div>
 
 </body>
 </html>
