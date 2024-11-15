@@ -4,435 +4,178 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #181818;
-      color: white;
-    }
-
-    /* Navbar */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #000;
-      color: white;
-      padding: 15px 20px;
+    /* Add a tiny bit of width reduction to the navbar */
+    nav {
+      width: 95%; /* reduced width by 5% */
+      margin: 0 auto;
+      padding: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 1000;
-    }
-
-    .navbar .coins {
-      font-size: 18px;
-      background-color: #2c9e27;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .navbar .home-btn {
-      font-size: 18px;
-      background-color: #3498db;
+      background-color: #333;
       color: white;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      transition: background-color 0.3s;
     }
 
-    .navbar .home-btn:hover {
-      background-color: #2980b9;
-    }
-
-    .navbar .daily-login-box {
-      font-size: 14px;
-      color: #ffcd00; /* Gold color */
+    .navbar-links {
       display: flex;
-      align-items: center;
       gap: 10px;
-      cursor: pointer;
     }
 
-    .navbar .daily-login-box span {
-      font-size: 14px;
-      color: #fff;
+    .navbar-links a {
+      color: white;
+      text-decoration: none;
     }
 
-    .navbar .daily-login-text {
-      color: #ffcd00;
+    .navbar-links a:hover {
+      text-decoration: underline;
     }
 
-    /* Main Dashboard Container */
-    .dashboard-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      padding: 80px 20px 20px; /* Removed small gap above */
-    }
-
-    /* Left Column (Task Boxes) */
-    .task-column {
-      width: 100%;
-      max-width: 300px;
-      margin-right: 20px;
-      margin-bottom: 20px;
-    }
-
-    .task-boxes {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .task-box {
-      background-color: #2c2c2c;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-
-    .task-box h3 {
-      margin-top: 0;
-    }
-
-    .task-box button {
-      background-color: #1fd100;
-      color: black;
-      padding: 10px;
-      font-size: 14px;
+    /* Style for the logout button in the top-right */
+    .logout-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: red;
+      color: white;
       border: none;
-      border-radius: 6px;
+      padding: 10px 20px;
       cursor: pointer;
-      margin-top: 10px;
     }
 
-    .task-box button:hover {
-      background-color: #0e7d00;
+    .logout-btn:hover {
+      background-color: darkred;
     }
 
-    /* Right Column (Video and Coin Area) */
-    .video-column {
-      width: 100%;
-      max-width: 640px;
-      position: relative;
-      padding: 20px;
-      background-color: #2c2c2c;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      margin-bottom: 20px;
+    /* Style for the start earning button */
+    .start-earning-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
     }
 
-    /* Video Player Container */
-    .video-container {
-      background-color: #1c1c1c;
-      position: relative;
-      padding: 10px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 10px #00ff00;
-      text-align: center;
-      height: 100%;
+    .start-earning-btn:hover {
+      background-color: #45a049;
     }
 
-    /* Progress Bar */
-    .progress-bar-container {
-      width: 100%;
-      background-color: #444;
-      border-radius: 10px;
+    /* Style for coin display */
+    .coin-display {
+      font-size: 20px;
       margin-top: 20px;
-      height: 10px;
-      position: relative;
+    }
+
+    /* Progress bar styling */
+    .progress-container {
+      width: 100%;
+      height: 20px;
+      background-color: #f3f3f3;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .progress-bar {
       height: 100%;
-      width: 0;
-      background-color: #1fd100;
+      width: 0%;
+      background-color: #4CAF50;
       border-radius: 10px;
     }
 
-    /* Coins Section */
-    .coins {
-      position: sticky;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #2c9e27;
-      color: white;
-      font-size: 18px;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
-    }
-
-    /* Coin Redemption Section */
-    .coin-redemption {
-      margin-top: 30px;
-      background-color: #333;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    }
-
-    .coin-redemption h3 {
-      margin-top: 0;
-    }
-
-    .coin-redemption p {
-      font-size: 16px;
-      margin: 10px 0;
-    }
-
-    .coin-redemption button {
-      background-color: #ff5733;
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .coin-redemption button:hover {
-      background-color: #c0392b;
-    }
-
-    /* Disable Click on Video */
-    iframe {
-      pointer-events: none;
-      max-width: 100%;
-      height: 100%;
-    }
-
-    /* Daily Reward Icon */
-    .daily-reward-icon {
-      font-size: 40px;
-      color: #f39c12;
-      cursor: pointer;
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 10;
-    }
-
-    .daily-reward-text {
-      font-size: 12px;
-      color: #39FF14;
-      text-align: center;
-    }
-
-    /* Popup Styles */
-    .popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0, 0.8);
-      color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 15px #00ff00;
-      z-index: 1001;
-    }
-
-    .popup button {
-      background-color: #2c9e27;
-      color: white;
-      padding: 10px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .popup button:hover {
-      background-color: #1fd100;
-    }
-
-    /* Responsive Layout */
-    @media (max-width: 768px) {
-      .dashboard-container {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .task-column, .video-column {
-        width: 100%;
-        margin-bottom: 20px;
-      }
-    }
   </style>
 </head>
 <body>
-
-  <!-- Navbar -->
-  <div class="navbar">
-    <div class="home-btn" onclick="goHome()">🏠 Home</div>
-    <div class="coins" id="coins">💰 Coins: 0</div>
-    <div class="daily-login-box" onclick="claimReward()">
-      <span class="daily-reward-icon">🎁</span>
-      <span class="daily-login-text"></span>
-    </div>
-  </div>
-
-  <!-- Main Dashboard Container -->
-  <div class="dashboard-container">
-    <!-- Left Column: Task Boxes -->
-    <div class="task-column">
-      <div class="task-boxes">
-        <div class="task-box">
-
-          <h3>Watch videos</h3>
-          <p>Earn 50 coins per video</p>
-          <button>Start Earning</button>
-        </div>
-        <div class="task-box">
-          <h3>Download Apps</h3>
-          <p>Earn 30 coins per download</p>
-          <button>Start Earning</button>
-        </div>
-        <div class="task-box">
-          <h3>Complete Surveys</h3>
-          <p>Earn 25 coins per survey</p>
-          <button>Start Earning</button>
-        </div>
+  <div id="dashboard">
+    <!-- Navbar with the logout button -->
+    <nav>
+      <div class="navbar-links">
+        <a href="/home">Home</a>
+        <a href="/profile">Profile</a>
+        <a href="/settings">Settings</a>
       </div>
-    </div>
+      <button class="logout-btn" id="logout-btn">Logout</button>
+    </nav>
 
-    <!-- Right Column: Video Player and Coin Area -->
-    <div class="video-column">
-      <div class="video-container">
-        <!-- Embed YouTube Video -->
-        <iframe id="videoPlayer" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allowfullscreen></iframe>
-        <div class="progress-bar-container">
-          <div id="progressBar" class="progress-bar"></div>
-        </div>
-        <div id="timer" class="timer">Next video in: 30s</div>
+    <!-- Content -->
+    <div class="content">
+      <h1>Welcome to your Dashboard</h1>
+      <p id="welcome-message"></p>
+
+      <!-- Coins and Start Earning button -->
+      <button class="start-earning-btn" id="start-earning-btn">Start Earning</button>
+
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
       </div>
 
-      <div class="coin-redemption">
-        <h3>🎮 Start Earning Now!</h3>
-        <p></p>
-        <button id="earnBtn" onclick="startEarning()">Start Watching</button>
+      <div class="coin-display">
+        <p id="coins">Coins: 0</p>
       </div>
     </div>
   </div>
 
-  <audio id="coinSound" src="assets/chiching.mp3"></audio>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    const supabase = supabase.createClient('your-supabase-url', 'your-supabase-anon-key');
+    const supabaseUrl = 'https://qvdrfahwyztzpbddoakd.supabase.co';
+    const supabaseKey = 'YOUR_SUPABASE_KEY'; // Replace with your actual key
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    async function checkAuth() {
-      const user = supabase.auth.user();
+    const logoutButton = document.getElementById("logout-btn");
+    const startEarningButton = document.getElementById("start-earning-btn");
+    const coinsDisplay = document.getElementById("coins");
+    const progressBar = document.getElementById("progress-bar");
+    const welcomeMessage = document.getElementById("welcome-message");
 
-      if (!user) {
-        window.location.href = '/login.html'; // Redirect to login page
+    const MAX_COINS = 500; // Maximum coins goal for the progress bar
+
+    // Check if the user is logged in and a member
+    async function checkUser() {
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data.user) {
+        window.location.href = '/login'; // Redirect to login page if not authenticated
       } else {
-        updateCoins();
-      }
-    }
+        // User is authenticated, check for the user's membership
+        const user = data.user;
+        welcomeMessage.innerText = `Welcome back, ${user.email}!`;
 
-    // Check authentication status on page load
-    checkAuth();
-
-    let currentVideoIndex = 0;
-    let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 0;
-    let timer;
-    let isEarning = false;
-    let isMuted = false;
-    const videoList = [
-      "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
-      "https://www.youtube.com/embed/kJQP7kiw5Fk?autoplay=1",
-      "https://www.youtube.com/embed/lY2yjAdbvdQ?autoplay=1",
-      "https://www.youtube.com/embed/nfWlot6h_JM?autoplay=1",
-      "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1"
-    ];
-
-    const progressBar = document.getElementById("progressBar");
-
-    // Update coins display
-    function updateCoins() {
-      document.getElementById("coins").innerText = `💰 Coins: ${coins}`;
-      localStorage.setItem("coins", coins);
-    }
-
-    // Start or stop earning
-    function startEarning() {
-      if (!isEarning) {
-        document.getElementById("earnBtn").innerText = "Stop Earning";
-        document.getElementById("earnBtn").style.backgroundColor = "#FF5733"; // Change to red
-        startTimer();
-        playNextVideo();
-      } else {
-        document.getElementById("earnBtn").innerText = "Start Watching";
-        document.getElementById("earnBtn").style.backgroundColor = "#1fd100"; // Change back to green
-        stopTimer();
-      }
-      isEarning = !isEarning;
-    }
-
-    // Mute and unmute the page
-    function toggleMute() {
-      const iframe = document.getElementById("videoPlayer");
-      isMuted = !isMuted;
-      iframe.muted = isMuted;
-      document.getElementById("muteBtn").innerText = isMuted ? "Unmute" : "Mute";
-    }
-
-    // Start the timer and progress bar
-    function startTimer() {
-      let progress = 0;
-      const progressInterval = setInterval(() => {
-        progress += 1;
-        progressBar.style.width = progress + "%";
-
-        if (progress >= 100) {
-          clearInterval(progressInterval);
-          coins += 50;  // Add coins when progress bar is full
-          updateCoins();
-          setTimeout(() => {
-            playNextVideo(); // Load next video after 3 seconds
-            startTimer(); // Restart the timer
-          }, 3000); // 3-second delay
+        // Check localStorage for coin data
+        const savedCoins = localStorage.getItem('coins');
+        if (savedCoins) {
+          coinsDisplay.innerText = `Coins: ${savedCoins}`;
+          updateProgressBar(savedCoins);
+        } else {
+          coinsDisplay.innerText = 'Coins: 0';
+          updateProgressBar(0);
         }
-      }, 300); // 30-second timer for progress bar
-      timer = progressInterval;
+      }
     }
 
-    // Stop the timer if "Stop Earning" is clicked
-    function stopTimer() {
-      clearInterval(timer);
+    // Logout function
+    logoutButton.addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = '/login'; // Redirect to login page after logout
+    });
+
+    // Update the progress bar based on coin count
+    function updateProgressBar(coins) {
+      const percentage = Math.min((coins / MAX_COINS) * 100, 100); // Calculate percentage, cap at 100%
+      progressBar.style.width = `${percentage}%`;
     }
 
-    // Play the next video in the list
-    function playNextVideo() {
-      currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-      const videoPlayer = document.getElementById("videoPlayer");
-      videoPlayer.src = videoList[currentVideoIndex];  // Change video source
-    }
+    // Start earning button functionality
+    startEarningButton.addEventListener("click", () => {
+      let currentCoins = parseInt(localStorage.getItem('coins')) || 0;
+      currentCoins += 50; // Add 50 coins
+      localStorage.setItem('coins', currentCoins); // Save to local storage
+      coinsDisplay.innerText = `Coins: ${currentCoins}`; // Update displayed coins
+      updateProgressBar(currentCoins); // Update the progress bar
+    });
 
-    // Go to Home (for now it just refreshes the page)
-    function goHome() {
-      location.reload();  // Placeholder home function
-    }
-
-    // Initialize coins
-    updateCoins();
+    // Initialize by checking user status and setting up
+    checkUser();
   </script>
-
 </body>
 </html>
