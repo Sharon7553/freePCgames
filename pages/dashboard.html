@@ -282,21 +282,21 @@
     <div class="home-btn" onclick="goHome()">🏠 Home</div>
     <div class="coins" id="coins">💰 Coins: 0</div>
     <div class="daily-login-box" onclick="claimReward()">
-      <i class="fas fa-gift"></i>
-      <span class="daily-login-text">Claim Reward</span>
+      <span class="daily-reward-icon">🎁</span>
+      <span class="daily-login-text"></span>
     </div>
-    <div class="logout-btn" onclick="logout()">🚪 Logout</div>
   </div>
 
-  <!-- Dashboard -->
+  <!-- Main Dashboard Container -->
   <div class="dashboard-container">
     <!-- Left Column: Task Boxes -->
     <div class="task-column">
       <div class="task-boxes">
         <div class="task-box">
+
           <h3>Watch videos</h3>
           <p>Earn 50 coins per video</p>
-          <button id="earnBtn" onclick="startEarning()">Start Watching</button>
+          <button>Start Earning</button>
         </div>
         <div class="task-box">
           <h3>Download Apps</h3>
@@ -311,9 +311,12 @@
       </div>
     </div>
 
+
+
     <!-- Right Column: Video Player and Coin Area -->
     <div class="video-column">
       <div class="video-container">
+        <!-- Embed YouTube Video -->
         <iframe id="videoPlayer" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allowfullscreen></iframe>
         <div class="progress-bar-container">
           <div id="progressBar" class="progress-bar"></div>
@@ -321,31 +324,24 @@
         <div id="timer" class="timer">Next video in: 30s</div>
       </div>
 
+
       <div class="coin-redemption">
         <h3>🎮 Start Earning Now!</h3>
+        <p></p>
         <button id="earnBtn" onclick="startEarning()">Start Watching</button>
       </div>
     </div>
   </div>
 
-  <!-- Audio for Sound Effect -->
+
   <audio id="coinSound" src="assets/chiching.mp3"></audio>
 
-  <!-- Popup -->
-  <div class="popup" id="popup">
-    <p>You need to log in first!</p>
-    <button onclick="closePopup()">Close</button>
-  </div>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    const supabase = createClient("https://qvdrfahwyztzpbddoakd.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2ZHJmYWh3eXp0enBiZGRvYWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTEwODUsImV4cCI6MjA0NzAyNzA4NX0.R-AqTGj5MsAb-bqE1yP0Ag5ZWMtFIQxgtJ2BM05uJh0");
-
-    let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 0;
     let currentVideoIndex = 0;
-    let isEarning = false;
+    let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 0;
     let timer;
+    let isEarning = false;
+    let isMuted = false;
     const videoList = [
       "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
       "https://www.youtube.com/embed/kJQP7kiw5Fk?autoplay=1",
@@ -353,24 +349,8 @@
       "https://www.youtube.com/embed/nfWlot6h_JM?autoplay=1",
       "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1"
     ];
+
     const progressBar = document.getElementById("progressBar");
-
-    // Check if user is logged in
-    async function checkAuth() {
-      const { data: user } = await supabase.auth.getUser();
-      if (!user) {
-        alert("You are not logged in. Please log in first.");
-        window.location.href = "/login";  // Redirect to login page
-      } else {
-        document.getElementById("coins").innerText = `💰 Coins: ${coins}`;
-      }
-    }
-
-    // Logout function
-    async function logout() {
-      await supabase.auth.signOut();
-      window.location.href = "/";  // Redirect to home page
-    }
 
     // Update coins display
     function updateCoins() {
@@ -391,6 +371,14 @@
         stopTimer();
       }
       isEarning = !isEarning;
+    }
+
+    // Mute and unmute the page
+    function toggleMute() {
+      const iframe = document.getElementById("videoPlayer");
+      isMuted = !isMuted;
+      iframe.muted = isMuted;
+      document.getElementById("muteBtn").innerText = isMuted ? "Unmute" : "Mute";
     }
 
     // Start the timer and progress bar
@@ -425,14 +413,15 @@
       videoPlayer.src = videoList[currentVideoIndex];  // Change video source
     }
 
-    // Check if the user is authenticated when the page loads
-    checkAuth();
 
-    // Function to go to Home
+    // Go to Home (for now it just refreshes the page)
     function goHome() {
-      location.reload();  // Reload the page
+      location.reload();  // Placeholder home function
     }
 
+    // Initialize coins
+    updateCoins();
   </script>
+
 </body>
 </html>
