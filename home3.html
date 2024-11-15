@@ -33,6 +33,16 @@
       color: #28a745;
       margin-left: 10px;
       font-size: 1.5em;
+      animation: bounce 0.8s infinite alternate;
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-10px);
+      }
     }
 
     /* Bullet list container centered */
@@ -99,6 +109,13 @@
       box-shadow: 0 0 20px #28a745;
     }
 
+    /* Arrows next to each task */
+    .task-item .arrow {
+      display: inline-block;
+      margin-left: 10px;
+      animation: bounce 0.8s infinite alternate;
+    }
+
     /* Timer and Game Info */
     #game-info {
       font-size: 1.2rem;
@@ -127,7 +144,6 @@
       display: none;
       justify-content: center;
       align-items: center;
-      z-index: 999;
     }
 
     .popup-content {
@@ -298,27 +314,34 @@
   <div id="task-container">
     <button class="show-task-btn">Show Task Box</button>
     <div class="task-box" id="task-box">
-      <h3>Tasks <span id="close-task-box">&#10005;</span></h3>
+      <h3>
+        Tasks
+        <span id="close-task-box">&#10005;</span>
+      </h3>
       <div id="game-info">
         <p><strong>Locked Game:</strong> <span id="locked-game-title">None</span></p>
         <p><strong>Time Left:</strong> <span id="timer">--</span></p>
       </div>
       <ul class="task-list">
         <li class="task-item">
-          <h4><a href="https://www.google.com" target="_blank">Leave a Review</a></h4>
+          <h4>Leave a Review</h4>
           <p>Write a review of the game on your favorite platform to earn the game.</p>
+          <span class="arrow">→</span>
         </li>
         <li class="task-item">
-          <h4><a href="https://www.google.com" target="_blank">Watch Videos</a></h4>
+          <h4>Watch Videos</h4>
           <p>Watch game trailers or gameplay videos on YouTube to complete this task.</p>
+          <span class="arrow">→</span>
         </li>
         <li class="task-item">
-          <h4><a href="https://www.google.com" target="_blank">Play the Game</a></h4>
+          <h4>Play the Game</h4>
           <p>Play at least 30 minutes of the game to fulfill this requirement.</p>
+          <span class="arrow">→</span>
         </li>
         <li class="task-item">
-          <h4><a href="https://www.google.com" target="_blank">Share on Social Media</a></h4>
+          <h4>Share on Social Media</h4>
           <p>Share the game on your social media profiles to help us spread the word!</p>
+          <span class="arrow">→</span>
         </li>
       </ul>
     </div>
@@ -329,10 +352,12 @@
     <p>Game Claimed Successfully!</p>
   </div>
 
-  <!-- Popup for Game Locked -->
-  <div id="game-locked-popup" class="popup">
+  <!-- Confirmation Popup -->
+  <div id="confirmation-popup" class="popup">
     <div class="popup-content">
-      <h3>Game Locked In!</h3>
+      <h3>Are you sure you want to claim this game?</h3>
+      <button class="btn green" id="confirm-yes" style="background-color: #28a745;">Yes</button>
+      <button class="btn red" id="confirm-no" style="background-color: #f44336;">No</button>
     </div>
   </div>
 
@@ -355,27 +380,16 @@
       button.addEventListener('click', function() {
         const gameCard = this.closest('.game-card');
         selectedGame = gameCard.getAttribute('data-game-id');
-        gameCard.classList.add('highlighted');
         if (!localStorage.getItem(`claimedGame-${selectedGame}`)) {
           confirmationPopup.style.display = 'flex';
         }
       });
     });
 
-    // Show "Game Locked In!" popup for 3 seconds
-    function showGameLockedPopup() {
-      const popup = document.getElementById('game-locked-popup');
-      popup.style.display = 'flex';
-      setTimeout(() => {
-        popup.style.display = 'none';
-      }, 3000);
-    }
-
     // Confirm button in the popup
     confirmYes.addEventListener('click', function() {
       confirmationPopup.style.display = 'none';
       lockGame(selectedGame);
-      showGameLockedPopup();
     });
 
     // Cancel button in the popup
@@ -411,7 +425,7 @@
 
     // Start the countdown timer
     function startTimer() {
-      let timeRemaining = parseInt(localStorage.getItem('timer')) || 5 * 24 * 60 * 60; // 5 days in seconds
+      let timeRemaining = 5 * 24 * 60 * 60; // 5 days in seconds
       localStorage.setItem('timer', timeRemaining);
 
       countdownTimer = setInterval(() => {
