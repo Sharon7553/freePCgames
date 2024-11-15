@@ -283,7 +283,6 @@
     <div class="coins" id="coins">💰 Coins: 0</div>
     <div class="daily-login-box" onclick="claimReward()">
       <span class="daily-reward-icon">🎁</span>
-      <span class="daily-login-text"></span>
       <button onclick="logout()" style="background-color: red; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
   Logout
 </button>
@@ -291,13 +290,17 @@
 <script>
   function logout() {
     supabase.auth.signOut().then(() => {
-      // Redirect to login page
-      window.location.href = "login.html";  // Change to your actual login page URL
+      // Clear user session (session-related state may persist in certain conditions)
+      localStorage.removeItem('supabase.auth.token');  // This should clear any session tokens
+
+      // Redirect to login page after logout
+      window.location.href = "login.html";  // Make sure 'login.html' is the correct URL
     }).catch((error) => {
       console.error("Error during logout:", error.message);
     });
   }
 </script>
+
 
 
     </div>
