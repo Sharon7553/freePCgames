@@ -49,9 +49,7 @@
       border-radius: 8px;
       overflow: hidden;
       cursor: pointer;
-      transition: transform 0.3s ease, opacity 0.5s ease-in-out;
-      opacity: 1;
-      z-index: 1;
+      transition: transform 0.3s ease;
     }
 
     .game-card img {
@@ -203,12 +201,10 @@
       z-index: 1000;
       display: none;
       overflow-y: auto;
-      transition: all 1s ease;
     }
 
     .task-box.show {
       display: block;
-      transform: translateY(100px) translateX(-20px);
     }
 
     .task-box h3 {
@@ -258,38 +254,10 @@
       }
     }
 
-    .fade-out {
-      animation: fadeOut 1s forwards;
-      opacity: 0;
-    }
-
-    @keyframes fadeOut {
-      0% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-      }
-    }
-
-    /* Game transition to new container */
+    /* Game selection highlight */
     .game-card.selected {
-      transition: transform 1s ease-out, opacity 0.5s ease-out;
-      transform: translateX(-80vw);
-      opacity: 0.5;
-    }
-
-    /* New container for the selected game */
-    .selected-game-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 10px;
-      background: #333;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-      z-index: 100;
+      border: 4px solid #28a745;
+      box-shadow: 0 0 20px #28a745;
     }
 
   </style>
@@ -344,162 +312,47 @@
     </div>
   </div>
 
-  <div class="selected-game-container" id="selected-game-container" style="display:none;">
-    <p>Selected Game</p>
+  <!-- Success Notification -->
+  <div id="success-notification" class="success-notification">
+    <p>Game Locked In!</p>
   </div>
 
+  <!-- Task Box -->
   <div class="task-box" id="task-box">
-    <h3>How to Claim Your Game</h3>
+    <h3>Your Game Tasks</h3>
     <ul class="task-list">
       <li class="task-item">
-        <h4>Leave a Review</h4>
-        <p>Write a review of the game on your favorite platform to earn the game.</p>
+        <h4>Task 1</h4>
+        <p>Complete the tutorial</p>
       </li>
       <li class="task-item">
-        <h4>Watch Videos</h4>
-        <p>Watch game trailers or gameplay videos on YouTube to complete this task.</p>
-      </li>
-      <li class="task-item">
-        <h4>Play the Game</h4>
-        <p>Play at least 30 minutes of the game to fulfill this requirement.</p>
-      </li>
-      <li class="task-item">
-        <h4>Share on Social Media</h4>
-        <p>Share the game on your social media profiles to help us spread the word!</p>
+        <h4>Task 2</h4>
+        <p>Reach level 10</p>
       </li>
     </ul>
   </div>
 
   <script>
-    const claimButtons = document.querySelectorAll('.claim-btn');
-    const confirmationPopup = document.getElementById('confirmation-popup');
-    const confirmYes = document.getElementById('confirm-yes');
-    const confirmNo = document.getElementById('confirm-no');
-    const successNotification = document.getElementById('success-notification');
-    const gameTitleContainer = document.getElementById('game-title-container');
-    const timerContainer = document.getElementById('timer-container');
-    const taskBox = document.getElementById('task-box');
-    const selectedGameContainer = document.getElementById('selected-game-container');
-    let selectedGame = null;
-    let countdownTimer = null;
+    document.addEventListener("DOMContentLoaded", function() {
+      const gameCards = document.querySelectorAll(".game-card");
 
-    // Function to handle game selection and popup
-    claimButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const gameCard = this.closest('.game-card');
-        selectedGame = gameCard.getAttribute('data-game-id');
-        if (!localStorage.getItem(`claimedGame-${selectedGame}`)) {
-          confirmationPopup.style.display = 'flex';
-        }
+      gameCards.forEach(card => {
+        card.addEventListener("click", function() {
+          // Remove the highlight from all other games
+          gameCards.forEach(game => game.classList.remove("selected"));
+
+          // Add the highlight class to the selected game
+          this.classList.add("selected");
+
+          // Show a simple success notification
+          const notification = document.getElementById("success-notification");
+          notification.style.display = "block";
+          setTimeout(() => {
+            notification.style.display = "none";
+          }, 2000);  // Hide notification after 2 seconds
+        });
       });
     });
-
-    // Confirm button in the popup
-    confirmYes.addEventListener('click', function() {
-      confirmationPopup.style.display = 'none';
-      lockGame(selectedGame);
-    });
-
-    // Cancel button in the popup
-    confirmNo.addEventListener('click', function() {
-      confirmationPopup.style.display = 'none';
-    });
-
-    // Lock the game (set it in localStorage and show the success notification)
-    function lockGame(gameId) {
-      const gameTitle = document.querySelector(`.game-card[data-game-id="${gameId}"] .game-title`).textContent;
-      localStorage.setItem('lockedGame', gameId);
-      localStorage.setItem('gameTitle', gameTitle);
-      localStorage.setItem(`claimedGame-${gameId}`, 'true');
-      showSuccessNotification(gameTitle);
-      updateGameTitle(gameTitle);
-      moveSelectedGame();
-      startTimer();
-      disableOtherGames();
-      showTaskBox();
-    }
-
-    // Show success notification
-    function showSuccessNotification(gameTitle) {
-      successNotification.style.display = 'block';
-      setTimeout(() => {
-        successNotification.style.display = 'none';
-      }, 2000);
-    }
-
-    // Update the title of the locked game at the top of the page
-    function updateGameTitle(gameTitle) {
-      gameTitleContainer.textContent = `Locked Game: ${gameTitle}`;
-    }
-
-    // Start the countdown timer
-    function startTimer() {
-      let timeRemaining = 5 * 24 * 60 * 60; // 5 days in seconds
-      localStorage.setItem('timer', timeRemaining);
-
-      countdownTimer = setInterval(() => {
-        timeRemaining--;
-        localStorage.setItem('timer', timeRemaining);
-        displayTimer(timeRemaining);
-
-        if (timeRemaining <= 0) {
-          clearInterval(countdownTimer);
-          timerContainer.textContent = 'Time is up!';
-        }
-      }, 1000);
-    }
-
-    // Display the remaining timer
-    function displayTimer(seconds) {
-      const days = Math.floor(seconds / (24 * 60 * 60));
-      const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
-      const minutes = Math.floor((seconds % (60 * 60)) / 60);
-      const secondsLeft = seconds % 60;
-      timerContainer.textContent = `Time left: ${days}d ${hours}h ${minutes}m ${secondsLeft}s`;
-    }
-
-    // Move the selected game to a new container
-    function moveSelectedGame() {
-      const gameCard = document.querySelector(`.game-card[data-game-id="${selectedGame}"]`);
-      gameCard.classList.add('selected');
-      selectedGameContainer.style.display = 'block';
-      selectedGameContainer.innerHTML = `
-        <h2>Selected Game: ${gameCard.querySelector('.game-title').textContent}</h2>
-        <img src="${gameCard.querySelector('img').src}" alt="${gameCard.querySelector('.game-title').textContent}">
-      `;
-    }
-
-    // Disable other games once a game is locked
-    function disableOtherGames() {
-      document.querySelectorAll('.game-card').forEach(card => {
-        if (card.getAttribute('data-game-id') !== selectedGame) {
-          card.classList.add('fade-out');
-          card.querySelector('.claim-btn').disabled = true;
-        }
-      });
-    }
-
-    // Show the task box
-    function showTaskBox() {
-      taskBox.classList.add('show');
-    }
-
-    // Initialize the page with locked game info and timer if exists in localStorage
-    function initializePage() {
-      const lockedGame = localStorage.getItem('lockedGame');
-      const gameTitle = localStorage.getItem('gameTitle');
-      const timer = localStorage.getItem('timer');
-
-      if (lockedGame && gameTitle) {
-        updateGameTitle(gameTitle);
-        displayTimer(timer);
-        disableOtherGames();
-        moveSelectedGame();
-        showTaskBox();
-      }
-    }
-
-    initializePage();
   </script>
 
 </body>
