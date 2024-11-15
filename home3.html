@@ -50,8 +50,6 @@
       overflow: hidden;
       cursor: pointer;
       transition: transform 0.3s ease;
-      opacity: 1;
-      transition: opacity 0.5s ease-in-out;
     }
 
     .game-card img {
@@ -93,14 +91,6 @@
       padding: 5px 10px;
       color: white;
       font-size: 14px;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .game-card:hover .game-info {
-      visibility: visible;
-      opacity: 1;
     }
 
     .game-title {
@@ -445,7 +435,6 @@
     function disableOtherGames() {
       document.querySelectorAll('.game-card').forEach(card => {
         if (card.getAttribute('data-game-id') !== selectedGame) {
-          card.classList.add('fade-out');
           card.querySelector('.claim-btn').disabled = true;
         }
       });
