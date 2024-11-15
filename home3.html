@@ -7,360 +7,299 @@
   <style>
     @import url("https://fonts.googleapis.com/css?family=Roboto:300,900");
 
-    body {
+    html, body {
       background: #252833;
-      color: white;
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      padding: 0;
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      justify-content: flex-start;
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
     }
 
-    h2 {
-      margin-top: 20px;
-      font-size: 2em;
+    * {
+      box-sizing: border-box;
     }
 
-    /* Game Section */
-    .game-section {
-      width: 100%;
-      max-width: 1200px;
-    }
-
-    .games-grid {
+    .cards {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-gap: 1rem;
-      width: 100%;
+      gap: 20px;
+      width: 90%;
+      margin-bottom: 20px;
+      padding: 0 20px;
     }
 
-    .game-card {
+    .card {
+      width: 100%;
       position: relative;
-      background: #333;
+      transition: all 0.25s ease;
+      cursor: pointer;
       border-radius: 8px;
       overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s ease;
     }
 
-    .game-card img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .game-card:hover {
-      transform: scale(1.05);
-    }
-
-    .game-img-container {
+    .card-content {
       position: relative;
-      height: 400px;
+      width: 100%;
+      height: 100%;
     }
 
-    .claim-btn {
+    .card-img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.3s ease;
+    }
+
+    .card-label, .card-title, .card-footer {
+      position: absolute;
+      color: white;
+      font-size: 1em;
+      z-index: 5;
+    }
+
+    .card-label {
+      top: 10px;
+      left: 10px;
+      background-color: #089f8a;
+      padding: 5px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .card-title {
+      bottom: 10px;
+      left: 10px;
+      font-weight: 900;
+    }
+
+    .card-footer {
+      bottom: 40px;
+      left: 10px;
+      font-size: 0.8em;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 5px;
+    }
+
+    .card:hover .card-img img {
+      opacity: 0.8;
+    }
+
+    .card button {
       position: absolute;
       bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
+      right: 10px;
       padding: 10px 20px;
-      background-color: #f79533;
+      background-color: #089f8a;
       border: none;
-      border-radius: 5px;
       color: white;
-      font-size: 16px;
+      font-size: 1.2em;
       cursor: pointer;
-      display: block;
+      border-radius: 5px;
+      transition: all 0.2s ease;
     }
 
-    .game-info {
+    .card button:hover {
+      background-color: #07b39b;
+    }
+
+    .card.locked .card-img img {
+      filter: blur(5px);
+      opacity: 0.6;
+    }
+
+    .card.locked button {
+      background-color: #d3d3d3;
+      cursor: not-allowed;
+    }
+
+    .card.locked .card-footer {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .card.locked .card-footer:before {
+      content: 'Locked';
+      color: #ff0000;
+      font-weight: bold;
+    }
+
+    .card .padlock {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.7);
-      padding: 5px 10px;
-      color: white;
-      font-size: 14px;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .game-card:hover .game-info {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    .game-title {
-      padding: 10px;
-      text-align: center;
-      font-weight: 600;
-      background: #111;
-      border-radius: 0 0 8px 8px;
-    }
-
-    .btn {
-      padding: 10px 20px;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
-    .green {
-      background-color: #28a745;
-    }
-
-    .red {
-      background-color: #dc3545;
-    }
-
-    /* Popup Styles */
-    .popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      display: none;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .popup-content {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      color: black;
-    }
-
-    .success-notification {
-      background: #28a745;
+      font-size: 2em;
       color: white;
       display: none;
+    }
+
+    .card.locked .padlock {
+      display: block;
+    }
+
+    .game-title-popup, .timer-popup {
       position: absolute;
-      top: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 1em;
+      top: -40px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 10px;
-      border-radius: 5px;
+      width: 200px;
+      display: none;
+      z-index: 100;
     }
 
-    #game-title-container {
-      position: fixed;
+    .card:hover .game-title-popup,
+    .card:hover .timer-popup {
+      display: block;
+    }
+
+    .game-title-popup {
       top: 10px;
-      right: 10px;
-      background: #28a745;
+    }
+
+    .timer-popup {
+      top: -40px;
+    }
+
+    .card.locked .card-title {
+      border: 2px solid #07b39b;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+    }
+
+    .card button.claimed {
+      background-color: red;
       color: white;
-      padding: 10px;
-      border-radius: 5px;
     }
 
-    #timer-container {
-      position: fixed;
-      top: 50px;
-      right: 10px;
-      background: #f79533;
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
+    /* Row Duplication Styles */
+    .card-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      margin-bottom: 20px;
     }
 
-    /* Mobile responsiveness */
-    @media (max-width: 768px) {
-      .games-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .games-grid {
-        grid-template-columns: 1fr;
-      }
+    .card-row .card {
+      width: 23%;
     }
 
   </style>
 </head>
 <body>
 
-  <div id="game-title-container"></div>
-  <div id="timer-container"></div>
-
-  <div class="game-section">
-    <h2>Newest PC Games</h2>
-    <div class="games-grid">
-      <!-- Game 1 -->
-      <div class="game-card" data-game-id="1">
-        <div class="game-img-container">
-          <img src="https://via.placeholder.com/300x400?text=Game+1" alt="Game 1">
-          <button class="claim-btn">Claim Game</button>
-          <div class="game-info">Steam Game Code</div>
+  <div class="cards">
+    <div class="card-row">
+      <!-- Game Box 1 -->
+      <div class="card" id="game1">
+        <div class="card-content">
+          <div class="card-img">
+            <img src="https://via.placeholder.com/250x350?text=Game+1" alt="Game 1">
+            <div class="padlock">🔒</div>
+          </div>
+          <div class="card-label">Action</div>
+          <div class="card-title">Game 1</div>
+          <div class="card-footer">Claimed 12 times this week</div>
+          <button class="claim-button">Claim Now</button>
+          <div class="game-title-popup">Steam Game Code</div>
         </div>
-        <div class="game-title">Game Title 1</div>
       </div>
-
-      <!-- Game 2 -->
-      <div class="game-card" data-game-id="2">
-        <div class="game-img-container">
-          <img src="https://via.placeholder.com/300x400?text=Game+2" alt="Game 2">
-          <button class="claim-btn">Claim Game</button>
-          <div class="game-info">Steam Game Code</div>
+      <!-- Game Box 2 -->
+      <div class="card" id="game2">
+        <div class="card-content">
+          <div class="card-img">
+            <img src="https://via.placeholder.com/250x350?text=Game+2" alt="Game 2">
+            <div class="padlock">🔓</div>
+          </div>
+          <div class="card-label">Adventure</div>
+          <div class="card-title">Game 2</div>
+          <div class="card-footer">Claimed 20 times this week</div>
+          <button class="claim-button">Claim Now</button>
+          <div class="game-title-popup">Steam Game Code</div>
         </div>
-        <div class="game-title">Game Title 2</div>
       </div>
-
-      <!-- Game 3 -->
-      <div class="game-card" data-game-id="3">
-        <div class="game-img-container">
-          <img src="https://via.placeholder.com/300x400?text=Game+3" alt="Game 3">
-          <button class="claim-btn">Claim Game</button>
-          <div class="game-info">Steam Game Code</div>
+      <!-- Game Box 3 -->
+      <div class="card" id="game3">
+        <div class="card-content">
+          <div class="card-img">
+            <img src="https://via.placeholder.com/250x350?text=Game+3" alt="Game 3">
+            <div class="padlock">🔓</div>
+          </div>
+          <div class="card-label">RPG</div>
+          <div class="card-title">Game 3</div>
+          <div class="card-footer">Claimed 30 times this week</div>
+          <button class="claim-button">Claim Now</button>
+          <div class="game-title-popup">Steam Game Code</div>
         </div>
-        <div class="game-title">Game Title 3</div>
       </div>
-
-      <!-- Game 4 -->
-      <div class="game-card" data-game-id="4">
-        <div class="game-img-container">
-          <img src="https://via.placeholder.com/300x400?text=Game+4" alt="Game 4">
-          <button class="claim-btn">Claim Game</button>
-          <div class="game-info">Steam Game Code</div>
+      <!-- Game Box 4 -->
+      <div class="card" id="game4">
+        <div class="card-content">
+          <div class="card-img">
+            <img src="https://via.placeholder.com/250x350?text=Game+4" alt="Game 4">
+            <div class="padlock">🔓</div>
+          </div>
+          <div class="card-label">Shooter</div>
+          <div class="card-title">Game 4</div>
+          <div class="card-footer">Claimed 8 times this week</div>
+          <button class="claim-button">Claim Now</button>
+          <div class="game-title-popup">Steam Game Code</div>
         </div>
-        <div class="game-title">Game Title 4</div>
       </div>
-
     </div>
-  </div>
-
-  <!-- Confirmation Popup -->
-  <div id="confirmation-popup" class="popup">
-    <div class="popup-content">
-      <p>Are you sure you want to lock in this game?</p>
-      <button id="confirm-yes" class="btn green">Yes</button>
-      <button id="confirm-no" class="btn red">No</button>
-    </div>
-  </div>
-
-  <!-- Success Notification -->
-  <div id="success-notification" class="popup success-notification">
-    <p>Game Locked In!</p>
+    <!-- Repeat this row for a total of 7 rows -->
+    <!-- Insert 6 more rows of similar games here as needed... -->
   </div>
 
   <script>
-    // Variables
-    const claimButtons = document.querySelectorAll('.claim-btn');
-    const confirmationPopup = document.getElementById('confirmation-popup');
-    const confirmYes = document.getElementById('confirm-yes');
-    const confirmNo = document.getElementById('confirm-no');
-    const successNotification = document.getElementById('success-notification');
-    const gameTitleContainer = document.getElementById('game-title-container');
-    const timerContainer = document.getElementById('timer-container');
-
-    let selectedGame = null;
-    let countdownTimer = null;
-
-    // Function to handle game selection and popup
-    claimButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const gameCard = this.closest('.game-card');
-        selectedGame = gameCard.getAttribute('data-game-id');
-        confirmationPopup.style.display = 'flex';
+    const claimButtons = document.querySelectorAll('.claim-button');
+    const gameTitles = document.querySelectorAll('.card');
+    const padlocks = document.querySelectorAll('.padlock');
+    const gameFooter = document.querySelectorAll('.card-footer');
+    
+    claimButtons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        const card = gameTitles[index];
+        const footer = gameFooter[index];
+        const padlock = padlocks[index];
+        
+        if (card.classList.contains('locked')) {
+          alert("You've already locked in this game.");
+          return;
+        }
+        
+        // Lock game
+        card.classList.add('locked');
+        padlock.innerHTML = '🔒';
+        button.classList.add('claimed');
+        
+        // Change footer
+        footer.innerHTML = 'Game Locked';
+        footer.style.background = 'rgba(0, 0, 0, 0.8)';
+        
+        // Optional: Persist game selection with Local Storage
+        localStorage.setItem('lockedGame', card.id);
       });
     });
 
-    // Confirm button in the popup
-    confirmYes.addEventListener('click', function() {
-      confirmationPopup.style.display = 'none';
-      lockGame(selectedGame);
+    // Show random number in claimed text
+    gameFooter.forEach((footer) => {
+      const randomNumber = Math.floor(Math.random() * 34) + 7;
+      footer.innerText = `${randomNumber} claimed this week`;
     });
-
-    // Cancel button in the popup
-    confirmNo.addEventListener('click', function() {
-      confirmationPopup.style.display = 'none';
-    });
-
-    // Lock the game (set it in localStorage and show the success notification)
-    function lockGame(gameId) {
-      const gameTitle = document.querySelector(`.game-card[data-game-id="${gameId}"] .game-title`).textContent;
-      localStorage.setItem('lockedGame', gameId);
-      localStorage.setItem('gameTitle', gameTitle);
-      showSuccessNotification(gameTitle);
-      updateGameTitle(gameTitle);
-      startTimer();
-      disableOtherGames();
-    }
-
-    // Show success notification
-    function showSuccessNotification(gameTitle) {
-      successNotification.style.display = 'block';
-      setTimeout(() => {
-        successNotification.style.display = 'none';
-      }, 2000);
-    }
-
-    // Update the title of the locked game at the top of the page
-    function updateGameTitle(gameTitle) {
-      gameTitleContainer.textContent = `Locked Game: ${gameTitle}`;
-    }
-
-    // Start the countdown timer
-    function startTimer() {
-      let timeRemaining = 5 * 24 * 60 * 60; // 5 days in seconds
-      localStorage.setItem('timer', timeRemaining);
-
-      countdownTimer = setInterval(() => {
-        timeRemaining--;
-        localStorage.setItem('timer', timeRemaining);
-        displayTimer(timeRemaining);
-
-        if (timeRemaining <= 0) {
-          clearInterval(countdownTimer);
-          timerContainer.textContent = 'Time is up!';
-        }
-      }, 1000);
-    }
-
-    // Display the remaining timer
-    function displayTimer(seconds) {
-      const days = Math.floor(seconds / (24 * 60 * 60));
-      const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
-      const minutes = Math.floor((seconds % (60 * 60)) / 60);
-      const secondsLeft = seconds % 60;
-      timerContainer.textContent = `Time left: ${days}d ${hours}h ${minutes}m ${secondsLeft}s`;
-    }
-
-    // Disable other games once a game is locked
-    function disableOtherGames() {
-      document.querySelectorAll('.game-card').forEach(card => {
-        if (card.getAttribute('data-game-id') !== selectedGame) {
-          card.querySelector('.claim-btn').disabled = true;
-          card.style.opacity = 0.5;
-        }
-      });
-    }
-
-    // Initialize the page with locked game info and timer if exists in localStorage
-    function initializePage() {
-      const lockedGame = localStorage.getItem('lockedGame');
-      const gameTitle = localStorage.getItem('gameTitle');
-      const timer = localStorage.getItem('timer');
-
-      if (lockedGame && gameTitle) {
-        updateGameTitle(gameTitle);
-        displayTimer(timer);
-        disableOtherGames();
-      }
-    }
-
-    initializePage();
-
   </script>
 </body>
 </html>
