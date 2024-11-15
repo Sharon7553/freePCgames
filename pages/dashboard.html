@@ -285,6 +285,7 @@
       <span class="daily-reward-icon">🎁</span>
       <span class="daily-login-text"></span>
     </div>
+    <button id="logoutBtn" style="background-color: #e74c3c; padding: 10px; border-radius: 8px; cursor: pointer; color: white;" onclick="logout()">Logout</button>
   </div>
 
   <!-- Main Dashboard Container -->
@@ -293,10 +294,9 @@
     <div class="task-column">
       <div class="task-boxes">
         <div class="task-box">
-
           <h3>Watch videos</h3>
           <p>Earn 50 coins per video</p>
-          <button>Start Earning</button>
+          <button onclick="startEarning()">Start Earning</button>
         </div>
         <div class="task-box">
           <h3>Download Apps</h3>
@@ -311,12 +311,9 @@
       </div>
     </div>
 
-
-
     <!-- Right Column: Video Player and Coin Area -->
     <div class="video-column">
       <div class="video-container">
-        <!-- Embed YouTube Video -->
         <iframe id="videoPlayer" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allowfullscreen></iframe>
         <div class="progress-bar-container">
           <div id="progressBar" class="progress-bar"></div>
@@ -324,19 +321,19 @@
         <div id="timer" class="timer">Next video in: 30s</div>
       </div>
 
-
       <div class="coin-redemption">
         <h3>🎮 Start Earning Now!</h3>
-        <p></p>
         <button id="earnBtn" onclick="startEarning()">Start Watching</button>
       </div>
     </div>
   </div>
 
-
   <audio id="coinSound" src="assets/chiching.mp3"></audio>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
+    const supabase = createClient("https://qvdrfahwyztzpbddoakd.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2ZHJmYWh3eXp0enBiZGRvYWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTEwODUsImV4cCI6MjA0NzAyNzA4NX0.R-AqTGj5MsAb-bqE1yP0Ag5ZWMtFIQxgtJ2BM05uJh0");
+
     let currentVideoIndex = 0;
     let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 0;
     let timer;
@@ -351,6 +348,21 @@
     ];
 
     const progressBar = document.getElementById("progressBar");
+
+    // Check if user is logged in
+    async function checkAuth() {
+      const { data: user } = await supabase.auth.getUser();
+      if (!user) {
+        alert("You are not logged in. Please log in first.");
+        window.location.href = "/login";  // Redirect to login page (adjust URL as needed)
+      }
+    }
+
+    // Logout function
+    async function logout() {
+      await supabase.auth.signOut();
+      window.location.href = "/";  // Redirect to home page after logout
+    }
 
     // Update coins display
     function updateCoins() {
@@ -413,7 +425,6 @@
       videoPlayer.src = videoList[currentVideoIndex];  // Change video source
     }
 
-
     // Go to Home (for now it just refreshes the page)
     function goHome() {
       location.reload();  // Placeholder home function
@@ -421,7 +432,10 @@
 
     // Initialize coins
     updateCoins();
-  </script>
 
+    // Check if the user is authenticated when the page loads
+    checkAuth();
+
+  </script>
 </body>
 </html>
