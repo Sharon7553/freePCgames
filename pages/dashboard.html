@@ -311,8 +311,6 @@
       </div>
     </div>
 
-
-
     <!-- Right Column: Video Player and Coin Area -->
     <div class="video-column">
       <div class="video-container">
@@ -324,7 +322,6 @@
         <div id="timer" class="timer">Next video in: 30s</div>
       </div>
 
-
       <div class="coin-redemption">
         <h3>🎮 Start Earning Now!</h3>
         <p></p>
@@ -333,10 +330,25 @@
     </div>
   </div>
 
-
   <audio id="coinSound" src="assets/chiching.mp3"></audio>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
+    const supabase = supabase.createClient('your-supabase-url', 'your-supabase-anon-key');
+
+    async function checkAuth() {
+      const user = supabase.auth.user();
+
+      if (!user) {
+        window.location.href = '/login.html'; // Redirect to login page
+      } else {
+        updateCoins();
+      }
+    }
+
+    // Check authentication status on page load
+    checkAuth();
+
     let currentVideoIndex = 0;
     let coins = localStorage.getItem("coins") ? parseInt(localStorage.getItem("coins")) : 0;
     let timer;
@@ -412,7 +424,6 @@
       const videoPlayer = document.getElementById("videoPlayer");
       videoPlayer.src = videoList[currentVideoIndex];  // Change video source
     }
-
 
     // Go to Home (for now it just refreshes the page)
     function goHome() {
