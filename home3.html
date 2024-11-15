@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>freePCgames</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Roboto:300,900");
+
+    body {
+      background: #252833;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    h2 {
+      margin-top: 20px;
+      font-size: 2em;
+    }
+
+    /* Game Section */
+    .game-section {
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 1rem;
+      width: 100%;
+    }
+
+    .game-card {
+      position: relative;
+      background: #333;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .game-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .game-card:hover {
+      transform: scale(1.05);
+    }
+
+    .game-img-container {
+      position: relative;
+      height: 400px;
+    }
+
+    .claim-btn {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background-color: #f79533;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+    }
+
+    .game-info {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.7);
+      padding: 5px 10px;
+      color: white;
+      font-size: 14px;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .game-card:hover .game-info {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .game-title {
+      padding: 10px;
+      text-align: center;
+      font-weight: 600;
+      background: #111;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .green {
+      background-color: #28a745;
+    }
+
+    .red {
+      background-color: #dc3545;
+    }
+
+    /* Popup Styles */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      color: black;
+    }
+
+    .success-notification {
+      background: #28a745;
+      color: white;
+      display: none;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    #game-title-container {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #28a745;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    #timer-container {
+      position: fixed;
+      top: 50px;
+      right: 10px;
+      background: #f79533;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .games-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="game-title-container"></div>
+  <div id="timer-container"></div>
+
+  <div class="game-section">
+    <h2>Newest PC Games</h2>
+    <div class="games-grid">
+      <!-- Game 1 -->
+      <div class="game-card" data-game-id="1">
+        <div class="game-img-container">
+          <img src="https://via.placeholder.com/300x400?text=Game+1" alt="Game 1">
+          <button class="claim-btn">Claim Game</button>
+          <div class="game-info">Steam Game Code</div>
+        </div>
+        <div class="game-title">Game Title 1</div>
+      </div>
+
+      <!-- Game 2 -->
+      <div class="game-card" data-game-id="2">
+        <div class="game-img-container">
+          <img src="https://via.placeholder.com/300x400?text=Game+2" alt="Game 2">
+          <button class="claim-btn">Claim Game</button>
+          <div class="game-info">Steam Game Code</div>
+        </div>
+        <div class="game-title">Game Title 2</div>
+      </div>
+
+      <!-- Game 3 -->
+      <div class="game-card" data-game-id="3">
+        <div class="game-img-container">
+          <img src="https://via.placeholder.com/300x400?text=Game+3" alt="Game 3">
+          <button class="claim-btn">Claim Game</button>
+          <div class="game-info">Steam Game Code</div>
+        </div>
+        <div class="game-title">Game Title 3</div>
+      </div>
+
+      <!-- Game 4 -->
+      <div class="game-card" data-game-id="4">
+        <div class="game-img-container">
+          <img src="https://via.placeholder.com/300x400?text=Game+4" alt="Game 4">
+          <button class="claim-btn">Claim Game</button>
+          <div class="game-info">Steam Game Code</div>
+        </div>
+        <div class="game-title">Game Title 4</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Confirmation Popup -->
+  <div id="confirmation-popup" class="popup">
+    <div class="popup-content">
+      <p>Are you sure you want to lock in this game?</p>
+      <button id="confirm-yes" class="btn green">Yes</button>
+      <button id="confirm-no" class="btn red">No</button>
+    </div>
+  </div>
+
+  <!-- Success Notification -->
+  <div id="success-notification" class="popup success-notification">
+    <p>Game Locked In!</p>
+  </div>
+
+  <script>
+    // Variables
+    const claimButtons = document.querySelectorAll('.claim-btn');
+    const confirmationPopup = document.getElementById('confirmation-popup');
+    const confirmYes = document.getElementById('confirm-yes');
+    const confirmNo = document.getElementById('confirm-no');
+    const successNotification = document.getElementById('success-notification');
+    const gameTitleContainer = document.getElementById('game-title-container');
+    const timerContainer = document.getElementById('timer-container');
+
+    let selectedGame = null;
+    let countdownTimer = null;
+
+    // Function to handle game selection and popup
+    claimButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const gameCard = this.closest('.game-card');
+        selectedGame = gameCard.getAttribute('data-game-id');
+        confirmationPopup.style.display = 'flex';
+      });
+    });
+
+    // Confirm button in the popup
+    confirmYes.addEventListener('click', function() {
+      confirmationPopup.style.display = 'none';
+      lockGame(selectedGame);
+    });
+
+    // Cancel button in the popup
+    confirmNo.addEventListener('click', function() {
+      confirmationPopup.style.display = 'none';
+    });
+
+    // Lock the game (set it in localStorage and show the success notification)
+    function lockGame(gameId) {
+      const gameTitle = document.querySelector(`.game-card[data-game-id="${gameId}"] .game-title`).textContent;
+      localStorage.setItem('lockedGame', gameId);
+      localStorage.setItem('gameTitle', gameTitle);
+      showSuccessNotification(gameTitle);
+      updateGameTitle(gameTitle);
+      startTimer();
+      disableOtherGames();
+    }
+
+    // Show success notification
+    function showSuccessNotification(gameTitle) {
+      successNotification.style.display = 'block';
+      setTimeout(() => {
+        successNotification.style.display = 'none';
+      }, 2000);
+    }
+
+    // Update the title of the locked game at the top of the page
+    function updateGameTitle(gameTitle) {
+      gameTitleContainer.textContent = `Locked Game: ${gameTitle}`;
+    }
+
+    // Start the countdown timer
+    function startTimer() {
+      let timeRemaining = 5 * 24 * 60 * 60; // 5 days in seconds
+      localStorage.setItem('timer', timeRemaining);
+
+      countdownTimer = setInterval(() => {
+        timeRemaining--;
+        localStorage.setItem('timer', timeRemaining);
+        displayTimer(timeRemaining);
+
+        if (timeRemaining <= 0) {
+          clearInterval(countdownTimer);
+          timerContainer.textContent = 'Time is up!';
+        }
+      }, 1000);
+    }
+
+    // Display the remaining timer
+    function displayTimer(seconds) {
+      const days = Math.floor(seconds / (24 * 60 * 60));
+      const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
+      const minutes = Math.floor((seconds % (60 * 60)) / 60);
+      const secondsLeft = seconds % 60;
+      timerContainer.textContent = `Time left: ${days}d ${hours}h ${minutes}m ${secondsLeft}s`;
+    }
+
+    // Disable other games once a game is locked
+    function disableOtherGames() {
+      document.querySelectorAll('.game-card').forEach(card => {
+        if (card.getAttribute('data-game-id') !== selectedGame) {
+          card.querySelector('.claim-btn').disabled = true;
+          card.style.opacity = 0.5;
+        }
+      });
+    }
+
+    // Initialize the page with locked game info and timer if exists in localStorage
+    function initializePage() {
+      const lockedGame = localStorage.getItem('lockedGame');
+      const gameTitle = localStorage.getItem('gameTitle');
+      const timer = localStorage.getItem('timer');
+
+      if (lockedGame && gameTitle) {
+        updateGameTitle(gameTitle);
+        displayTimer(timer);
+        disableOtherGames();
+      }
+    }
+
+    initializePage();
+
+  </script>
+</body>
+</html>
