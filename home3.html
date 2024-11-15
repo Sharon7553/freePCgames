@@ -472,3 +472,383 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>freePCgames</title>
+  <style>
+    body {
+      background: #252833;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    /* Container for task box and game info */
+    #task-container {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .task-box {
+      background: #333;
+      padding: 20px;
+      border-radius: 8px;
+      color: white;
+      width: 100%;
+      max-width: 600px;
+      display: none;
+      position: relative;
+    }
+
+    .task-box h3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .task-box h3 span {
+      cursor: pointer;
+      font-size: 1.5em;
+      color: #f79533;
+    }
+
+    /* Timer and Game Info at the top of the task box */
+    #game-info {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Task List */
+    .task-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .task-item {
+      margin-bottom: 1rem;
+    }
+
+    .task-item h4 {
+      font-size: 1.2rem;
+      color: #f79533;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    /* Highlighted game border */
+    .highlighted {
+      border: 4px solid #28a745;
+      box-shadow: 0 0 20px #28a745;
+    }
+
+    /* Game Grid */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 1rem;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .game-card {
+      position: relative;
+      background: #333;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .game-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .game-card:hover {
+      transform: scale(1.05);
+    }
+
+    .claim-btn {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background-color: #f79533;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .games-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .task-box {
+        width: 100%;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .task-box {
+        width: 100%;
+        max-width: none;
+      }
+    }
+
+    /* Popup Styles */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      color: black;
+    }
+
+    .success-notification {
+      background: #28a745;
+      color: white;
+      display: none;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 999;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Title with animated arrows next to the tasks -->
+  <h1>Newest PC Games <span style="font-size: 1.5em;">→</span></h1>
+
+  <!-- Task container with timer and info at top -->
+  <div id="task-container">
+    <div class="task-box" id="task-box">
+      <h3>Tasks <span id="close-task-box">&#10005;</span></h3>
+      <div id="game-info">
+        <p><strong>Locked Game:</strong> <span id="locked-game-title">None</span></p>
+        <p><strong>Time Left:</strong> <span id="timer">--</span></p>
+      </div>
+      <ul class="task-list">
+        <li class="task-item">
+          <h4><a href="https://www.google.com" target="_blank">Leave a Review</a></h4>
+        </li>
+        <li class="task-item">
+          <h4><a href="https://www.google.com" target="_blank">Watch Videos</a></h4>
+        </li>
+        <li class="task-item">
+          <h4><a href="https://www.google.com" target="_blank">Play the Game</a></h4>
+        </li>
+        <li class="task-item">
+          <h4><a href="https://www.google.com" target="_blank">Share on Social Media</a></h4>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Button to show task box -->
+    <button class="show-task-btn">Show Task Box</button>
+  </div>
+
+  <!-- Game Grid -->
+  <div class="games-grid">
+    <!-- Game 1 -->
+    <div class="game-card" data-game-id="1">
+      <div class="game-img-container">
+        <img src="https://via.placeholder.com/300x400?text=Game+1" alt="Game 1">
+        <button class="claim-btn">Claim Game</button>
+      </div>
+      <div class="game-title">Game 1</div>
+    </div>
+
+    <!-- Game 2 -->
+    <div class="game-card" data-game-id="2">
+      <div class="game-img-container">
+        <img src="https://via.placeholder.com/300x400?text=Game+2" alt="Game 2">
+        <button class="claim-btn">Claim Game</button>
+      </div>
+      <div class="game-title">Game 2</div>
+    </div>
+
+    <!-- Game 3 -->
+    <div class="game-card" data-game-id="3">
+      <div class="game-img-container">
+        <img src="https://via.placeholder.com/300x400?text=Game+3" alt="Game 3">
+        <button class="claim-btn">Claim Game</button>
+      </div>
+      <div class="game-title">Game 3</div>
+    </div>
+
+    <!-- Game 4 -->
+    <div class="game-card" data-game-id="4">
+      <div class="game-img-container">
+        <img src="https://via.placeholder.com/300x400?text=Game+4" alt="Game 4">
+        <button class="claim-btn">Claim Game</button>
+      </div>
+      <div class="game-title">Game 4</div>
+    </div>
+  </div>
+
+  <!-- Success Notification -->
+  <div id="success-notification" class="success-notification">
+    <p>Game Claimed Successfully!</p>
+  </div>
+
+  <!-- Popup for Game Locked -->
+  <div id="game-locked-popup" class="popup">
+    <div class="popup-content">
+      <h3>Game Locked In!</h3>
+    </div>
+  </div>
+
+  <script>
+    const claimButtons = document.querySelectorAll('.claim-btn');
+    const successNotification = document.getElementById('success-notification');
+    const gameTitleContainer = document.getElementById('locked-game-title');
+    const timerContainer = document.getElementById('timer');
+    const taskBox = document.getElementById('task-box');
+    const closeTaskBox = document.getElementById('close-task-box');
+    const showTaskBtn = document.querySelector('.show-task-btn');
+    let selectedGame = null;
+    let countdownTimer = null;
+
+    // Handle game claim
+    claimButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const gameCard = this.closest('.game-card');
+        selectedGame = gameCard.getAttribute('data-game-id');
+        gameCard.classList.add('highlighted');
+        if (!localStorage.getItem(`claimedGame-${selectedGame}`)) {
+          lockGame(selectedGame);
+        }
+      });
+    });
+
+    // Lock the game and start timer
+    function lockGame(gameId) {
+      const gameTitle = document.querySelector(`.game-card[data-game-id="${gameId}"] .game-title`).textContent;
+      localStorage.setItem('lockedGame', gameId);
+      localStorage.setItem('gameTitle', gameTitle);
+      localStorage.setItem(`claimedGame-${gameId}`, 'true');
+      showSuccessNotification(gameTitle);
+      updateGameTitle(gameTitle);
+      startTimer();
+      showGameLockedPopup();
+    }
+
+    // Show success notification
+    function showSuccessNotification(gameTitle) {
+      successNotification.style.display = 'block';
+      setTimeout(() => {
+        successNotification.style.display = 'none';
+      }, 2000);
+    }
+
+    // Game locked popup
+    function showGameLockedPopup() {
+      const popup = document.getElementById('game-locked-popup');
+      popup.style.display = 'flex';
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 3000);
+    }
+
+    // Update game title and timer
+    function updateGameTitle(gameTitle) {
+      gameTitleContainer.textContent = gameTitle;
+    }
+
+    function startTimer() {
+      let timeRemaining = parseInt(localStorage.getItem('timer')) || 5 * 24 * 60 * 60; // 5 days in seconds
+      localStorage.setItem('timer', timeRemaining);
+
+      countdownTimer = setInterval(() => {
+        timeRemaining--;
+        localStorage.setItem('timer', timeRemaining);
+        displayTimer(timeRemaining);
+
+        if (timeRemaining <= 0) {
+          clearInterval(countdownTimer);
+          timerContainer.textContent = 'Time is up!';
+        }
+      }, 1000);
+    }
+
+    function displayTimer(seconds) {
+      const days = Math.floor(seconds / (24 * 60 * 60));
+      const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
+      const minutes = Math.floor((seconds % (60 * 60)) / 60);
+      const secondsLeft = seconds % 60;
+      timerContainer.textContent = `${days}d ${hours}h ${minutes}m ${secondsLeft}s`;
+    }
+
+    // Show and close task box
+    closeTaskBox.addEventListener('click', function() {
+      taskBox.style.display = 'none';
+    });
+
+    showTaskBtn.addEventListener('click', function() {
+      taskBox.style.display = 'block';
+    });
+
+    // Initialize page with locked game and timer info
+    function initializePage() {
+      const lockedGame = localStorage.getItem('lockedGame');
+      const gameTitle = localStorage.getItem('gameTitle');
+      const timer = localStorage.getItem('timer');
+
+      if (lockedGame && gameTitle) {
+        updateGameTitle(gameTitle);
+        displayTimer(timer);
+      }
+    }
+
+    initializePage();
+  </script>
+</body>
+</html>
