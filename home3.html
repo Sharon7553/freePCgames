@@ -45,16 +45,130 @@
       }
     }
 
-    /* Game Section */
-    .game-section {
-      width: 100%;
-      max-width: 1200px;
+    /* Bullet list container centered */
+    #task-container {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      gap: 2rem;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 800px;
     }
 
+    /* Task Box and Button */
+    .task-box {
+      background: #333;
+      padding: 20px;
+      border-radius: 8px;
+      color: white;
+      width: 100%;
+      max-width: 600px;
+      position: relative;
+      display: none;
+    }
+
+    .task-box h3 {
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .task-box h3 span {
+      cursor: pointer;
+      font-size: 1.5em;
+      color: #f79533;
+    }
+
+    .task-list {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 1rem;
+    }
+
+    .task-item {
+      margin-bottom: 1rem;
+    }
+
+    .task-item h4 {
+      font-size: 1.2rem;
+      color: #f79533;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .task-item p {
+      font-size: 1rem;
+      margin-left: 1rem;
+      display: inline-block;
+    }
+
+    .highlighted {
+      border: 4px solid #28a745;
+      box-shadow: 0 0 20px #28a745;
+    }
+
+    /* Arrows next to each task */
+    .task-item .arrow {
+      display: inline-block;
+      margin-left: 10px;
+      animation: bounce 0.8s infinite alternate;
+    }
+
+    /* Timer and Game Info */
+    #game-info {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Button to show Task Box */
+    .show-task-btn {
+      padding: 10px 20px;
+      color: white;
+      background-color: #f79533;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    /* Popup Styles */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      color: black;
+    }
+
+    .success-notification {
+      background: #28a745;
+      color: white;
+      display: none;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 999;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Game Grid */
     .games-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -118,125 +232,6 @@
       font-weight: 600;
       background: #111;
       border-radius: 0 0 8px 8px;
-    }
-
-    .btn {
-      padding: 10px 20px;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
-    .green {
-      background-color: #28a745;
-    }
-
-    .red {
-      background-color: #dc3545;
-    }
-
-    /* Popup Styles */
-    .popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      display: none;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .popup-content {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      color: black;
-    }
-
-    .success-notification {
-      background: #28a745;
-      color: white;
-      display: none;
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 10px;
-      border-radius: 5px;
-      z-index: 999;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Task Box Styles */
-    .task-box {
-      background: #333;
-      padding: 20px;
-      border-radius: 8px;
-      color: white;
-      width: 40%;
-      min-width: 300px;
-      max-width: 600px;
-      position: fixed;
-      right: 10px;
-      top: 10%;
-      z-index: 1000;
-      display: none;
-      overflow-y: auto;
-    }
-
-    .task-box h3 {
-      margin-bottom: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .task-box h3 span {
-      cursor: pointer;
-      font-size: 1.5em;
-      color: #f79533;
-    }
-
-    .task-list {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    .task-item {
-      margin-bottom: 1rem;
-    }
-
-    .task-item h4 {
-      font-size: 1.2rem;
-      color: #f79533;
-    }
-
-    .task-item p {
-      font-size: 1rem;
-      margin-left: 1rem;
-    }
-
-    .highlighted {
-      border: 4px solid #28a745;
-      box-shadow: 0 0 20px #28a745;
-    }
-
-    /* Center Bullet List */
-    #task-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      margin-top: 2rem;
-    }
-
-    #task-container ul {
-      list-style-type: disc;
-      padding-left: 20px;
     }
 
     /* Mobile responsiveness */
@@ -313,44 +308,48 @@
         <div class="game-title">Game Title 4</div>
       </div>
     </div>
+  </div>
 
-    <!-- Task Box with Timer & Locked Game Info -->
-    <div id="task-container">
-      <div class="task-box" id="task-box">
-        <h3>
-          Tasks
-          <span id="close-task-box">&#10005;</span>
-        </h3>
-        <ul class="task-list">
-          <li class="task-item">
-            <h4>Leave a Review</h4>
-            <p>Write a review of the game on your favorite platform to earn the game.</p>
-          </li>
-          <li class="task-item">
-            <h4>Watch Videos</h4>
-            <p>Watch game trailers or gameplay videos on YouTube to complete this task.</p>
-          </li>
-          <li class="task-item">
-            <h4>Play the Game</h4>
-            <p>Play at least 30 minutes of the game to fulfill this requirement.</p>
-          </li>
-          <li class="task-item">
-            <h4>Share on Social Media</h4>
-            <p>Share the game on your social media profiles to help us spread the word!</p>
-          </li>
-        </ul>
-        <div id="game-info">
-          <p><strong>Locked Game:</strong> <span id="locked-game-title">None</span></p>
-          <p><strong>Time Left:</strong> <span id="timer">--</span></p>
-        </div>
+  <!-- Task Box with Timer & Locked Game Info -->
+  <div id="task-container">
+    <button class="show-task-btn">Show Task Box</button>
+    <div class="task-box" id="task-box">
+      <h3>
+        Tasks
+        <span id="close-task-box">&#10005;</span>
+      </h3>
+      <div id="game-info">
+        <p><strong>Locked Game:</strong> <span id="locked-game-title">None</span></p>
+        <p><strong>Time Left:</strong> <span id="timer">--</span></p>
       </div>
+      <ul class="task-list">
+        <li class="task-item">
+          <h4>Leave a Review</h4>
+          <p>Write a review of the game on your favorite platform to earn the game.</p>
+          <span class="arrow">→</span>
+        </li>
+        <li class="task-item">
+          <h4>Watch Videos</h4>
+          <p>Watch game trailers or gameplay videos on YouTube to complete this task.</p>
+          <span class="arrow">→</span>
+        </li>
+        <li class="task-item">
+          <h4>Play the Game</h4>
+          <p>Play at least 30 minutes of the game to fulfill this requirement.</p>
+          <span class="arrow">→</span>
+        </li>
+        <li class="task-item">
+          <h4>Share on Social Media</h4>
+          <p>Share the game on your social media profiles to help us spread the word!</p>
+          <span class="arrow">→</span>
+        </li>
+      </ul>
     </div>
-    
-    <!-- Success Notification -->
-    <div id="success-notification" class="success-notification">
-      <p>Game Claimed Successfully!</p>
-    </div>
-    
+  </div>
+
+  <!-- Success Notification -->
+  <div id="success-notification" class="success-notification">
+    <p>Game Claimed Successfully!</p>
   </div>
 
   <!-- Confirmation Popup -->
@@ -372,6 +371,7 @@
     const timerContainer = document.getElementById('timer');
     const taskBox = document.getElementById('task-box');
     const closeTaskBox = document.getElementById('close-task-box');
+    const showTaskBtn = document.querySelector('.show-task-btn');
     let selectedGame = null;
     let countdownTimer = null;
 
@@ -468,6 +468,13 @@
       taskBox.style.display = 'none';
     });
 
+    // Show task box when button is clicked
+    showTaskBtn.addEventListener('click', function() {
+      if (!taskBox.classList.contains('highlighted')) {
+        showTaskBox();
+      }
+    });
+
     // Initialize the page with locked game info and timer if exists in localStorage
     function initializePage() {
       const lockedGame = localStorage.getItem('lockedGame');
@@ -482,7 +489,6 @@
     }
 
     initializePage();
-
   </script>
 
 </body>
