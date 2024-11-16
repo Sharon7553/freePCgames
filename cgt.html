@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>freePCgames</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Roboto:300,900");
+
+    body {
+      background: #252833;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    h2 {
+      margin-top: 20px;
+      font-size: 2em;
+      position: relative;
+      text-align: center;
+    }
+
+    /* Task Box */
+    #task-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 20px;
+    }
+
+    .task-box {
+      background: #333;
+      color: white;
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 1rem;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .task-box h3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .task-box h3 span {
+      cursor: pointer;
+      font-size: 1.5em;
+      color: #f79533;
+    }
+
+    .task-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 1rem;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      background: #444;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .task-item h4 {
+      font-size: 1.2rem;
+      color: #f79533;
+    }
+
+    .task-item input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    .task-item button {
+      background-color: #f79533;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    /* Carousel */
+    .carousel-container {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .carousel {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .game-card {
+      flex: 0 0 100%;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .game-img-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .carousel-btn {
+      background-color: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: white;
+      font-size: 2rem;
+      padding: 10px;
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+
+    .prev-btn {
+      left: 10px;
+    }
+
+    .next-btn {
+      right: 10px;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .task-box {
+        width: 100%;
+      }
+
+      .carousel-container {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Free Steam Game Codes</h2>
+
+  <!-- Carousel -->
+  <div class="carousel-container">
+    <button class="carousel-btn prev-btn">&#10094;</button>
+    <div class="carousel">
+      <div class="game-card">
+        <div class="game-img-container">
+          <img src="https://p325k7wa.twic.pics/high/tekken/tekken-8/03-dlc/tekken8-dlc-lidia.jpg" alt="Game 1">
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="game-img-container">
+          <img src="https://smartcdkeys.com/image/data/products/grand-theft-auto-5-gta-v-steam/cover/grand-theft-auto-5-gta-v-steam-smartcdkeys-cheap-cd-key-cover.jpg" alt="Game 2">
+        </div>
+      </div>
+    </div>
+    <button class="carousel-btn next-btn">&#10095;</button>
+  </div>
+
+  <!-- Task Box -->
+  <div id="task-container">
+    <button class="show-task-btn">Show Tasks</button>
+    <div class="task-box" id="task-box">
+      <h3>
+        Tasks
+        <span id="close-task-box">&#10005;</span>
+      </h3>
+      <ul class="task-list">
+        <li class="task-item">
+          <label>
+            <input type="checkbox" id="task-1"> ⭐ Leave a Review
+          </label>
+          <button>Complete</button>
+        </li>
+        <li class="task-item">
+          <label>
+            <input type="checkbox" id="task-2"> ▶️ Watch Videos
+          </label>
+          <button>Complete</button>
+        </li>
+        <li class="task-item">
+          <label>
+            <input type="checkbox" id="task-3"> 🎮 Play Games
+          </label>
+          <button>Complete</button>
+        </li>
+        <li class="task-item">
+          <label>
+            <input type="checkbox" id="task-4"> ↪️ Share Us On Your Social Media
+          </label>
+          <button>Complete</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Handle tasks in localStorage
+    const checkboxes = document.querySelectorAll('.task-item input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        localStorage.setItem(checkbox.id, checkbox.checked);
+      });
+      // Load state from localStorage
+      if (localStorage.getItem(checkbox.id) === 'true') {
+        checkbox.checked = true;
+      }
+    });
+
+    // Handle showing and hiding task box
+    const showTaskBtn = document.querySelector('.show-task-btn');
+    const taskBox = document.getElementById('task-box');
+    const closeTaskBox = document.getElementById('close-task-box');
+
+    showTaskBtn.addEventListener('click', () => {
+      taskBox.style.display = 'block';
+    });
+
+    closeTaskBox.addEventListener('click', () => {
+      taskBox.style.display = 'none';
+    });
+
+    // Carousel functionality (one image at a time)
+    const carousel = document.querySelector('.carousel');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    let currentIndex = 0;
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex === 0) ? 1 : currentIndex - 1;
+      updateCarousel();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex === 1) ? 0 : currentIndex + 1;
+      updateCarousel();
+    });
+
+    function updateCarousel() {
+      carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+  </script>
+
+</body>
+</html>
