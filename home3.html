@@ -509,53 +509,38 @@
 
 
 
-<script>
-    // Handle tasks in localStorage
-    const checkboxes = document.querySelectorAll('.task-item input[type="checkbox"]');
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', () => {
-        localStorage.setItem(checkbox.id, checkbox.checked);
-      });
-      // Load state from localStorage
-      if (localStorage.getItem(checkbox.id) === 'true') {
-        checkbox.checked = true;
-      }
-    });
-
-    // Handle showing and hiding task box
-    const showTaskBtn = document.querySelector('.show-task-btn');
-    const taskBox = document.getElementById('task-box');
-    const closeTaskBox = document.getElementById('close-task-box');
-
-    showTaskBtn.addEventListener('click', () => {
-      taskBox.style.display = 'block';
-    });
-
-    closeTaskBox.addEventListener('click', () => {
-      taskBox.style.display = 'none';
-    });
-
-    // Carousel functionality (one image at a time)
-    const carousel = document.querySelector('.carousel');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    let currentIndex = 0;
-
-    prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex === 0) ? 1 : currentIndex - 1;
-      updateCarousel();
-    });
-
-    nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex === 1) ? 0 : currentIndex + 1;
-      updateCarousel();
-    });
-
-    function updateCarousel() {
-      carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }
-  </script>
-
+<!-- Task Box with Timer & Locked Game Info -->
+<div id="task-container">
+  <button class="show-task-btn">Show Tasks</button>
+  <div class="task-box" id="task-box">
+    <h3>
+      Tasks
+      <span id="close-task-box">&#10005;</span>
+    </h3>
+    <div id="game-info">
+      <p><strong>Locked Game:</strong> <span id="locked-game-title">None</span></p>
+      <p><strong>Time Left:</strong> <span id="timer">--</span></p>
+    </div>
+    <ul class="task-list">
+      <li class="task-item">
+        <h4><a href="https://www.google.com" target="_blank">⭐ Leave a Review</a></h4>
+        <p></p>
+      </li>
+      <li class="task-item">
+        <h4><a href="https://www.google.com" target="_blank">▶️ Watch Videos</a></h4>
+        <p></p>
+      </li>
+      <li class="task-item">
+        <h4><a href="https://www.google.com" target="_blank">🎮 Play Games</a></h4>
+        <p></p>
+      </li>
+      <li class="task-item">
+        <h4><a href="https://www.google.com" target="_blank">↪️ Share Us On Your Social Media</a></h4>
+        <p></p>
+      </li>
+    </ul>
+  </div>
+</div>
 
   <!-- Success Notification -->
   <div id="success-notification" class="success-notification">
