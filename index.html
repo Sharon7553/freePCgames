@@ -4,271 +4,284 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>freePCgames</title>
-  <style>
-    /* Scoped styles to the .game-container class */
-    .game-container {
-      width: 100%;
-      background: #252833;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      font-family: "Roboto", sans-serif;
-      margin: 0;
-    }
 
-    .game-container * {
-      box-sizing: border-box;
-    }
+<script>
+/* Scoped styles to the .game-container class */
+.game-container {
+  width: 100%;
+  background: #252833;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+}
 
-    .game-container .cards {
-      width: 80%;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      grid-template-rows: auto;
-      grid-gap: 1em;
-      grid-template-areas:
-        "a a b c"
-        "a a d d";
-      margin-bottom: 2em;
-    }
+.game-container * {
+  box-sizing: border-box;
+}
 
-    .game-container .card {
-      width: 100%;
-      position: relative;
-      transition: all 0.25s ease;
-      cursor: pointer;
-      font-weight: 300;
-    }
+.game-container .cards {
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-gap: 1em;
+  grid-template-areas:
+    "a a b c"
+    "a a d d";
+  margin-bottom: 2em;
+}
 
-    .game-container .card:last-child {
-      margin-bottom: 0;
-    }
+.game-container .card {
+  width: 100%;
+  position: relative;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  font-weight: 300;
+}
 
-    .game-container .card:before {
-      height: 0;
-      content: "";
-      display: block;
-      padding-bottom: 47.36%;
-    }
+.game-container .card:last-child {
+  margin-bottom: 0;
+}
 
-    .game-container .card.content:after {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      content: "";
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), black);
-    }
+.game-container .card:before {
+  height: 0;
+  content: "";
+  display: block;
+  padding-bottom: 47.36%;
+}
 
-    .game-container .card:nth-child(1) {
-      grid-area: a;
-    }
+.game-container .card.content:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  content: "";
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), black);
+}
 
-    .game-container .card:nth-child(2) {
-      grid-area: b;
-    }
+.game-container .card:nth-child(1) {
+  grid-area: a;
+}
 
-    .game-container .card:nth-child(3) {
-      grid-area: c;
-    }
+.game-container .card:nth-child(2) {
+  grid-area: b;
+}
 
-    .game-container .card:nth-child(4) {
-      grid-area: d;
-    }
+.game-container .card:nth-child(3) {
+  grid-area: c;
+}
 
-    .game-container .card-content {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
+.game-container .card:nth-child(4) {
+  grid-area: d;
+}
 
-    .game-container .card-img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
+.game-container .card-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 
-    .game-container .card-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+.game-container .card-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 
-    .game-container .card-label {
-      position: absolute;
-      top: 0.45rem;
-      left: 0.45rem;
-      background: #089f8a;
-      text-transform: uppercase;
-      font-weight: 300;
-      font-size: 0.7em;
-      color: white;
-      padding: 0.5em;
-    }
+.game-container .card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-    .game-container .card-title {
-      position: absolute;
-      left: 1em;
-      bottom: 1em;
-      color: #d6dbeb;
-      z-index: 5;
-      font-size: 0.8em;
-    }
+.game-container .card-label {
+  position: absolute;
+  top: 0.45rem;
+  left: 0.45rem;
+  background: #089f8a;
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 0.7em;
+  color: white;
+  padding: 0.5em;
+}
 
-    .game-container .card.form {
-      position: relative;
-    }
+.game-container .card-title {
+  position: absolute;
+  left: 1em;
+  bottom: 1em;
+  color: #d6dbeb;
+  z-index: 5;
+  font-size: 0.8em;
+}
 
-    .game-container .card.form:before {
-      background: linear-gradient(
-        60deg,
-        #f79533,
-        #f37055,
-        #ef4e7b,
-        #a166ab,
-        #5073b8,
-        #1098ad,
-        #07b39b,
-        #6fba82
-      );
-    }
+.game-container .card.form {
+  position: relative;
+}
 
-    .game-container .card.form:after {
-      position: absolute;
-      top: 0.5em;
-      left: 0.5em;
-      width: calc(100% - 1em);
-      height: calc(100% - 1em);
-      content: "";
-      background: #252833;
-    }
+.game-container .card.form:before {
+  background: linear-gradient(
+    60deg,
+    #f79533,
+    #f37055,
+    #ef4e7b,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b,
+    #6fba82
+  );
+}
 
-    .game-container .form-title {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      font-size: 7vw;
-      font-weight: 900;
-      z-index: 5;
-      text-transform: uppercase;
-      background: linear-gradient(
-        60deg,
-        #f79533,
-        #f37055,
-        #ef4e7b,
-        #a166ab,
-        #5073b8,
-        #1098ad,
-        #07b39b,
-        #6fba82
-      );
-      -webkit-text-fill-color: transparent;
-      -webkit-background-clip: text;
-    }
+.game-container .card.form:after {
+  position: absolute;
+  top: 0.5em;
+  left: 0.5em;
+  width: calc(100% - 1em);
+  height: calc(100% - 1em);
+  content: "";
+  background: #252833;
+}
 
-    .game-container .form-title:before {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100%;
-      height: 100%;
-      content: "Sign Up";
-      opacity: 0.5;
-      filter: blur(10px);
-      transition: all 0.25s ease;
-      z-index: 2;
-      background: linear-gradient(
-        60deg,
-        #f79533,
-        #f37055,
-        #ef4e7b,
-        #a166ab,
-        #5073b8,
-        #1098ad,
-        #07b39b,
-        #6fba82
-      );
-      -webkit-text-fill-color: transparent;
-      -webkit-background-clip: text;
-      transform: translateX(-50%) translateY(-50%);
-    }
+.game-container .form-title {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 7vw;
+  font-weight: 900;
+  z-index: 5;
+  text-transform: uppercase;
+  background: linear-gradient(
+    60deg,
+    #f79533,
+    #f37055,
+    #ef4e7b,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b,
+    #6fba82
+  );
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
 
-    .game-container .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
-    }
+.game-container .form-title:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  content: "Sign Up";
+  opacity: 0.5;
+  filter: blur(10px);
+  transition: all 0.25s ease;
+  z-index: 2;
+  background: linear-gradient(
+    60deg,
+    #f79533,
+    #f37055,
+    #ef4e7b,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b,
+    #6fba82
+  );
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  transform: translateX(-50%) translateY(-50%);
+}
 
-    .game-container .card:hover .form-title:before {
-      filter: blur(3px);
-      opacity: 0.7;
-    }
+.game-container .card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
+}
 
-    .game-container .card:nth-child(2) .card-label {
-      background: #ef4e7b;
-    }
+.game-container .card:hover .form-title:before {
+  filter: blur(3px);
+  opacity: 0.7;
+}
 
-    .game-container .card:nth-child(3) .card-label {
-      background: #1098ad;
-    }
+.game-container .card:nth-child(2) .card-label {
+  background: #ef4e7b;
+}
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .game-container .cards {
-        grid-template-columns: 1fr 1fr;
-      }
+.game-container .card:nth-child(3) .card-label {
+  background: #1098ad;
+}
 
-      .game-container .form-title {
-        font-size: 10vw;
-      }
-    }
+/* Responsive Design */
+@media (max-width: 768px) {
+  .game-container .cards {
+    grid-template-columns: 1fr 1fr;
+  }
 
-    @media (max-width: 480px) {
-      .game-container .cards {
-        grid-template-columns: 1fr;
-      }
+  .game-container .form-title {
+    font-size: 10vw;
+  }
+}
 
-      .game-container .form-title {
-        font-size: 12vw;
-      }
-    }
+@media (max-width: 480px) {
+  .game-container .cards {
+    grid-template-columns: 1fr;
+  }
 
-    /* Smaller Boxes */
-    .game-container .small-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-gap: 1em;
-      width: 80%;
-      margin-bottom: 2em;
-    }
+  .game-container .form-title {
+    font-size: 12vw;
+  }
+}
 
-    .game-container .small-card {
-      background: #373d46;
-      padding: 1.5em;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      color: #fff;
-    }
+/* Smaller Boxes */
+.game-container .small-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1em;
+  width: 80%;
+  margin-bottom: 2em;
+}
 
-    .game-container .small-card .small-card-title {
-      font-weight: bold;
-      font-size: 1.2em;
-      margin-bottom: 0.5em;
-    }
+/* Change to flex for smaller screens */
+@media (max-width: 768px) {
+  .game-container .small-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
 
-    .game-container .small-card .small-card-text {
-      font-size: 0.9em;
-      color: #c1c1c1;
-    }
-  </style>
+/* Individual Small Card Styles */
+.game-container .small-card {
+  background: #373d46;
+  padding: 1.5em;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
+}
+
+.game-container .small-card .small-card-title {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+.game-container .small-card .small-card-text {
+  font-size: 0.9em;
+  color: #c1c1c1;
+}
+
+</script>
+
 </head>
 <body>
 
