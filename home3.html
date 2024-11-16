@@ -505,166 +505,181 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <!-- Task Box with Timer & Locked Game Info -->
-<div class="task-box" id="task-box">
-  <h3>Tasks</h3>
-  <div id="game-info">
-    <p><strong>Locked Game:</strong> <span id="locked-game-title">None</span></p>
-    <p><strong>Time Left:</strong> <span id="timer">--</span></p>
-  </div>
-  <ul class="task-list">
-    <li class="task-item">
-      <h4><a href="https://www.google.com" target="_blank">⭐ Leave a Review</a></h4>
-    </li>
-    <li class="task-item">
-      <h4><a href="https://www.google.com" target="_blank">▶️ Watch Videos</a></h4>
-    </li>
-    <li class="task-item">
-      <h4><a href="https://www.google.com" target="_blank">🎮 Play Games</a></h4>
-    </li>
-    <li class="task-item">
-      <h4><a href="https://www.google.com" target="_blank">↪️ Share Us On Your Social Media</a></h4>
-    </li>
-  </ul>
-</div>
-
-<!-- Success Notification -->
-<div id="success-notification" class="success-notification">
-  <p>Game locked in!</p>
-</div>
-
-<!-- Confirmation Popup -->
-<div id="confirmation-popup" class="popup">
-  <div class="popup-content">
-    <h3>Are you sure you want to 'lock in' this game? This cannot be undone.</h3>
-    <button class="btn green" id="confirm-yes" style="background-color: #28a745;">Yes</button>
-    <button class="btn red" id="confirm-no" style="background-color: #f44336;">No</button>
+<div id="task-container">
+  <button class="show-task-btn">Show Tasks</button>
+  <div class="task-box" id="task-box">
+    <h3>
+      Tasks
+      <span id="close-task-box">&#10005;</span>
+    </h3>
+    <div id="game-info">
+      <p><strong>Locked Game:</strong> <span id="locked-game-title">None</span></p>
+      <p><strong>Time Left:</strong> <span id="timer">--</span></p>
+    </div>
+    <ul class="task-list">
+      <li class="task-item">
+        <h4><a href="https://www.google.com" target="_blank">⭐ Leave a Review</a></h4>
+        <p></p>
+      </li>
+      <li class="task-item">
+        <h4><a href="https://www.google.com" target="_blank">▶️ Watch Videos</a></h4>
+        <p></p>
+      </li>
+      <li class="task-item">
+        <h4><a href="https://www.google.com" target="_blank">🎮 Play Games</a></h4>
+        <p></p>
+      </li>
+      <li class="task-item">
+        <h4><a href="https://www.google.com" target="_blank">↪️ Share Us On Your Social Media</a></h4>
+        <p></p>
+      </li>
+    </ul>
   </div>
 </div>
 
-<script>
-  const claimButtons = document.querySelectorAll('.claim-btn');
-  const confirmationPopup = document.getElementById('confirmation-popup');
-  const confirmYes = document.getElementById('confirm-yes');
-  const confirmNo = document.getElementById('confirm-no');
-  const successNotification = document.getElementById('success-notification');
-  const gameTitleContainer = document.getElementById('locked-game-title');
-  const timerContainer = document.getElementById('timer');
-  const taskBox = document.getElementById('task-box');
-  const showTaskBtn = document.querySelector('.show-task-btn');
-  let selectedGame = null;
-  let countdownTimer = null;
+  <!-- Success Notification -->
+  <div id="success-notification" class="success-notification">
+    <p>Game locked in!</p>
+  </div>
 
-  // Function to handle game selection and popup
-  claimButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const gameCard = this.closest('.game-card');
-      selectedGame = gameCard.getAttribute('data-game-id');
-      if (!localStorage.getItem(`claimedGame-${selectedGame}`)) {
-        confirmationPopup.style.display = 'flex';
-      }
+  <!-- Confirmation Popup -->
+  <div id="confirmation-popup" class="popup">
+    <div class="popup-content">
+      <h3>Are you sure you want to 'lock in' this game? This cannot be undone.</h3>
+      <button class="btn green" id="confirm-yes" style="background-color: #28a745;">Yes</button>
+      <button class="btn red" id="confirm-no" style="background-color: #f44336;">No</button>
+    </div>
+  </div>
+
+  <script>
+    const claimButtons = document.querySelectorAll('.claim-btn');
+    const confirmationPopup = document.getElementById('confirmation-popup');
+    const confirmYes = document.getElementById('confirm-yes');
+    const confirmNo = document.getElementById('confirm-no');
+    const successNotification = document.getElementById('success-notification');
+    const gameTitleContainer = document.getElementById('locked-game-title');
+    const timerContainer = document.getElementById('timer');
+    const taskBox = document.getElementById('task-box');
+    const closeTaskBox = document.getElementById('close-task-box');
+    const showTaskBtn = document.querySelector('.show-task-btn');
+    let selectedGame = null;
+    let countdownTimer = null;
+
+    // Function to handle game selection and popup
+    claimButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const gameCard = this.closest('.game-card');
+        selectedGame = gameCard.getAttribute('data-game-id');
+        if (!localStorage.getItem(`claimedGame-${selectedGame}`)) {
+          confirmationPopup.style.display = 'flex';
+        }
+      });
     });
-  });
 
-  // Confirm button in the popup
-  confirmYes.addEventListener('click', function() {
-    confirmationPopup.style.display = 'none';
-    lockGame(selectedGame);
-  });
-
-  // Cancel button in the popup
-  confirmNo.addEventListener('click', function() {
-    confirmationPopup.style.display = 'none';
-  });
-
-  // Lock the game (set it in localStorage and show the success notification)
-  function lockGame(gameId) {
-    const gameTitle = document.querySelector(`.game-card[data-game-id="${gameId}"] .game-title`).textContent;
-    localStorage.setItem('lockedGame', gameId);
-    localStorage.setItem('gameTitle', gameTitle);
-    localStorage.setItem(`claimedGame-${gameId}`, 'true');
-    showSuccessNotification(gameTitle);
-    updateGameTitle(gameTitle);
-    startTimer();
-    disableOtherGames();
-    showTaskBox();
-  }
-
-  // Show success notification
-  function showSuccessNotification(gameTitle) {
-    successNotification.style.display = 'block';
-    setTimeout(() => {
-      successNotification.style.display = 'none';
-    }, 2000);
-  }
-
-  // Update the title of the locked game at the top of the page
-  function updateGameTitle(gameTitle) {
-    gameTitleContainer.textContent = gameTitle;
-  }
-
-  // Start the countdown timer
-  function startTimer() {
-    let timeRemaining = 5 * 24 * 60 * 60; // 5 days in seconds
-    localStorage.setItem('timer', timeRemaining);
-
-    countdownTimer = setInterval(() => {
-      timeRemaining--;
-      localStorage.setItem('timer', timeRemaining);
-      displayTimer(timeRemaining);
-
-      if (timeRemaining <= 0) {
-        clearInterval(countdownTimer);
-        timerContainer.textContent = 'Time is up, contact us asap for your free game!';
-      }
-    }, 1000);
-  }
-
-  // Display the remaining timer
-  function displayTimer(seconds) {
-    const days = Math.floor(seconds / (24 * 60 * 60));
-    const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
-    const minutes = Math.floor((seconds % (60 * 60)) / 60);
-    const secondsLeft = seconds % 60;
-    timerContainer.textContent = `${days}d ${hours}h ${minutes}m ${secondsLeft}s`;
-  }
-
-  // Disable other games once a game is locked
-  function disableOtherGames() {
-    document.querySelectorAll('.game-card').forEach(card => {
-      if (card.getAttribute('data-game-id') !== selectedGame) {
-        card.querySelector('.claim-btn').disabled = true;
-      }
+    // Confirm button in the popup
+    confirmYes.addEventListener('click', function() {
+      confirmationPopup.style.display = 'none';
+      lockGame(selectedGame);
     });
-  }
 
-  // Show the task box
-  function showTaskBox() {
-    taskBox.style.display = 'block';
-  }
+    // Cancel button in the popup
+    confirmNo.addEventListener('click', function() {
+      confirmationPopup.style.display = 'none';
+    });
 
-  // Show task box when button is clicked
-  showTaskBtn.addEventListener('click', function() {
-    if (!taskBox.classList.contains('highlighted')) {
+    // Lock the game (set it in localStorage and show the success notification)
+    function lockGame(gameId) {
+      const gameTitle = document.querySelector(`.game-card[data-game-id="${gameId}"] .game-title`).textContent;
+      localStorage.setItem('lockedGame', gameId);
+      localStorage.setItem('gameTitle', gameTitle);
+      localStorage.setItem(`claimedGame-${gameId}`, 'true');
+      showSuccessNotification(gameTitle);
+      updateGameTitle(gameTitle);
+      startTimer();
+      disableOtherGames();
       showTaskBox();
     }
-  });
 
-  // Initialize the page with locked game info and timer if exists in localStorage
-  function initializePage() {
-    const lockedGame = localStorage.getItem('lockedGame');
-    const gameTitle = localStorage.getItem('gameTitle');
-    const timer = localStorage.getItem('timer');
-
-    if (lockedGame && gameTitle) {
-      updateGameTitle(gameTitle);
-      displayTimer(timer);
-      disableOtherGames();
+    // Show success notification
+    function showSuccessNotification(gameTitle) {
+      successNotification.style.display = 'block';
+      setTimeout(() => {
+        successNotification.style.display = 'none';
+      }, 2000);
     }
-  }
 
-  initializePage();
-</script>
+    // Update the title of the locked game at the top of the page
+    function updateGameTitle(gameTitle) {
+      gameTitleContainer.textContent = gameTitle;
+    }
 
+    // Start the countdown timer
+    function startTimer() {
+      let timeRemaining = 5 * 24 * 60 * 60; // 5 days in seconds
+      localStorage.setItem('timer', timeRemaining);
+
+      countdownTimer = setInterval(() => {
+        timeRemaining--;
+        localStorage.setItem('timer', timeRemaining);
+        displayTimer(timeRemaining);
+
+        if (timeRemaining <= 0) {
+          clearInterval(countdownTimer);
+          timerContainer.textContent = 'Time is up, contact us asap for your free game!';
+        }
+      }, 1000);
+    }
+
+    // Display the remaining timer
+    function displayTimer(seconds) {
+      const days = Math.floor(seconds / (24 * 60 * 60));
+      const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
+      const minutes = Math.floor((seconds % (60 * 60)) / 60);
+      const secondsLeft = seconds % 60;
+      timerContainer.textContent = `${days}d ${hours}h ${minutes}m ${secondsLeft}s`;
+    }
+
+    // Disable other games once a game is locked
+    function disableOtherGames() {
+      document.querySelectorAll('.game-card').forEach(card => {
+        if (card.getAttribute('data-game-id') !== selectedGame) {
+          card.querySelector('.claim-btn').disabled = true;
+        }
+      });
+    }
+
+    // Show the task box
+    function showTaskBox() {
+      taskBox.style.display = 'block';
+    }
+
+    // Close the task box
+    closeTaskBox.addEventListener('click', function() {
+      taskBox.style.display = 'none';
+    });
+
+    // Show task box when button is clicked
+    showTaskBtn.addEventListener('click', function() {
+      if (!taskBox.classList.contains('highlighted')) {
+        showTaskBox();
+      }
+    });
+
+    // Initialize the page with locked game info and timer if exists in localStorage
+    function initializePage() {
+      const lockedGame = localStorage.getItem('lockedGame');
+      const gameTitle = localStorage.getItem('gameTitle');
+      const timer = localStorage.getItem('timer');
+
+      if (lockedGame && gameTitle) {
+        updateGameTitle(gameTitle);
+        displayTimer(timer);
+        disableOtherGames();
+      }
+    }
+
+    initializePage();
+  </script>
 
 </body>
 </html>
