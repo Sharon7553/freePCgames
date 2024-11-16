@@ -5,270 +5,170 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>freePCgames</title>
   <style>
-    /* Scoped styles to the .game-container class */
+    /* General Styles */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: "Roboto", sans-serif;
+      background-color: #252833;
+      color: white;
+    }
+
     .game-container {
-      width: 100%;
-      background: #252833;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 2em 1em;
+      gap: 2em;
+    }
+
+    /* Card Styles */
+    .game-card {
+      position: relative;
+      background-color: #373d46;
+      border-radius: 8px;
+      overflow: hidden;
+      width: 280px;
+      height: 400px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      font-family: "Roboto", sans-serif;
-      margin: 0;
     }
 
-    .game-container * {
-      box-sizing: border-box;
-    }
-
-    .game-container .cards {
-      width: 80%;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      grid-template-rows: auto;
-      grid-gap: 1em;
-      grid-template-areas:
-        "a a b c"
-        "a a d d";
-      margin-bottom: 2em;
-    }
-
-    .game-container .card {
-      width: 100%;
-      position: relative;
-      transition: all 0.25s ease;
-      cursor: pointer;
-      font-weight: 300;
-    }
-
-    .game-container .card:last-child {
-      margin-bottom: 0;
-    }
-
-    .game-container .card:before {
-      height: 0;
-      content: "";
-      display: block;
-      padding-bottom: 47.36%;
-    }
-
-    .game-container .card.content:after {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      content: "";
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), black);
-    }
-
-    .game-container .card:nth-child(1) {
-      grid-area: a;
-    }
-
-    .game-container .card:nth-child(2) {
-      grid-area: b;
-    }
-
-    .game-container .card:nth-child(3) {
-      grid-area: c;
-    }
-
-    .game-container .card:nth-child(4) {
-      grid-area: d;
-    }
-
-    .game-container .card-content {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .game-container .card-img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .game-container .card-img img {
+    .game-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .game-container .card-label {
+    .game-card .game-label {
       position: absolute;
-      top: 0.45rem;
-      left: 0.45rem;
-      background: #089f8a;
-      text-transform: uppercase;
-      font-weight: 300;
-      font-size: 0.7em;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(8, 159, 138, 0.8);
       color: white;
-      padding: 0.5em;
-    }
-
-    .game-container .card-title {
-      position: absolute;
-      left: 1em;
-      bottom: 1em;
-      color: #d6dbeb;
-      z-index: 5;
-      font-size: 0.8em;
-    }
-
-    .game-container .card.form {
-      position: relative;
-    }
-
-    .game-container .card.form:before {
-      background: linear-gradient(
-        60deg,
-        #f79533,
-        #f37055,
-        #ef4e7b,
-        #a166ab,
-        #5073b8,
-        #1098ad,
-        #07b39b,
-        #6fba82
-      );
-    }
-
-    .game-container .card.form:after {
-      position: absolute;
-      top: 0.5em;
-      left: 0.5em;
-      width: calc(100% - 1em);
-      height: calc(100% - 1em);
-      content: "";
-      background: #252833;
-    }
-
-    .game-container .form-title {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      font-size: 7vw;
-      font-weight: 900;
-      z-index: 5;
+      font-weight: 300;
       text-transform: uppercase;
-      background: linear-gradient(
-        60deg,
-        #f79533,
-        #f37055,
-        #ef4e7b,
-        #a166ab,
-        #5073b8,
-        #1098ad,
-        #07b39b,
-        #6fba82
-      );
-      -webkit-text-fill-color: transparent;
-      -webkit-background-clip: text;
+      font-size: 0.75em;
+      padding: 0.5em;
+      border-radius: 5px;
     }
 
-    .game-container .form-title:before {
+    .game-card .game-title {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100%;
-      height: 100%;
-      content: "Sign Up";
-      opacity: 0.5;
-      filter: blur(10px);
-      transition: all 0.25s ease;
+      bottom: 10px;
+      left: 15px;
+      font-size: 1.2em;
+      font-weight: bold;
       z-index: 2;
-      background: linear-gradient(
-        60deg,
-        #f79533,
-        #f37055,
-        #ef4e7b,
-        #a166ab,
-        #5073b8,
-        #1098ad,
-        #07b39b,
-        #6fba82
-      );
-      -webkit-text-fill-color: transparent;
-      -webkit-background-clip: text;
-      transform: translateX(-50%) translateY(-50%);
+      color: #d6dbeb;
     }
 
-    .game-container .card:hover {
+    .game-card .game-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 1em;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), black);
+      color: #c1c1c1;
+      font-size: 0.9em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Hover Effects */
+    .game-card:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
     }
 
-    .game-container .card:hover .form-title:before {
-      filter: blur(3px);
-      opacity: 0.7;
-    }
-
-    .game-container .card:nth-child(2) .card-label {
-      background: #ef4e7b;
-    }
-
-    .game-container .card:nth-child(3) .card-label {
-      background: #1098ad;
-    }
-
-    /* Responsive Design */
+    /* Small Cards (Responsive Grid) */
     @media (max-width: 768px) {
-      .game-container .cards {
-        grid-template-columns: 1fr 1fr;
+      .game-container {
+        justify-content: space-between;
       }
-
-      .game-container .form-title {
-        font-size: 10vw;
+      .game-card {
+        width: 45%;
+        height: 350px;
       }
     }
 
     @media (max-width: 480px) {
-      .game-container .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .game-container .form-title {
-        font-size: 12vw;
+      .game-card {
+        width: 90%;
+        height: 300px;
       }
     }
 
-    /* Smaller Boxes */
-    .game-container .small-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-gap: 1em;
-      width: 80%;
-      margin-bottom: 2em;
+    /* Animation for Cards */
+    .game-card {
+      animation: fadeInUp 0.6s ease-out;
     }
 
-    .game-container .small-card {
-      background: #373d46;
-      padding: 1.5em;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      color: #fff;
-    }
-
-    .game-container .small-card .small-card-title {
-      font-weight: bold;
-      font-size: 1.2em;
-      margin-bottom: 0.5em;
-    }
-
-    .game-container .small-card .small-card-text {
-      font-size: 0.9em;
-      color: #c1c1c1;
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
+</head>
+<body>
+
+  <div class="game-container">
+    <div class="game-card">
+      <img src="https://via.placeholder.com/280x400" alt="Game Image">
+      <div class="game-label">Adventure</div>
+      <div class="game-title">Game 1</div>
+      <div class="game-info">
+        <span>Free</span>
+        <span>Download</span>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <img src="https://via.placeholder.com/280x400" alt="Game Image">
+      <div class="game-label" style="background-color: #ef4e7b;">RPG</div>
+      <div class="game-title">Game 2</div>
+      <div class="game-info">
+        <span>Free</span>
+        <span>Download</span>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <img src="https://via.placeholder.com/280x400" alt="Game Image">
+      <div class="game-label" style="background-color: #1098ad;">Shooter</div>
+      <div class="game-title">Game 3</div>
+      <div class="game-info">
+        <span>Free</span>
+        <span>Download</span>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <img src="https://via.placeholder.com/280x400" alt="Game Image">
+      <div class="game-label" style="background-color: #f79533;">Strategy</div>
+      <div class="game-title">Game 4</div>
+      <div class="game-info">
+        <span>Free</span>
+        <span>Download</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
+.
 </head>
 <body>
 
@@ -620,87 +520,5 @@
         -webkit-transform: translateY(calc(100% - 42px));
       }
     }
-  </style>
-<div>
-  <br>
-<br>
-<a href="https://www.monkeybusiness.agency/paid-per-sale-for-life-program?aid=terrytibbs4044" target="_blank" title="Build Your Business with software and services for smart, modern businesses from Monkey Business Agency Inc.">Pay per Sale Program - Earn 5% sales commission for LIFE!</a>
-
-<br>
-<br>
-</head>
-
-<body>
-
-  <section class="game-section">
-    <h2 class="line-title">Trending Games</h2>
-    <div class="owl-carousel custom-carousel owl-theme">
-      <div class="item active" style="background-image: url(https://www.yudiz.com/codepen/expandable-animated-card-slider/dota-2.jpg);">
-        <div class="item-desc">
-          <h3>Dota 2</h3>
-          <p>Dota 2 is a multiplayer online battle arena by Valve. The game is a sequel to Defense of the Ancients, which was a community-created mod for Blizzard Entertainment's Warcraft III.</p>
-        </div>
-      </div>
-      <div class="item" style="background-image: url(https://www.yudiz.com/codepen/expandable-animated-card-slider/winter-3.jpg);">
-        <div class="item-desc">
-          <h3>The Witcher 3</h3>
-          <p>The Witcher 3 is an action role-playing game developed by CD Projekt. The game is set in a fantasy world where players control Geralt of Rivia.</p>
-        </div>
-      </div>
-      <div class="item" style="background-image: url(https://www.yudiz.com/codepen/expandable-animated-card-slider/rdr-2.jpg);">
-        <div class="item-desc">
-          <h3>RDR 2</h3>
-          <p>Red Dead Redemption 2 is an action-adventure game developed by Rockstar Games. Set in the Wild West, it offers an immersive open-world experience.</p>
-        </div>
-      </div>
-      <div class="item" style="background-image: url(https://www.yudiz.com/codepen/expandable-animated-card-slider/pubg.jpg);">
-        <div class="item-desc">
-          <h3>PUBG Mobile</h3>
-          <p>PUBG Mobile is a battle royale game where 100 players fight to be the last person standing. A fast-paced, competitive game.</p>
-        </div>
-      </div>
-      <div class="item" style="background-image: url(https://www.yudiz.com/codepen/expandable-animated-card-slider/fortnite.jpg);">
-        <div class="item-desc">
-          <h3>Fortnite</h3>
-          <p>Battle royale where 100 players fight to be the last person standing. A blend of building and shooting action with a unique art style.</p>
-        </div>
-      </div>
-      <div class="item" style="background-image: url(https://www.yudiz.com/codepen/expandable-animated-card-slider/far-cry-5.jpg);">
-        <div class="item-desc">
-          <h3>Far Cry 5</h3>
-          <p>Far Cry 5 is a first-person shooter developed by Ubisoft. It follows a protagonist trying to take down a cult in the fictional Hope County.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div>
-
-  <!-- jQuery, OwlCarousel JS -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-
-  <script>
-    $(".custom-carousel").owlCarousel({
-      autoWidth: true,
-      loop: true
-    });
-
-    $(document).ready(function () {
-      $(".custom-carousel .item").click(function () {
-        $(".custom-carousel .item").not($(this)).removeClass("active");
-        $(this).toggleClass("active");
-      });
-    });
-  </script>
-
-<br>
-
-
-
-
-
-</body>
-</html>
 
 
