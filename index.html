@@ -1,3 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Collage</title>
+  <style>
+    /* General Reset */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #252833;
+      color: white;
+    }
+
+    /* Container for the collage */
+    .collage-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1em;
+      padding: 2em;
+      margin-top: 3em;
+    }
+
+    /* Each image box */
+    .collage-item {
+      position: relative;
+      width: 45%; /* Default width on desktop */
+      height: 300px; /* Set a consistent height */
+      background-color: #373d46;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+
+    .collage-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(40%);
+    }
+
+    /* Title and paragraph */
+    .collage-item .text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 1em;
+      background: rgba(0, 0, 0, 0.7);
+      width: 100%;
+      color: white;
+    }
+
+    .collage-item .title {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 0.5em;
+    }
+
+    .collage-item .description {
+      font-size: 1em;
+      margin-bottom: 1em;
+    }
+
+    /* Button Styles */
+    .collage-item button {
+      background-color: #f79533;
+      border: none;
+      padding: 0.8em 1.5em;
+      font-size: 1em;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .collage-item button:hover {
+      background-color: #ef4e7b;
+    }
+
+    /* Hover effects */
+    .collage-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Responsive Design for mobile */
+    @media (max-width: 768px) {
+      .collage-item {
+        width: 100%; /* Stack in one column */
+        height: 250px; /* Adjust height for mobile */
+        margin-bottom: 2em;
+      }
+    }
+
+    /* Wild Collage Effect on Desktop */
+    @media (min-width: 769px) {
+      .collage-container {
+        flex-wrap: wrap;
+      }
+      .collage-item:nth-child(odd) {
+        transform: rotate(-5deg); /* Slight rotation for odd items */
+      }
+      .collage-item:nth-child(even) {
+        transform: rotate(5deg); /* Slight rotation for even items */
+      }
+      .collage-item:nth-child(3) {
+        margin-top: 2em;
+      }
+      .collage-item:nth-child(4) {
+        margin-top: -1em;
+      }
+      .collage-item:nth-child(5) {
+        margin-top: 3em;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Collage Container -->
+  <div class="collage-container">
+    <!-- First Image Box -->
+    <div class="collage-item">
+      <img src="https://via.placeholder.com/500x300" alt="Game 1">
+      <div class="text">
+        <div class="title">Game 1</div>
+        <div class="description">This is a description for the first game. Enjoy exploring!</div>
+        <button>Download</button>
+      </div>
+    </div>
+
+    <!-- Second Image Box -->
+    <div class="collage-item">
+      <img src="https://via.placeholder.com/500x300" alt="Game 2">
+      <div class="text">
+        <div class="title">Game 2</div>
+        <div class="description">This game is full of action and adventure. Get started!</div>
+        <button>Download</button>
+      </div>
+    </div>
+
+    <!-- Third Image Box -->
+    <div class="collage-item">
+      <img src="https://via.placeholder.com/500x300" alt="Game 3">
+      <div class="text">
+        <div class="title">Game 3</div>
+        <div class="description">Immerse yourself in a world of strategy and war.</div>
+        <button>Download</button>
+      </div>
+    </div>
+
+    <!-- Fourth Image Box -->
+    <div class="collage-item">
+      <img src="https://via.placeholder.com/500x300" alt="Game 4">
+      <div class="text">
+        <div class="title">Game 4</div>
+        <div class="description">Solve puzzles and mysteries in this amazing game.</div>
+        <button>Download</button>
+      </div>
+    </div>
+
+  </div>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
