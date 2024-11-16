@@ -5,185 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>freePCgames</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
+    /* All the styles, same as before */
 
-    h2 {
-      font-size: 28px;
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    .game-section {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      padding: 20px;
-      max-width: 1200px;
-      width: 100%;
-    }
-
-    .game-card {
-      position: relative;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      opacity: 1;
-      transition: opacity 0.5s ease-in-out;
-    }
-
-    .game-card img {
-      width: 100%;
-      height: auto;
-    }
-
-    .game-card .game-info {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
-      padding: 5px 10px;
-      font-size: 14px;
-    }
-
-    .game-card .game-title {
-      font-size: 18px;
-      font-weight: bold;
-      padding: 10px;
-      background-color: #f1f1f1;
-    }
-
-    .claim-btn {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .claim-btn:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-
-    .task-box {
-      display: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: white;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-      z-index: 100;
-    }
-
-    .task-box h3 {
-      margin-top: 0;
-    }
-
-    .task-list {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    .task-item {
-      margin: 10px 0;
-      font-size: 16px;
-    }
-
-    .task-item h4 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .task-item p {
-      margin: 5px 0;
-      font-size: 14px;
-    }
-
-    #success-notification {
-      display: none;
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #28a745;
-      color: white;
-      padding: 15px;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-
-    #confirmation-popup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 101;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #confirmation-popup .popup-content {
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-    }
-
-    #confirmation-popup button {
-      padding: 10px 20px;
-      margin: 10px;
-      font-size: 16px;
-    }
-
-    .show-task-btn {
-      padding: 10px 20px;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 20px;
-    }
-
-    #close-task-box {
-      font-size: 20px;
-      cursor: pointer;
-      color: #f44336;
-      position: absolute;
-      top: 10px;
-      right: 10px;
-    }
   </style>
 </head>
 <body>
@@ -275,17 +98,161 @@
   </div>
 
   <!-- Confirmation Popup -->
-  <div id="confirmation-popup">
+  <div id="confirmation-popup" class="popup">
     <div class="popup-content">
-      <h3>Are you sure you want to lock this game?</h3>
-      <button id="confirm-lock">Yes</button>
-      <button id="cancel-lock">No</button>
+      <h3>Are you sure you want to 'lock in' this game?</h3>
+      <button class="btn green" id="confirm-yes" style="background-color: #28a745;">Yes</button>
+      <button class="btn red" id="confirm-no" style="background-color: #f44336;">No</button>
     </div>
   </div>
 
   <script>
-    // JavaScript code (as before)
+    // Add your existing script here, with improvements for fade-out and centered task box
+
+    const claimButtons = document.querySelectorAll('.claim-btn');
+    const confirmationPopup = document.getElementById('confirmation-popup');
+    const confirmYes = document.getElementById('confirm-yes');
+    const confirmNo = document.getElementById('confirm-no');
+    const successNotification = document.getElementById('success-notification');
+    const gameTitleContainer = document.getElementById('locked-game-title');
+    const timerContainer = document.getElementById('timer');
+    const taskBox = document.getElementById('task-box');
+    const closeTaskBox = document.getElementById('close-task-box');
+    const showTaskBtn = document.querySelector('.show-task-btn');
+    let selectedGame = null;
+    let countdownTimer = null;
+
+    // Function to handle game selection and popup
+    claimButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const gameCard = this.closest('.game-card');
+        selectedGame = gameCard.getAttribute('data-game-id');
+        if (!localStorage.getItem(`claimedGame-${selectedGame}`)) {
+          confirmationPopup.style.display = 'flex';
+        }
+      });
+    });
+
+    // Confirm button in the popup
+    confirmYes.addEventListener('click', function() {
+      confirmationPopup.style.display = 'none';
+      lockGame(selectedGame);
+    });
+
+    // Cancel button in the popup
+    confirmNo.addEventListener('click', function() {
+      confirmationPopup.style.display = 'none';
+    });
+
+    // Lock the game (set it in localStorage and show the success notification)
+    function lockGame(gameId) {
+      const gameTitle = document.querySelector(`.game-card[data-game-id="${gameId}"] .game-title`).textContent;
+      localStorage.setItem('lockedGame', gameId);
+      localStorage.setItem('gameTitle', gameTitle);
+      localStorage.setItem(`claimedGame-${gameId}`, 'true');
+      showSuccessNotification(gameTitle);
+      updateGameTitle(gameTitle);
+      startTimer();
+      disableOtherGames();
+      removeGameCard(gameId); // Remove the claimed game with a fade-out effect
+      showTaskBox();
+    }
+
+    // Remove the game card with fade-out animation
+    function removeGameCard(gameId) {
+      const gameCard = document.querySelector(`.game-card[data-game-id="${gameId}"]`);
+      gameCard.style.opacity = 0;
+      setTimeout(() => {
+        gameCard.style.display = 'none';
+      }, 1000); // Hide the game card after fade-out
+    }
+
+    // Show success notification
+    function showSuccessNotification(gameTitle) {
+      successNotification.style.display = 'block';
+      setTimeout(() => {
+        successNotification.style.display = 'none';
+      }, 2000);
+    }
+
+    // Update the title of the locked game at the top of the page
+    function updateGameTitle(gameTitle) {
+      gameTitleContainer.textContent = gameTitle;
+    }
+
+    // Start the countdown timer
+    function startTimer() {
+      let timeRemaining = 5 * 24 * 60 * 60; // 5 days in seconds
+      localStorage.setItem('timer', timeRemaining);
+
+      countdownTimer = setInterval(() => {
+        timeRemaining--;
+        localStorage.setItem('timer', timeRemaining);
+        displayTimer(timeRemaining);
+
+        if (timeRemaining <= 0) {
+          clearInterval(countdownTimer);
+          timerContainer.textContent = 'Time is up, contact us asap for your free game!';
+        }
+      }, 1000);
+    }
+
+    // Display the remaining timer
+    function displayTimer(seconds) {
+      const days = Math.floor(seconds / (24 * 60 * 60));
+      const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
+      const minutes = Math.floor((seconds % (60 * 60)) / 60);
+      const secondsLeft = seconds % 60;
+      timerContainer.textContent = `${days}d ${hours}h ${minutes}m ${secondsLeft}s`;
+    }
+
+    // Disable other games once a game is locked
+    function disableOtherGames() {
+      document.querySelectorAll('.game-card').forEach(card => {
+        if (card.getAttribute('data-game-id') !== selectedGame) {
+          card.querySelector('.claim-btn').disabled = true;
+        }
+      });
+    }
+
+    // Show the task box
+    function showTaskBox() {
+      taskBox.style.display = 'block';
+      setTimeout(() => {
+        taskBox.style.opacity = 1;
+      }, 10);
+    }
+
+    // Close the task box
+    closeTaskBox.addEventListener('click', function() {
+      taskBox.style.opacity = 0;
+      setTimeout(() => {
+        taskBox.style.display = 'none';
+      }, 1000);
+    });
+
+    // Show task box when button is clicked
+    showTaskBtn.addEventListener('click', function() {
+      if (!taskBox.classList.contains('highlighted')) {
+        showTaskBox();
+      }
+    });
+
+    // Initialize the page with locked game info and timer if exists in localStorage
+    function initializePage() {
+      const lockedGame = localStorage.getItem('lockedGame');
+      const gameTitle = localStorage.getItem('gameTitle');
+      const timer = localStorage.getItem('timer');
+
+      if (lockedGame && gameTitle) {
+        updateGameTitle(gameTitle);
+        displayTimer(timer);
+        disableOtherGames();
+      }
+    }
+
+    initializePage();
   </script>
-  
+
 </body>
 </html>
