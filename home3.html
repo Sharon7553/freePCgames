@@ -376,11 +376,9 @@
       </div>
       <div class="game-title">Horizon Zero Dawn</div>
     </div>
-
   </div>
   <button class="carousel-btn next-btn">&#10095;</button>
 </div>
-
 
 <style>
 .carousel-container {
@@ -441,6 +439,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let offset = 0;
 
+  // Start in the middle
+  const initialOffset = -250 * 2;  // Offset for the second or third card
+  carousel.style.transform = `translateX(${initialOffset}px)`;
+
+  // Variables for mouse dragging
+  let isDragging = false;
+  let startX;
+  let scrollLeft;
+
+  // Mouse events for dragging
+  carousel.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startX = e.pageX - carousel.offsetLeft;
+    scrollLeft = carousel.scrollLeft;
+  });
+
+  carousel.addEventListener('mouseleave', () => {
+    isDragging = false;
+  });
+
+  carousel.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  carousel.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - carousel.offsetLeft;
+    const walk = (x - startX) * 3;  // Adjust the dragging speed
+    carousel.style.transform = `translateX(${offset - walk}px)`;
+  });
+
+  // Touch events for swiping
+  let startTouch;
+  let startOffset;
+
+  carousel.addEventListener('touchstart', (e) => {
+    startTouch = e.touches[0].clientX;
+    startOffset = offset;
+  });
+
+  carousel.addEventListener('touchmove', (e) => {
+    if (!startTouch) return;
+    const touchMove = e.touches[0].clientX - startTouch;
+    carousel.style.transform = `translateX(${startOffset - touchMove}px)`;
+  });
+
+  carousel.addEventListener('touchend', () => {
+    startTouch = null;
+  });
+
+  // Next and previous buttons functionality
   prevBtn.addEventListener("click", () => {
     offset -= 270; // Adjust based on game-card width + gap
     carousel.style.transform = `translateX(${offset}px)`;
