@@ -262,53 +262,126 @@
 </head>
 <body>
 
-  <!-- Title with animated arrows -->
-  <h2>Free Steam Game Codes<h2>
+<!-- Title with animated arrows -->
+<h2>Free Steam Game Codes</h2>
 
-  <div class="game-section">
-    <h34>Please lock in your game to continue</h3>
-    <div class="games-grid">
-      <!-- Game 1 -->
-      <div class="game-card" data-game-id="1">
-        <div class="game-img-container">
-          <img src="https://p325k7wa.twic.pics/high/tekken/tekken-8/03-dlc/tekken8-dlc-lidia.jpg" alt="Game 1">
-          <button class="claim-btn">Claim Game</button>
-          <div class="game-info">Steam Game Code</div>
-        </div>
-        <div class="game-title">Tekken 8</div>
+<div class="carousel-container">
+  <button class="carousel-btn prev-btn">&#10094;</button>
+  <div class="carousel">
+    <!-- Game 1 -->
+    <div class="game-card" data-game-id="1">
+      <div class="game-img-container">
+        <img src="https://p325k7wa.twic.pics/high/tekken/tekken-8/03-dlc/tekken8-dlc-lidia.jpg" alt="Game 1">
+        <button class="claim-btn">Claim Game</button>
+        <div class="game-info">Steam Game Code</div>
       </div>
+      <div class="game-title">Tekken 8</div>
+    </div>
 
-      <!-- Game 2 -->
-      <div class="game-card" data-game-id="2">
-        <div class="game-img-container">
-          <img src="https://smartcdkeys.com/image/data/products/grand-theft-auto-5-gta-v-steam/cover/grand-theft-auto-5-gta-v-steam-smartcdkeys-cheap-cd-key-cover.jpg" alt="Game 2">
-          <button class="claim-btn">Claim Game</button>
-          <div class="game-info">Steam Game Code</div>
-        </div>
-        <div class="game-title">GTA 5</div>
+    <!-- Game 2 -->
+    <div class="game-card" data-game-id="2">
+      <div class="game-img-container">
+        <img src="https://smartcdkeys.com/image/data/products/grand-theft-auto-5-gta-v-steam/cover/grand-theft-auto-5-gta-v-steam-smartcdkeys-cheap-cd-key-cover.jpg" alt="Game 2">
+        <button class="claim-btn">Claim Game</button>
+        <div class="game-info">Steam Game Code</div>
       </div>
+      <div class="game-title">GTA 5</div>
+    </div>
 
-      <!-- Game 3 -->
-      <div class="game-card" data-game-id="3">
-        <div class="game-img-container">
-          <img src="https://livecards.net/pi/ww-7-days-to-die-pc-steam-68341.png" alt="Game 3">
-          <button class="claim-btn">Claim Game</button>
-          <div class="game-info">Steam Game Code</div>
-        </div>
-        <div class="game-title">7 Days To Die</div>
+    <!-- Game 3 -->
+    <div class="game-card" data-game-id="3">
+      <div class="game-img-container">
+        <img src="https://livecards.net/pi/ww-7-days-to-die-pc-steam-68341.png" alt="Game 3">
+        <button class="claim-btn">Claim Game</button>
+        <div class="game-info">Steam Game Code</div>
       </div>
+      <div class="game-title">7 Days To Die</div>
+    </div>
 
-      <!-- Game 4 -->
-      <div class="game-card" data-game-id="4">
-        <div class="game-img-container">
-          <img src="https://products.eneba.games/resized-products/xAg5W0iyjWabOPfKAeaL8hGr2YAGK_BrGWbX3uDWLuE_350x200_1x-0.jpg" alt="Game 4">
-          <button class="claim-btn">Claim Game</button>
-          <div class="game-info">Steam Game Code</div>
-        </div>
-        <div class="game-title">Spiderman</div>
+    <!-- Game 4 -->
+    <div class="game-card" data-game-id="4">
+      <div class="game-img-container">
+        <img src="https://products.eneba.games/resized-products/xAg5W0iyjWabOPfKAeaL8hGr2YAGK_BrGWbX3uDWLuE_350x200_1x-0.jpg" alt="Game 4">
+        <button class="claim-btn">Claim Game</button>
+        <div class="game-info">Steam Game Code</div>
       </div>
+      <div class="game-title">Spiderman</div>
     </div>
   </div>
+  <button class="carousel-btn next-btn">&#10095;</button>
+</div>
+
+<style>
+.carousel-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.5s ease-in-out;
+  scroll-behavior: smooth;
+}
+
+.game-card {
+  flex: 0 0 250px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.game-img-container img {
+  width: 100%;
+  height: auto;
+}
+
+.carousel-btn {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const carousel = document.querySelector(".carousel");
+  const prevBtn = document.querySelector(".prev-btn");
+  const nextBtn = document.querySelector(".next-btn");
+
+  let offset = 0;
+
+  prevBtn.addEventListener("click", () => {
+    offset -= 270; // Adjust based on game-card width + gap
+    carousel.style.transform = `translateX(${offset}px)`;
+  });
+
+  nextBtn.addEventListener("click", () => {
+    offset += 270; // Adjust based on game-card width + gap
+    carousel.style.transform = `translateX(${offset}px)`;
+  });
+});
+</script>
+
 
 <!-- Task Box with Timer & Locked Game Info -->
 <div id="task-container">
