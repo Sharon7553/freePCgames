@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Game Offers</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         /* General Reset and Layout */
         * {
@@ -13,47 +15,46 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #e5e5e5;
             color: #333;
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
             min-height: 100vh;
-            background-image: url('yahoo.jpg');
+            background-image: url('https://t3.ftcdn.net/jpg/05/99/53/58/360_F_599535831_pwQFVG0qtf6ksLXeVTnUwFMvoW5H0WiS.jpg');
             background-size: cover;
             background-position: center;
-            padding: 20px;
+            padding: 0 20px;
         }
 
-        /* Header Animation */
+        /* Header Styling */
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-top: 30px;
             animation: flashyTitle 2s infinite alternate;
         }
 
         .header h1 {
-            font-size: 50px;
-            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            font-size: 60px;
+            font-weight: 700;
             color: #f39c12;
-            text-shadow: 0 0 5px #f39c12, 0 0 10px #f39c12, 0 0 20px #f39c12;
+            text-shadow: none; /* Reduced shadow for better readability */
+            margin-bottom: 10px;
         }
 
         .slogan {
             font-size: 24px;
             font-weight: 500;
             color: #ecf0f1;
-            margin-top: 10px;
             font-style: italic;
         }
 
         /* Flashy Title Animation */
         @keyframes flashyTitle {
-            0% { text-shadow: 0 0 5px #f39c12, 0 0 10px #f39c12, 0 0 15px #f39c12, 0 0 20px #e74c3c; }
-            50% { text-shadow: 0 0 5px #f39c12, 0 0 10px #f39c12, 0 0 15px #f39c12, 0 0 20px #9b59b6; }
-            100% { text-shadow: 0 0 5px #f39c12, 0 0 10px #f39c12, 0 0 15px #f39c12, 0 0 20px #3498db; }
+            0% { color: #f39c12; }
+            50% { color: #9b59b6; }
+            100% { color: #3498db; }
         }
 
         /* Wrapper for All Content */
@@ -65,6 +66,8 @@
             max-width: 1200px;
             padding: 20px;
             box-sizing: border-box;
+            margin: 0 auto; /* Centers the grid container */
+            margin-bottom: 80px; /* To create space for the footer */
         }
 
         /* Individual Box Styling */
@@ -123,7 +126,7 @@
             color: white;
             border-radius: 8px;
             width: 100%;
-            position: absolute;
+            position: relative;
             bottom: 0;
             left: 0;
         }
@@ -146,9 +149,10 @@
         }
 
         nav {
-            margin: 60px 0;
+            margin: 0;
             background-color: orange;
             position: relative;
+            width: 100%;
         }
 
         nav ul {
@@ -165,6 +169,7 @@
         }
 
         nav a {
+            font-family: 'Poppins', sans-serif;
             font-size: 18px;
             display: block;
             text-decoration: none;
@@ -201,10 +206,6 @@
             font-size: 30px;
             color: white;
             padding: 10px;
-        }
-
-        .hamburger-menu.active {
-            display: block;
         }
 
         /* Mobile Menu */
@@ -249,12 +250,6 @@
 </head>
 <body>
 
-<!-- Header Section with Flashy Animation -->
-<div class="header">
-    <h1>Unlock Your Game World</h1>
-    <p class="slogan">Explore, Earn, and Play Your Favorite Games Like Never Before!</p>
-</div>
-
 <!-- Navigation Bar with Hamburger Menu -->
 <div id="container">
     <nav>
@@ -295,53 +290,53 @@
     </nav>
 </div>
 
+<!-- Header Section with Flashy Animation -->
+<div class="header">
+    <h1>Unlock Your Game World</h1>
+    <p class="slogan">Explore, Earn, and Play Your Favorite Games Like Never Before!</p>
+</div>
+
 <!-- Content -->
 <div class="content-wrapper">
-    <!-- Boxes with images and text -->
     <a href="#" class="box">
         <img src="https://picsum.photos/300/200?random=1" alt="Exciting Offers">
         <i>💲</i>
         <h3>Exciting Offers</h3>
         <p>Get exclusive deals and discounts on your favorite games.</p>
     </a>
-
     <a href="#" class="box">
         <img src="https://picsum.photos/300/200?random=2" alt="Community Events">
-        <i>👨‍👦‍👦</i>
-        <h3>Join Our Community</h3>
-        <p>Be part of our gaming community and participate in exciting events, challenges, and much more!</p>
+        <i>👨‍👨‍👦‍👦</i>
+        <h3>Community Events</h3>
+        <p>Join our community events and participate in challenges.</p>
     </a>
-
     <a href="#" class="box">
         <img src="https://picsum.photos/300/200?random=3" alt="Game Reviews">
         <i>✍️</i>
-        <h3>Latest Game Reviews</h3>
-        <p>Stay up-to-date with the latest game releases and read detailed reviews from the gaming experts!</p>
+        <h3>Game Reviews</h3>
+        <p>Read the latest reviews and stay up-to-date with new releases.</p>
     </a>
-
     <a href="#" class="box">
         <img src="https://picsum.photos/300/200?random=4" alt="Freebies">
         <i>🎁</i>
-        <h3>Free Game Codes</h3>
-        <p>Access free Steam game codes, spin the wheel, and complete tasks to earn rewards and freebies!</p>
+        <h3>Freebies</h3>
+        <p>Access FREE steam game codes, complete tasks, spin the wheel, events.</p>
     </a>
-
     <a href="#" class="box">
         <img src="https://picsum.photos/300/200?random=5" alt="Marketplace">
         <i>🛒</i>
-        <h3>Game Marketplace</h3>
-        <p>Buy, sell, and trade game keys and gift cards in our marketplace. Get the best deals on the web!</p>
+        <h3>Marketplace</h3>
+        <p>Buy & sell game keys / gift cards in our marketplace. (beta)</p>
     </a>
-
     <a href="#" class="box">
         <img src="https://picsum.photos/300/200?random=6" alt="Earn Games">
         <i>💰</i>
-        <h3>Earn Free Games</h3>
-        <p>Complete tasks and earn coins to exchange for your favorite games or even Bitcoin! Start earning today!</p>
+        <h3>Earn Games</h3>
+        <p>Complete tasks in your dashboard to earn coins - trade for games or BTC.</p>
     </a>
 </div>
 
-<!-- Footer -->
+<!-- Footer Section -->
 <footer>
     <p>&copy; 2024 Game World. All rights reserved.</p>
     <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
@@ -353,5 +348,6 @@
         document.getElementById("nav-list").classList.toggle("active");
     }
 </script>
+
 </body>
 </html>
