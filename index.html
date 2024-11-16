@@ -102,162 +102,52 @@
 
 
 <!-- Feature Section -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feature Section</title>
-    <style>
-        /* Feature Section Styling */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        .feature-section {
-            padding: 50px 0;
-            background-color: #f9f9f9;
-        }
-
-        .feature-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 15px;
-            transform: scale(0.9);
-            opacity: 0;
-            transition: all 0.5s ease-in-out;
-            background-size: cover;
-            background-position: center;
-            margin: 10px;
-        }
-
-        /* Set Background */
-        .feature-item.set-bg {
-            background-image: url('');
-        }
-
-        /* Hover Animation */
-        .feature-item:hover {
-            transform: scale(1);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Content Styling */
-        .feature-item .cata {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            font-size: 12px;
-            padding: 5px 10px;
-            text-transform: uppercase;
-            border-radius: 5px;
-        }
-
-        .feature-item .fi-content {
-            position: absolute;
-            bottom: 15px;
-            left: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-        .feature-item .fi-content h5 a {
-            color: #fff;
-            font-size: 16px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .feature-item .fi-comment {
-            display: inline-block;
-            margin-top: 10px;
-            color: #ff5722;
-            font-size: 12px;
-            text-decoration: none;
-        }
-
-        /* Reveal Animation */
-        .feature-item.reveal {
-            transform: scale(1);
-            opacity: 1;
-        }
-    </style>
-</head>
-<body>
-    <!-- Feature Section -->
-    <section class="feature-section spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 p-0">
-                    <div class="feature-item set-bg" style="background-image: url('img/features/1.jpg');">
-                        <span class="cata new">new</span>
-                        <div class="fi-content text-white">
-                            <h5><a href="#">Suspendisse ut justo tem por, rutrum</a></h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            <a href="#" class="fi-comment">3 Comments</a>
-                        </div>
+<section class="feature-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 p-0">
+                <div class="feature-item set-bg" data-setbg="img/features/1.jpg">
+                    <span class="cata new">new</span>
+                    <div class="fi-content text-white">
+                        <h5><a href="#">Suspendisse ut justo tem por, rutrum</a></h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                        <a href="#" class="fi-comment">3 Comments</a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 p-0">
-                    <div class="feature-item set-bg" style="background-image: url('img/features/2.jpg');">
-                        <span class="cata strategy">strategy</span>
-                        <div class="fi-content text-white">
-                            <h5><a href="#">Justo tempor, rutrum erat id, molestie</a></h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            <a href="#" class="fi-comment">3 Comments</a>
-                        </div>
+            </div>
+            <div class="col-lg-3 col-md-6 p-0">
+                <div class="feature-item set-bg" data-setbg="img/features/2.jpg">
+                    <span class="cata strategy">strategy</span>
+                    <div class="fi-content text-white">
+                        <h5><a href="#">Justo tempor, rutrum erat id, molestie</a></h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                        <a href="#" class="fi-comment">3 Comments</a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 p-0">
-                    <div class="feature-item set-bg" style="background-image: url('img/features/3.jpg');">
-                        <span class="cata new">new</span>
-                        <div class="fi-content text-white">
-                            <h5><a href="#">Nullam lacinia ex eleifend orci porttitor</a></h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            <a href="#" class="fi-comment">3 Comments</a>
-                        </div>
+            </div>
+            <div class="col-lg-3 col-md-6 p-0">
+                <div class="feature-item set-bg" data-setbg="img/features/3.jpg">
+                    <span class="cata new">new</span>
+                    <div class="fi-content text-white">
+                        <h5><a href="#">Nullam lacinia ex eleifend orci porttitor</a></h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                        <a href="#" class="fi-comment">3 Comments</a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 p-0">
-                    <div class="feature-item set-bg" style="background-image: url('img/features/4.jpg');">
-                        <span class="cata racing">racing</span>
-                        <div class="fi-content text-white">
-                            <h5><a href="#">Lacinia ex eleifend orci suscipit</a></h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                            <a href="#" class="fi-comment">3 Comments</a>
-                        </div>
+            </div>
+            <div class="col-lg-3 col-md-6 p-0">
+                <div class="feature-item set-bg" data-setbg="img/features/4.jpg">
+                    <span class="cata racing">racing</span>
+                    <div class="fi-content text-white">
+                        <h5><a href="#">Lacinia ex eleifend orci suscipit</a></h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                        <a href="#" class="fi-comment">3 Comments</a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Feature Section End -->
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const featureItems = document.querySelectorAll('.feature-item');
-
-            const onScroll = () => {
-                featureItems.forEach(item => {
-                    const rect = item.getBoundingClientRect();
-                    if (rect.top < window.innerHeight - 100) {
-                        item.classList.add('reveal');
-                    }
-                });
-            };
-
-            window.addEventListener('scroll', onScroll);
-            onScroll(); // Trigger on page load
-        });
-    </script>
-</body>
-</html>
-
+    </div>
+</section>
 <!-- Feature Section End -->
 
 
