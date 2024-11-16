@@ -1,173 +1,252 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Collage</title>
+  <title>freePCgames</title>
   <style>
-    /* General Reset */
+    /* General Styles */
     body, html {
       margin: 0;
       padding: 0;
-      font-family: 'Roboto', sans-serif;
+      font-family: "Roboto", sans-serif;
       background-color: #252833;
       color: white;
     }
 
-    /* Container for the collage */
-    .collage-container {
+    .game-container {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 1em;
-      padding: 2em;
-      margin-top: 3em;
+      justify-content: center;
+      padding: 2em 1em;
+      gap: 2em;
     }
 
-    /* Each image box */
-    .collage-item {
+    /* Card Styles */
+    .game-card {
       position: relative;
-      width: 45%; /* Default width on desktop */
-      height: 300px; /* Set a consistent height */
       background-color: #373d46;
       border-radius: 8px;
       overflow: hidden;
+      width: 280px;
+      height: 400px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      align-items: flex-start;
     }
 
-    .collage-item img {
+    .game-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: grayscale(40%);
     }
 
-    /* Title and paragraph */
-    .collage-item .text {
+    .game-card .game-label {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(8, 159, 138, 0.8);
+      color: white;
+      font-weight: 300;
+      text-transform: uppercase;
+      font-size: 0.75em;
+      padding: 0.5em;
+      border-radius: 5px;
+    }
+
+    .game-card .game-title {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      font-size: 1.2em;
+      font-weight: bold;
+      z-index: 2;
+      color: #d6dbeb;
+    }
+
+    .game-card .game-info {
       position: absolute;
       bottom: 0;
       left: 0;
-      padding: 1em;
-      background: rgba(0, 0, 0, 0.7);
       width: 100%;
-      color: white;
+      padding: 1em;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), black);
+      color: #c1c1c1;
+      font-size: 0.9em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .collage-item .title {
-      font-size: 1.5em;
-      font-weight: bold;
-      margin-bottom: 0.5em;
-    }
-
-    .collage-item .description {
-      font-size: 1em;
-      margin-bottom: 1em;
-    }
-
-    /* Button Styles */
-    .collage-item button {
-      background-color: #f79533;
-      border: none;
-      padding: 0.8em 1.5em;
-      font-size: 1em;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-    .collage-item button:hover {
-      background-color: #ef4e7b;
-    }
-
-    /* Hover effects */
-    .collage-item:hover {
+    /* Hover Effects */
+    .game-card:hover {
       transform: scale(1.05);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
     }
 
-    /* Responsive Design for mobile */
+    /* Small Cards (Responsive Grid) */
     @media (max-width: 768px) {
-      .collage-item {
-        width: 100%; /* Stack in one column */
-        height: 250px; /* Adjust height for mobile */
-        margin-bottom: 2em;
+      .game-container {
+        justify-content: space-between;
+      }
+      .game-card {
+        width: 45%;
+        height: 350px;
       }
     }
 
-    /* Wild Collage Effect on Desktop */
-    @media (min-width: 769px) {
-      .collage-container {
-        flex-wrap: wrap;
-      }
-      .collage-item:nth-child(odd) {
-        transform: rotate(-5deg); /* Slight rotation for odd items */
-      }
-      .collage-item:nth-child(even) {
-        transform: rotate(5deg); /* Slight rotation for even items */
-      }
-      .collage-item:nth-child(3) {
-        margin-top: 2em;
-      }
-      .collage-item:nth-child(4) {
-        margin-top: -1em;
-      }
-      .collage-item:nth-child(5) {
-        margin-top: 3em;
+    @media (max-width: 480px) {
+      .game-card {
+        width: 90%;
+        height: 300px;
       }
     }
 
+    /* Animation for Cards */
+    .game-card {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Collage Container -->
-  <div class="collage-container">
-    <!-- First Image Box -->
-    <div class="collage-item">
-      <img src="https://via.placeholder.com/500x300" alt="Game 1">
-      <div class="text">
-        <div class="title">Game 1</div>
-        <div class="description">This is a description for the first game. Enjoy exploring!</div>
-        <button>Download</button>
+  <div class="game-container">
+    <div class="game-card">
+      <img src="https://via.placeholder.com/280x400" alt="Game Image">
+      <div class="game-label">Adventure</div>
+      <div class="game-title">Game 1</div>
+      <div class="game-info">
+        <span>Free</span>
+        <span>Download</span>
       </div>
     </div>
 
-    <!-- Second Image Box -->
-    <div class="collage-item">
-      <img src="https://via.placeholder.com/500x300" alt="Game 2">
-      <div class="text">
-        <div class="title">Game 2</div>
-        <div class="description">This game is full of action and adventure. Get started!</div>
-        <button>Download</button>
+    <div class="game-card">
+      <img src="https://via.placeholder.com/280x400" alt="Game Image">
+      <div class="game-label" style="background-color: #ef4e7b;">RPG</div>
+      <div class="game-title">Game 2</div>
+      <div class="game-info">
+        <span>Free</span>
+        <span>Download</span>
       </div>
     </div>
 
-    <!-- Third Image Box -->
-    <div class="collage-item">
-      <img src="https://via.placeholder.com/500x300" alt="Game 3">
-      <div class="text">
-        <div class="title">Game 3</div>
-        <div class="description">Immerse yourself in a world of strategy and war.</div>
-        <button>Download</button>
+    <div class="game-card">
+      <img src="https://via.placeholder.com/280x400" alt="Game Image">
+      <div class="game-label" style="background-color: #1098ad;">Shooter</div>
+      <div class="game-title">Game 3</div>
+      <div class="game-info">
+        <span>Free</span>
+        <span>Download</span>
       </div>
     </div>
 
-    <!-- Fourth Image Box -->
-    <div class="collage-item">
-      <img src="https://via.placeholder.com/500x300" alt="Game 4">
-      <div class="text">
-        <div class="title">Game 4</div>
-        <div class="description">Solve puzzles and mysteries in this amazing game.</div>
-        <button>Download</button>
+    <div class="game-card">
+      <img src="https://via.placeholder.com/280x400" alt="Game Image">
+      <div class="game-label" style="background-color: #f79533;">Strategy</div>
+      <div class="game-title">Game 4</div>
+      <div class="game-info">
+        <span>Free</span>
+        <span>Download</span>
       </div>
     </div>
 
+  </div>
+
+</body>
+</html>
+.
+</head>
+<body>
+
+  <div class="game-container">
+    <div class="cards">
+      <!-- First 4 cards (with images) -->
+      <div class="card content">
+        <a href="pages/sign-up.html" target="_blank">
+          <div class="card-content">
+            <div class="card-img">
+              <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80" alt="Gamer">
+            </div>
+            <div class="card-label">freePCgames</div>
+            <div class="card-title">Victory Awaits – Are You Ready?</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="card content">
+        <a href="pages/sign-up.html" target="_blank">
+          <div class="card-content">
+            <div class="card-img">
+              <img src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" alt="keyboard">
+            </div>
+            <div class="card-label">Community</div>
+            <div class="card-title">For the Players. By the Players</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="card content">
+        <a href="pages/sign-up.html" target="_blank">
+          <div class="card-content">
+            <div class="card-img">
+              <img src="https://images.unsplash.com/photo-1519326844852-704caea5679e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2034&q=80" alt="Controller">
+            </div>
+            <div class="card-label">Games</div>
+            <div class="card-title">Claim FREE Steam Game!</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="card form">
+        <a href="pages/sign-up.html" target="_blank">
+          <div class="form-title">Join us</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="small-cards">
+      <div class="small-card">
+        <div class="small-card-title">💲 Exciting Offers</div>
+        <div class="small-card-text">Get exclusive deals and discounts on your favorite games.</div>
+      </div>
+      <div class="small-card">
+        <div class="small-card-title">👨‍👨‍👦‍👦 Community Events</div>
+        <div class="small-card-text">Join our community events and participate in challenges.</div>
+      </div>
+      <div class="small-card">
+        <div class="small-card-title">✍️ Game Reviews</div>
+        <div class="small-card-text">Read the latest reviews and stay up-to-date with new releases.</div>
+      </div>
+    </div>
+
+    <div class="small-cards">
+      <div class="small-card">
+        <div class="small-card-title">🎁 Freebies</div>
+        <div class="small-card-text">Access FREE steam game codes, complete tasks, spin the wheel, events. .</div>
+      </div>
+      <div class="small-card">
+        <div class="small-card-title">🛒 Marketplace</div>
+        <div class="small-card-text">Buy & sell game keys / gift cards in our marketplace. (beta)</div>
+      </div>
+      <div class="small-card">
+        <div class="small-card-title">💰 Earn Games</div>
+        <div class="small-card-text">Complete tasks in your dashboard to earn coins - trade for games or BTC.</div>
+      </div>
+    </div>
   </div>
 
 <!DOCTYPE html>
