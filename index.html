@@ -1,4 +1,10 @@
 
+<br>
+<br>
+<a href="https://www.monkeybusiness.agency/paid-per-sale-for-life-program?aid=terrytibbs4044" target="_blank" title="Build Your Business with software and services for smart, modern businesses from Monkey Business Agency Inc.">Pay per Sale Program - Earn 5% sales commission for LIFE!</a>
+
+<br>
+<br>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +20,11 @@
       width: 100%;
       height: 100%;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       margin: 0;
+      font-family: "Roboto", sans-serif;
     }
 
     * {
@@ -24,14 +32,16 @@
     }
 
     .cards {
-      width: 90%;
+      width: calc(100% - 2em);
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr; /* Default 4 columns */
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-rows: auto;
       grid-gap: 1em;
       grid-template-areas:
         "a a b c"
         "a a d d";
-      padding: 1em;
+      width: 80%;
+      margin-bottom: 2em;
     }
 
     .card {
@@ -39,7 +49,6 @@
       position: relative;
       transition: all 0.25s ease;
       cursor: pointer;
-      font-family: "Roboto", sans-serif;
       font-weight: 300;
     }
 
@@ -222,46 +231,61 @@
     /* Responsive Design */
     @media (max-width: 768px) {
       .cards {
-        grid-template-columns: 1fr 1fr; /* 2 columns on tablets and smaller devices */
-        grid-template-areas: 
-          "a a"
-          "b b"
-          "c c"
-          "d d";
+        grid-template-columns: 1fr 1fr;
       }
 
       .form-title {
-        font-size: 10vw; /* Make the form title bigger on mobile */
-      }
-
-      .card-title {
-        font-size: 1em; /* Adjust text size for mobile */
+        font-size: 10vw;
       }
     }
 
     @media (max-width: 480px) {
       .cards {
-        grid-template-columns: 1fr; /* Single column on mobile phones */
-        grid-template-areas: 
-          "a"
-          "b"
-          "c"
-          "d";
+        grid-template-columns: 1fr;
       }
 
       .form-title {
-        font-size: 12vw; /* Make the form title even larger on very small screens */
+        font-size: 12vw;
       }
+    }
 
-      .card-title {
-        font-size: 1.2em; /* Larger text on smaller screens */
-      }
+    /* Additional Smaller Boxes */
+    .small-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 1em;
+      width: 80%;
+      margin-bottom: 2em;
+    }
+
+    .small-card {
+      background: #373d46;
+      padding: 1.5em;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+    }
+
+    .small-card .small-card-title {
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-bottom: 0.5em;
+    }
+
+    .small-card .small-card-text {
+      font-size: 0.9em;
+      color: #c1c1c1;
     }
 
   </style>
 </head>
 <body>
+
   <div class="cards">
+    <!-- First 4 cards (with images) -->
     <div class="card content">
       <a href="pages/sign-up.html" target="_blank">
         <div class="card-content">
@@ -269,14 +293,11 @@
             <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80" alt="Gamer">
           </div>
           <div class="card-label">freePCgames</div>
-          <div class="card-title">
-            Victory Awaits – Are You Ready?  
-          </div>
-
+          <div class="card-title">Victory Awaits – Are You Ready?</div>
         </div>
       </a>
     </div>
-    
+
     <div class="card content">
       <a href="pages/sign-up.html" target="_blank">
         <div class="card-content">
@@ -284,9 +305,7 @@
             <img src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" alt="keyboard">
           </div>
           <div class="card-label">Community</div>
-          <div class="card-title">
-             For the Players. By the Players!
-          </div>
+          <div class="card-title">For the Players. By the Players</div>
         </div>
       </a>
     </div>
@@ -295,25 +314,55 @@
       <a href="pages/sign-up.html" target="_blank">
         <div class="card-content">
           <div class="card-img">
-            <img src="ttps://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1q5qlH.img" alt="Controller">
+            <img src="https://images.unsplash.com/photo-1519326844852-704caea5679e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2034&q=80" alt="Controller">
           </div>
           <div class="card-label">Games</div>
-          <div class="card-title">
-            Claim FREE Steam Game Keys!
-          </div>
+          <div class="card-title">Claim FREE Steam Game!</div>
         </div>
       </a>
     </div>
 
     <div class="card form">
-       <div class="form-title">Start Your Adventure ></div>
-      <!-- Wrap the entire form card inside the <a> tag -->
       <a href="pages/sign-up.html" target="_blank">
+        <div class="form-title">Join us</div>
       </a>
     </div>
-
   </div>
+
+  <!-- Smaller boxes below -->
+  <div class="small-cards">
+    <div class="small-card">
+      <div class="small-card-title">Exciting Offers</div>
+      <div class="small-card-text">Get exclusive deals and discounts on your favorite games.</div>
+    </div>
+    <div class="small-card">
+      <div class="small-card-title">Community Events</div>
+      <div class="small-card-text">Join our community events and participate in challenges.</div>
+    </div>
+    <div class="small-card">
+      <div class="small-card-title">Game Reviews</div>
+      <div class="small-card-text">Read the latest reviews and stay up-to-date with new releases.</div>
+    </div>
+  </div>
+
+
+  <!-- Smaller boxes below -->
+  <div class="small-cards">
+    <div class="small-card">
+      <div class="small-card-title">Freebies</div>
+      <div class="small-card-text">Access FREE steam game codes.</div>
+    </div>
+    <div class="small-card">
+      <div class="small-card-title">Marketplace</div>
+      <div class="small-card-text">Buy & sell game keys / gift cards</div>
+    </div>
+    <div class="small-card">
+      <div class="small-card-title">Reviews</div>
+      <div class="small-card-text">Check out our reviews here.</div>
+    </div>
+  </div>
+
+  
 
 </body>
 </html>
-
