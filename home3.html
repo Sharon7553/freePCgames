@@ -393,7 +393,6 @@
   display: flex;
   gap: 20px;
   transition: transform 0.5s ease-in-out;
-  scroll-behavior: smooth;
 }
 
 .game-card {
@@ -438,66 +437,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextBtn = document.querySelector(".next-btn");
 
   let offset = 0;
+  const gameCards = document.querySelectorAll(".game-card");
+  const totalCards = gameCards.length;
+  
+  // Clone the first and last card for infinite loop effect
+  const firstCard = carousel.firstElementChild.cloneNode(true);
+  const lastCard = carousel.lastElementChild.cloneNode(true);
+  
+  // Append clones to the carousel
+  carousel.appendChild(firstCard);
+  carousel.insertBefore(lastCard, carousel.firstElementChild);
 
-  // Start in the middle
-  const initialOffset = -250 * 2;  // Offset for the second or third card
-  carousel.style.transform = `translateX(${initialOffset}px)`;
+  // Adjust the initial offset to start in the middle
+  offset = -250 * 2;
+  carousel.style.transform = `translateX(${offset}px)`;
 
-  // Variables for mouse dragging
-  let isDragging = false;
-  let startX;
-  let scrollLeft;
-
-  // Mouse events for dragging
-  carousel.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    startX = e.pageX - carousel.offsetLeft;
-    scrollLeft = carousel.scrollLeft;
-  });
-
-  carousel.addEventListener('mouseleave', () => {
-    isDragging = false;
-  });
-
-  carousel.addEventListener('mouseup', () => {
-    isDragging = false;
-  });
-
-  carousel.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - carousel.offsetLeft;
-    const walk = (x - startX) * 3;  // Adjust the dragging speed
-    carousel.style.transform = `translateX(${offset - walk}px)`;
-  });
-
-  // Touch events for swiping
-  let startTouch;
-  let startOffset;
-
-  carousel.addEventListener('touchstart', (e) => {
-    startTouch = e.touches[0].clientX;
-    startOffset = offset;
-  });
-
-  carousel.addEventListener('touchmove', (e) => {
-    if (!startTouch) return;
-    const touchMove = e.touches[0].clientX - startTouch;
-    carousel.style.transform = `translateX(${startOffset - touchMove}px)`;
-  });
-
-  carousel.addEventListener('touchend', () => {
-    startTouch = null;
-  });
-
-  // Next and previous buttons functionality
-  prevBtn.addEventListener("click", () => {
-    offset -= 270; // Adjust based on game-card width + gap
+  // Move to the next slide
+  nextBtn.addEventListener("click", () => {
+    offset += 270;
+    if (offset >= (totalCards + 1) * 270) {
+      offset = -270;  // Reset to the first real image
+    }
     carousel.style.transform = `translateX(${offset}px)`;
   });
 
-  nextBtn.addEventListener("click", () => {
-    offset += 270; // Adjust based on game-card width + gap
+  // Move to the previous slide
+  prevBtn.addEventListener("click", () => {
+    offset -= 270;
+    if (offset < 0) {
+      offset = totalCards * 270;  // Reset to the last real image
+    }
     carousel.style.transform = `translateX(${offset}px)`;
   });
 });
