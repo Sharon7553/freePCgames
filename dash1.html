@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding-top: 80px;
+    }
+    header {
+      width: 100%;
+      padding: 20px;
+      background-color: #007BFF;
+      color: white;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+    header h1 {
+      margin: 0;
+    }
+    .coins {
+      position: absolute;
+      left: 20px; /* Align left instead of right */
+      top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #28a745;
+      padding: 8px 15px;
+      border-radius: 50px;
+      color: white;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 100px;
+      width: 100%;
+      padding: 20px;
+    }
+    .task-box {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin: 15px;
+      text-align: center;
+      width: 180px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    .task-box:hover {
+      transform: scale(1.05);
+      background-color: #f0f0f0;
+    }
+    .task-button {
+      padding: 12px 20px;
+      background-color: #4CAF50; /* Green background */
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .task-button:hover {
+      background-color: #45a049; /* Darker green on hover */
+      transform: scale(1.05);
+    }
+    .task-button.locked {
+      background-color: #dc3545; /* Red background for locked state */
+      pointer-events: none; /* Disable button interaction */
+    }
+    .task-button.locked:before {
+      content: "🔒"; /* Padlock icon */
+      margin-right: 8px;
+    }
+    .task-button:focus {
+      outline: none;
+    }
+    .user-name {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .task-box p {
+      margin-top: 10px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 600px) {
+      .task-box {
+        width: 160px;
+      }
+      .coins {
+        font-size: 16px;
+        padding: 5px 12px;
+      }
+      header h1 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Welcome to Your Dashboard</h1>
+    <div class="coins" id="coins">coins: 0</div>
+  </header>
+
+  <!-- Container for Tasks -->
+  <div class="container">
+    <!-- First Row of Task Buttons -->
+    <div class="task-box" id="task1">
+      <h3>Task 1</h3>
+      <button class="task-button" id="button1" onclick="completeTask('task1', 'https://www.google.com')">Claim Coins</button>
+    </div>
+    <div class="task-box" id="task2">
+      <h3>Task 2</h3>
+      <button class="task-button" id="button2" onclick="completeTask('task2', 'https://www.example2.com')">Claim Coins</button>
+    </div>
+    <div class="task-box" id="task3">
+      <h3>Task 3</h3>
+      <button class="task-button" id="button3" onclick="completeTask('task3', 'https://www.example3.com')">Claim Coins</button>
+    </div>
+    <!-- Second Row of Task Buttons -->
+    <div class="task-box" id="task4">
+      <h3>Task 4</h3>
+      <button class="task-button" id="button4" onclick="completeTask('task4', 'https://www.example4.com')">Claim Coins</button>
+    </div>
+    <div class="task-box" id="task5">
+      <h3>Task 5</h3>
+      <button class="task-button" id="button5" onclick="completeTask('task5', 'https://www.example5.com')">Claim Coins</button>
+    </div>
+    <div class="task-box" id="task6">
+      <h3>Task 6</h3>
+      <button class="task-button" id="button6" onclick="completeTask('task6', 'https://www.example6.com')">Claim Coins</button>
+    </div>
+  </div>
+
+  <!-- User's Name Display -->
+  <div class="user-name" id="userName"></div>
+
+  <!-- Script to Handle Logic -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    // Initialize Supabase
+    const supabaseUrl = 'https://qvdrfahwyztzpbddoakd.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2ZHJmYWh3eXp0enBiZGRvYWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTEwODUsImV4cCI6MjA0NzAyNzA4NX0.R-AqTGj5MsAb-bqE1yP0Ag5ZWMtFIQxgtJ2BM05uJh0';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    let coins = localStorage.getItem('coins') ? parseInt(localStorage.getItem('coins')) : 0;
+    const userId = localStorage.getItem('userId');
+
+    // Set up initial coins and username
+    document.getElementById('coins').innerText = `coins: ${coins}`;
+
+    async function fetchUser() {
+      if (userId) {
+        const { data: user, error } = await supabase
+          .from('users')
+          .select('username')
+          .eq('id', userId)
+          .single();
+        
+        if (user) {
+          document.getElementById('userName').innerText = `Hello, ${user.username}`;
+        } else {
+          console.log('User not found!');
+        }
+      } else {
+        // Redirect to login if no userId in localStorage
+        window.location.href = '/login';
+      }
+    }
+
+    // Fetch user data on page load
+    fetchUser();
+
+    // Handle task completion
+    function completeTask(taskId, url) {
+      const button = document.getElementById(`button${taskId.charAt(taskId.length - 1)}`);
+      const taskBox = document.getElementById(taskId);
+
+      // Check if task has already been completed
+      if (button.classList.contains('locked')) return;
+
+      // Lock the button and change its color to red
+      button.classList.add('locked');
+      button.innerText = 'Claimed';
+      
+      // Add 50 coins to the user's balance
+      coins += 50;
+      localStorage.setItem('coins', coins);
+      document.getElementById('coins').innerText = `coins: ${coins}`;
+
+      // Open the link in a new tab
+      window.open(url, '_blank');
+    }
+
+    // Handle page load actions (like loading user info)
+    window.onload = function() {
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        // If not authenticated, redirect to login
+        window.location.href = '/login';
+      }
+    };
+  </script>
+
+</body>
+</html>
