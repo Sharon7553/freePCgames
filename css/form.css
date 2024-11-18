@@ -1,6 +1,6 @@
 /* Ensure the body and html take up the full height */
 html, body {
-  height: 50%;
+  height: 100%;
   margin: 0;
 }
 
