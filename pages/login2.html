@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+	<title>freePCgames</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Game Warrior Template">
+	<meta name="keywords" content="warrior, game, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->   
+	<link href="img/favicon.ico" rel="shortcut icon"/>
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i" rel="stylesheet">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/owl.carousel.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/animate.css"/>
+
+
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section">
+		<div class="container">
+			<!-- logo -->
+			<a class="site-logo" href="index.html">
+				<img src="img/logo.png" alt="">
+			</a>
+			<div class="user-panel">
+				<a href="pages/login.html">Login</a>  /  <a href="pages/sign-up.html">Register</a>
+			</div>
+			<!-- responsive -->
+			<div class="nav-switch">
+				<i class="fa fa-bars"></i>
+			</div>
+			<!-- site menu -->
+			<nav class="main-menu">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="review.html">Games</a></li>
+					<li><a href="categories.html">Freebies</a></li>
+					<li><a href="community.html">Forums</a></li>
+					<li><a href="contact.html">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<!-- Header section end -->
+
+ <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <script>
+    // Initialize Supabase client
+    function initializeSupabase() {
+      const supabaseUrl = 'https://qvdrfahwyztzpbddoakd.supabase.co'; // Your Supabase URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2ZHJmYWh3eXp0enBiZGRvYWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTEwODUsImV4cCI6MjA0NzAyNzA4NX0.R-AqTGj5MsAb-bqE1yP0Ag5ZWMtFIQxgtJ2BM05uJh0'; // Replace with your Supabase anon key
+      return supabase.createClient(supabaseUrl, supabaseKey);
+    }
+
+    // Handle sign-up process
+    function handleSignUp(supabase) {
+      const form = document.getElementById('sign-up-form');
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent the default form submission
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Hide any previous messages
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+
+        try {
+          const { user, error } = await supabase.auth.signUp({
+            email: email,
+            password: password
+          });
+
+          if (error) {
+            errorMessage.style.display = 'block';
+            console.error('Error signing up:', error.message);
+          } else {
+            successMessage.style.display = 'block';
+            console.log('Sign-up successful:', user);
+
+            // Redirect after 3 seconds
+            setTimeout(function() {
+              window.location.href = 'login.html';  // Redirect to login page after success
+            }, 3000);  // Adjust the delay (3000ms = 3 seconds)
+          }
+        } catch (error) {
+          errorMessage.style.display = 'block';
+          console.error('Unexpected error:', error);
+        }
+      });
+    }
+
+    // Run the sign-up function when the page loads
+    window.onload = function() {
+      const supabase = initializeSupabase();
+      handleSignUp(supabase);
+    };
+    
+
+  </script>
+
+	<!-- Tournaments section -->
+	<section class="tournaments-section spad">
+		<div class="container">
+			<div class="tournament-title">Prize draw</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="tournament-item mb-4 mb-lg-0">
+						<div class="ti-notic">Competition time </div>
+						<div class="ti-content">
+							<div class="ti-thumb set-bg" data-setbg="img/tournament/1.jpg"></div>
+							<div class="ti-text">
+								<h4>Halo</h4>
+								<ul>
+									<li><span>Tournament Beggins:</span> Dec 17, 2024</li>
+									<li><span>Tounament Start Time:</span> 7pm</li>
+									<li><span>Participants:</span> 4 </li>
+									<li><span>Tournament Author:</span> Admin</li>
+								</ul>
+								<p><span>Prizes:</span> 1st: $5k coins, 2nd: $2.5k, 3rd: $1k</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="tournament-item">
+						<div class="ti-notic">Premium Tournament</div>
+						<div class="ti-content">
+							<div class="ti-thumb set-bg" data-setbg="img/tournament/2.jpg"></div>
+							<div class="ti-text">
+								<h4>Fortnite</h4>
+								<ul>
+									<li><span>Tournament Beggins:</span> N/A</li>
+									<li><span>Tounament Ends:</span> N/A</li>
+									<li><span>Participants:</span> 0 teams</li>
+									<li><span>Tournament Author:</span> Admin</li>
+								</ul>
+								<p><span>Prizes:</span> 1st= $5k coins, 2nd: $2.5k, 3rd: $1k</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Tournaments section bg -->
+
+
+	<!-- Review section -->
+	<section class="review-section spad set-bg" data-setbg="img/review-bg.png">
+		<div class="container">
+			<div class="section-title">
+				<div class="cata new">new</div>
+				<h2>Recently won</h2>
+        <h4>Games will change when 20 is claimed<h4>
+			</div>
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/1.jpg">
+							<div class="score yellow">12</div>
+						</div>
+						<div class="review-text">
+							<h5>Assasin’’s Creed</h5>
+							<p></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/2.jpg">
+							<div class="score purple">9</div>
+						</div>
+						<div class="review-text">
+							<h5>Minecraft</h5>
+							<p></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/3.jpg">
+							<div class="score green">8</div>
+						</div>
+						<div class="review-text">
+							<h5>Overwatch</h5>
+							<p></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/4.jpg">
+							<div class="score pink">19</div>
+						</div>
+						<div class="review-text">
+							<h5>GTA5</h5>
+							<p>.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Review section end -->
+
+
+	<!-- Footer top section -->
+	<section class="footer-top-section">
+		<div class="container">
+			<div class="footer-top-bg">
+				<img src="img/footer-top-bg.png" alt="">
+			</div>
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="footer-logo text-white">
+						<img src="img/footer-logo.png" alt="">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="footer-widget mb-5 mb-md-0">
+						<h4 class="fw-title">Latest Posts</h4>
+						<div class="latest-blog">
+							<div class="lb-item">
+								<div class="lb-thumb set-bg" data-setbg="img/latest-blog/1.jpg"></div>
+								<div class="lb-content">
+									<div class="lb-date">June 21, 2014</div>
+									<p>How to double your coins in just 1 day </p>
+									<a href="#" class="lb-author">By Admin</a>
+								</div>
+							</div>
+							<div class="lb-item">
+								<div class="lb-thumb set-bg" data-setbg="img/latest-blog/2.jpg"></div>
+								<div class="lb-content">
+									<div class="lb-date">Oct 24, 2024</div>
+									<p>Exiting new game releases </p>
+									<a href="#" class="lb-author">By Admin</a>
+								</div>
+							</div>
+							<div class="lb-item">
+								<div class="lb-thumb set-bg" data-setbg="img/latest-blog/3.jpg"></div>
+								<div class="lb-content">
+									<div class="lb-date">Oct27, 2024</div>
+									<p>Enlisted Ban List </p>
+									<a href="#" class="lb-author">By Admin</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="footer-widget">
+						<h4 class="fw-title">Top Comments</h4>
+						<div class="top-comment">
+							<div class="tc-item">
+								<div class="tc-thumb set-bg" data-setbg="img/authors/1.jpg"></div>
+								<div class="tc-content">
+									<p><a href="#">James Smith</a> <span>on</span>  Lorem ipsum dolor sit amet, co</p>
+									<div class="tc-date">June 21, 2018</div>
+								</div>
+							</div>
+							<div class="tc-item">
+								<div class="tc-thumb set-bg" data-setbg="img/authors/2.jpg"></div>
+								<div class="tc-content">
+									<p><a href="#">James Smith</a> <span>on</span>  Lorem ipsum dolor sit amet, co</p>
+									<div class="tc-date">June 21, 2018</div>
+								</div>
+							</div>
+							<div class="tc-item">
+								<div class="tc-thumb set-bg" data-setbg="img/authors/3.jpg"></div>
+								<div class="tc-content">
+									<p><a href="#">James Smith</a> <span>on</span>  Lorem ipsum dolor sit amet, co</p>
+									<div class="tc-date">June 21, 2018</div>
+								</div>
+							</div>
+							<div class="tc-item">
+								<div class="tc-thumb set-bg" data-setbg="img/authors/4.jpg"></div>
+								<div class="tc-content">
+									<p><a href="#">James Smith</a> <span>on</span>  Lorem ipsum dolor sit amet, co</p>
+									<div class="tc-date">June 21, 2018</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Footer top section end -->
+
+	
+	<!-- Footer section -->
+	<footer class="footer-section">
+		<div class="container">
+			<ul class="footer-menu">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="review.html">Games</a></li>
+				<li><a href="categories.html">Blog</a></li>
+				<li><a href="community.html">Forums</a></li>
+				<li><a href="contact.html">Contact</a></li>
+			</ul>
+			<p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | A site <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://google.com" target="_blank">AJT Design</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</p>
+		</div>
+	</footer>
+	<!-- Footer section end -->
+
+
+	<!--====== Javascripts & Jquery ======-->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.marquee.min.js"></script>
+	<script src="js/main.js"></script>
+    </body>
+</html>
